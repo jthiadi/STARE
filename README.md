@@ -133,40 +133,63 @@ env.sh                 environment variables for a portable Python in env/ (opti
 
 ## Setup
 
-1. **Python 3.12** with PyTorch (CUDA build for the GPU steps; the CPU reproduction also imports it), then:
+Commands run from this folder (the repository root) unless a step says `system/assistant`. The `.sh` scripts need bash:
+on Windows, run them in Git Bash or WSL; the Python commands work in any shell.
+
+1. **Python 3.12** (newer versions are not supported) in a virtual environment:
+   ```bash
+   python3.12 -m venv .venv && source .venv/bin/activate        # Linux / macOS
+   py -3.12 -m venv .venv; .venv\Scripts\activate               # Windows (PowerShell)
+   python --version                                             # must print 3.12.x
+   ```
+   Then install PyTorch (CUDA 12.4 build for the GPU steps; for the CPU-only reproduction use
+   `--index-url https://download.pytorch.org/whl/cpu` instead) and the rest:
    ```bash
    pip install torch==2.5.1 torchvision==0.20.1 --index-url https://download.pytorch.org/whl/cu124
    pip install -r system/assistant/requirements.txt scikit-learn==1.7.2 weighted-levenshtein ultralytics==8.3.40 fastapi uvicorn
    ```
-   On a shared server, `source env.sh` keeps Python, packages and caches inside `env/` (create it there first).
+   Optional, Linux servers only: `env.sh` points Python, packages and caches at a portable Python 3.12 in
+   `env/python312` and a venv in `env/venv`, which you create yourself. It also sets `HF_HUB_OFFLINE=1`, so source it
+   only after steps 4 and 5 have downloaded everything (or `unset HF_HUB_OFFLINE TRANSFORMERS_OFFLINE`).
 2. **Datasets** (from their authors, under their terms):
-   - IndustReal (data.4tu.nl): the `train/`, `validation/`, `test/` annotation folders, and the 84 recordings as
-     `system/assistant/data/generated/industreal/videos/<rid>.mp4` (`python -m scripts.data.download_industreal` from
-     `system/assistant` downloads them).
+   - IndustReal annotations (data.4tu.nl), anywhere on disk; this folder is the `--data` argument below and must look
+     like `<root>/train/train_annotations/<rid>/AR_labels.csv`, `<root>/validation/val_annotations/<rid>/...` and
+     `<root>/test/test_annotations/<rid>/...` (each `<rid>` folder holds `AR_labels.csv` and the `PSR_labels*.csv`).
+   - IndustReal videos (86 .mp4 files, about 5 GB) in `system/assistant/data/generated/industreal/videos/<rid>.mp4`.
+     From `system/assistant`, `python -m scripts.data.download_industreal --all` downloads them from the official
+     archive; rerun it to resume after an interruption (`--recording <rid>` fetches one, `--list` shows them).
    - IndustReal `part_geometries` (CAD states, only for the UI's 3D inset) in
      `system/assistant/output/assist/cad/part_geometries/`.
-   - MECCANO: annotations and `MECCANO_RGB_Videos` in `data/MECCANO/` (or set `MECCANO_ROOT`).
-3. **Third-party code** at the commits we used (PROVIA, STORM-PSR, MECCANO step labels):
+   - MECCANO (<https://iplab.dmi.unict.it/MECCANO/>) in `data/MECCANO/` (or set `MECCANO_ROOT`):
+     `data/MECCANO/annotations/MECCANO_{train,val,test}_actions.csv` and `data/MECCANO/MECCANO_RGB_Videos/<vid>.mp4`.
+3. **Third-party code** at the commits we used (PROVIA, STORM-PSR, MECCANO step labels; needs `git`):
    ```bash
    bash tools/fetch_third_party.sh
    ```
-4. **Saved model outputs and weights** (too large for Git): download `stare_outputs.tar` (0.3 GB, needed to reproduce
-   the tables) and `stare_weights.tar` (8.5 GB, needed only to rerun the models) from
-   <https://huggingface.co/jthiadiii/STARE>, then unpack them inside this folder:
+4. **Saved model outputs and weights** (too large for Git), from <https://huggingface.co/jthiadiii/STARE>:
+   `stare_outputs.tar` (0.3 GB) is all the table reproduction needs; `stare_weights.tar` (8.5 GB) is only for
+   rerunning the models. Download into this folder and unpack (each file's SHA-256 is checked):
    ```bash
-   hf download jthiadiii/STARE stare_outputs.tar stare_weights.tar --local-dir .   # or download from the page
-   python tools/unpack_artifacts.py stare_outputs.tar stare_weights.tar      # checks every file's SHA-256
+   hf download jthiadiii/STARE stare_outputs.tar --local-dir .
+   python tools/unpack_artifacts.py stare_outputs.tar
+   hf download jthiadiii/STARE stare_weights.tar --local-dir .     # GPU steps only
+   python tools/unpack_artifacts.py stare_weights.tar
    ```
+   The `hf` command comes with `huggingface_hub` 0.34 or newer (installed in step 1); with an older version use
+   `huggingface-cli download` with the same arguments, or download the files from the page.
 5. **Public backbones** for the GPU steps (DINOv2-small, VideoMAE-SSv2, V-JEPA 2 ViT-L):
    `python -m scripts.data.download_models` from `system/assistant`.
 
 ## Reproduce the paper's numbers
 
-CPU only, about 30 minutes on 8 cores; needs steps 1-4 above (`stare_outputs.tar`, no weights):
+CPU only, about 30 minutes on 8 cores; needs steps 1-4 above (`stare_outputs.tar`, no weights, no GPU):
 
 ```bash
 python metrics/reproduce_all.py --data <IndustReal root with train/ validation/ test/>
 ```
+
+The videos are read from `system/assistant/data/generated/industreal/videos/` (step 2); add `--videos <folder>` if
+they are elsewhere.
 
 It prints `OK` or `MISMATCH` for every number of Tables 1-8 and ends with `ALL NUMBERS REPRODUCED`. Per-table scripts and
 details: [`metrics/ar/README.md`](metrics/ar/README.md), [`metrics/e2e/README.md`](metrics/e2e/README.md),
