@@ -177,8 +177,9 @@ pip install -r requirements.txt
 python -m scripts.data.download_models           # DINOv2-small + VideoMAE-SSv2 into models/
 ```
 
-Download the trained weights (`industreal_verb_noun_release.zip`) from this repository's
-**Releases** page and unzip it into the repository root, so that you have:
+The earlier offline release below (`industreal_verb_noun_release.zip`) is not published with STARE. The models the
+paper uses (causal TCNs, fine-tuned backbones, V-JEPA 2 runs) are in `stare_weights.tar`; see the top-level README.
+For the record, that release contained:
 
 ```
 release/

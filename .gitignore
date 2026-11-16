@@ -19,6 +19,7 @@ __pycache__/
 
 # Saved model outputs and trained weights: tools/pack_artifacts.py -> stare_outputs.tar, stare_weights.tar
 /system/weights/
+/system/psr_v14/weights
 /system/STORM-PSR-IndustReal/
 /system/assistant/models/
 /system/assistant/release_vjepa/
@@ -37,6 +38,8 @@ __pycache__/
 /demo_cards/videos/
 /demo_cards/app_v14_tcn/
 /.artifacts/
+/stare_outputs.tar
+/stare_weights.tar
 *.mp4
 *.log
 

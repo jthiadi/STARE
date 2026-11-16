@@ -151,8 +151,10 @@ env.sh                 environment variables for a portable Python in env/ (opti
    bash tools/fetch_third_party.sh
    ```
 4. **Saved model outputs and weights** (too large for Git): download `stare_outputs.tar` (0.3 GB, needed to reproduce
-   the tables) and `stare_weights.tar` (8.5 GB, needed only to rerun the models) from `<HF_REPO>`, then
+   the tables) and `stare_weights.tar` (8.5 GB, needed only to rerun the models) from
+   <https://huggingface.co/jthiadiii/STARE>, then unpack them inside this folder:
    ```bash
+   hf download jthiadiii/STARE stare_outputs.tar stare_weights.tar --local-dir .   # or download from the page
    python tools/unpack_artifacts.py stare_outputs.tar stare_weights.tar      # checks every file's SHA-256
    ```
 5. **Public backbones** for the GPU steps (DINOv2-small, VideoMAE-SSv2, V-JEPA 2 ViT-L):

@@ -83,10 +83,14 @@ simulated live AR (`selection/v13/`).
 | Item | Needed for | Where to get it |
 |---|---|---|
 | IndustReal dataset (frames + annotations) | everything (labels for scoring, frame counts) | the IndustReal authors, under the dataset's terms. Set `INDUSTREAL_DATA` |
-| Live AR predictions, `<video>/ar.jsonl` (val + test) | live-AR results, selection, causality, latency | a causal verb × noun TCN action-recognition model (teammate's work, not published here). `--ar-dir` / `LIVE_AR_DIR` |
-| Teammate's `assist` package (task graph + mistake rules) | mistake alerts and scoring | not published here. Set `TEAMMATE_AR` to its repository root |
-| ASD weights `asd_best_IndustRealandSynthetic.pt` (311 MB) | recomputing `cache/asd_*`, latency benchmark | `assembly_state_detection_model_weights.zip`, IndustReal dataset page (data.4tu.nl, Apache-2.0). Place in `weights/` |
-| Verifier weights `verif_base_r336.pt`, `verif_base_r336_e6u6.pt` (348 MB each) | latency benchmark, pipeline from frames | too large for git; attach to a GitHub Release (or Git LFS) and place in `weights/` |
+| Live AR predictions, `<video>/ar.jsonl` (val + test) | live-AR results, selection, causality, latency | the causal verb × noun TCN in `system/assistant`; the saved predictions are in `stare_outputs.tar` (see the top-level README). `--ar-dir` / `LIVE_AR_DIR` |
+| Teammate's `assist` package (task graph + mistake rules) | mistake alerts and scoring | `system/assistant` in this repository. Set `TEAMMATE_AR` to that folder |
+| ASD weights `asd_best_IndustRealandSynthetic.pt` (311 MB) | recomputing `cache/asd_*`, latency benchmark | `assembly_state_detection_model_weights.zip`, IndustReal dataset page (data.4tu.nl, Apache-2.0); also in `stare_weights.tar` |
+| Verifier weights `verif_base_r336.pt`, `verif_base_r336_e6u6.pt` (348 MB each) | latency benchmark, pipeline from frames | `stare_weights.tar` (Hugging Face, see the top-level README) |
+
+`tools/unpack_artifacts.py` puts these weights in `system/weights/`. The scripts in this folder look for them in
+`weights/` here, so link that folder once from `system/psr_v14`: `ln -s ../weights weights` (Windows:
+`mklink /J weights ..\weights`).
 
 ## Reproduce
 
