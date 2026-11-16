@@ -212,13 +212,6 @@ details: [`metrics/ar/README.md`](metrics/ar/README.md), [`metrics/e2e/README.md
 
 ## Demo
 
-- **Card UI in the browser** (any recording, results computed on the GPU machine): start the job service there with
-  `bash system/assistant/live/start_jobs.sh`, forward port 8020, then on the PC run
-  `python -m assist.tools.cards_web --port 8010` from `system/assistant` and open http://localhost:8010.
-- **Rendered test recordings**: `demo_cards/` (`build_v14_tcn.py` builds the app data, `render_cards.py` the videos,
-  `serve.py` serves them).
-- **One clip per mistake type, with spoken alerts**: `python -m assist.tools.six_cases` (see its docstring for inputs).
-
 **Rendered demo videos from IndustReal test set**: https://drive.google.com/drive/folders/1gOOiDWF7yPbYWn1aHRhmxn8siRY1gwmt?usp=drive_link
 
 ## Credits and licenses
