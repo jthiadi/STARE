@@ -219,6 +219,8 @@ details: [`metrics/ar/README.md`](metrics/ar/README.md), [`metrics/e2e/README.md
   `serve.py` serves them).
 - **One clip per mistake type, with spoken alerts**: `python -m assist.tools.six_cases` (see its docstring for inputs).
 
+**Rendered demo videos from IndustReal test set**: https://drive.google.com/drive/folders/1gOOiDWF7yPbYWn1aHRhmxn8siRY1gwmt?usp=drive_link
+
 ## Credits and licenses
 
 - IndustReal dataset, its PSR evaluator and assembly state detector: Schoonbeek et al. (Apache-2.0 code and weights;
