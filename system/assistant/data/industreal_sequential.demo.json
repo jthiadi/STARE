@@ -1,0 +1,328 @@
+{
+  "schema_version": 2,
+  "title": "IndustReal rubber-band car assembly · dataset-grounded candidate SOP",
+  "status": "candidate_for_experiment",
+  "station": {
+    "station_id": "industreal_assy",
+    "product": "rubber-band-driven construction-toy car",
+    "camera_type": "egocentric RGB",
+    "initial_state": ["chassis_base_present"]
+  },
+  "approval": {
+    "status": "pending_factory_pic_review",
+    "approved_for_research_experiment": true,
+    "approved_for_factory_operation": false,
+    "reason": "The official dataset defines component states and completed-step labels, but it is not a factory work instruction and does not certify safety, torque, or recovery actions."
+  },
+  "execution_policy": {
+    "type": "partial_order_dag",
+    "canonical_display_order": ["IR03", "IR06", "IR09", "IR15", "IR18", "IR21", "IR24", "IR27", "IR30"],
+    "note": "The front- and rear-chassis branches may be completed in either order. After both chassis branches are complete, the front-wheel and rear-wheel branches may also be completed in either order."
+  },
+  "source_documents": [
+    {
+      "id": "official_procedure_info",
+      "url": "https://github.com/TimSchoonbeek/IndustReal/blob/main/PSR/procedure_info.json",
+      "path": "data/reference/industreal_official/procedure_info.json",
+      "sha256": "91af2f30fec4cf867c87ad4c1d0857d0091ead4ce6f6823a3f5757b120fa1056",
+      "use": "Official step IDs, names, component-state indexes, and assembly membership."
+    },
+    {
+      "id": "official_state_overview",
+      "path": "data/reference/industreal_official/extracted/Overview of states.pdf",
+      "sha256": "91a7ec2360826e678d3533638ce0096f1fc79220f4c7a66f39b4896b6b88a7c0",
+      "use": "Official component names, state vectors, and valid partial assembly states."
+    }
+  ],
+  "evaluation_sources": [
+    {
+      "path": "data/evaluation/official/03_assy_0_1/PSR_labels.csv",
+      "use": "Held-out evaluation only; never an inference input."
+    },
+    {
+      "path": "data/evaluation/official/03_assy_0_1/AR_labels.csv",
+      "use": "Held-out action-context evaluation only; never an inference input."
+    }
+  ],
+  "visual_reference_policy": {
+    "use": "research_sop_source_only",
+    "source_document_id": "official_state_overview",
+    "not_ground_truth": true,
+    "factory_pic_approved": false,
+    "note": "Embedded component illustrations extracted from the cited SOP-side state overview may clarify terminology during research inference. They are not camera annotations, completion labels, or approved factory teach-in photos."
+  },
+  "camera_region": [0.0, 0.0, 1.0, 1.0],
+  "steps": [
+    {
+      "id": "IR03",
+      "official_step_id": 3,
+      "component_state_index": 1,
+      "source_quote": "Install front chassis",
+      "instruction": "Install the front chassis by fitting the two short white perforated braces to opposite sides of the chassis base.",
+      "prerequisites": [],
+      "parts": ["chassis base", "two short white perforated braces", "front chassis"],
+      "tools": [],
+      "completion_check": "The front chassis is correctly located: both short white perforated braces are attached on opposite sides of the chassis base. If both braces and their connection to the base are not visible, return unknown.",
+      "verification": "visual",
+      "recovery": "Hold the procedure and request supervisor review; no unapproved automatic correction is prescribed.",
+      "review_status": "pending_factory_pic_review",
+      "visual_references": [
+        {"entity": "front_chassis_brace", "role": "moving", "path": "data/generated/industreal_sop_visuals/page_01_image_19.jpg", "sha256": "0d8dd7f941174e64c6a2b5b7145975d91b93082db924040719fea4eabeadc897", "source_document_id": "official_state_overview", "source_type": "official_sop_illustration", "factory_pic_approved": false},
+        {"entity": "chassis_base", "role": "target", "path": "data/generated/industreal_sop_visuals/page_01_image_01.jpg", "sha256": "96c5dd3051bdb5f8edc7a867cd203cbefc3d9cc5a32def475118b1167e77b0d1", "source_document_id": "official_state_overview", "source_type": "official_sop_illustration", "factory_pic_approved": false}
+      ],
+      "visual_plan": {
+        "action": {"verb": "attach", "subject": "front_chassis_brace", "object": "chassis_base"},
+        "entities": [
+          {"name": "front_chassis_brace", "role": "moving", "description": "One currently handled short white perforated brace; two such braces form the front chassis.", "sop_evidence": ["two short white perforated braces", "front chassis"]},
+          {"name": "chassis_base", "role": "target", "description": "The central white chassis base that receives the braces.", "sop_evidence": ["chassis base"]}
+        ],
+        "tools": [],
+        "completion_evidence": [
+          {"id": "part_at_target", "description": "The front-chassis braces remain at the chassis base across several frames.", "source": "sam2_temporal_relation"},
+          {"id": "correct_final_state", "description": "A terminal visual check confirms both braces are correctly located on opposite sides of the base.", "source": "vlm_visual_check"}
+        ],
+        "required_evidence": ["part_at_target", "correct_final_state"]
+      }
+    },
+    {
+      "id": "IR06",
+      "official_step_id": 6,
+      "component_state_index": 2,
+      "source_quote": "Install front chassis pin",
+      "instruction": "Install the front chassis pin through the front chassis connection and fit its visible retaining hardware.",
+      "prerequisites": ["IR03"],
+      "parts": ["front chassis pin", "front chassis", "retaining hardware"],
+      "tools": [],
+      "completion_check": "The front chassis pin is correctly located through the front chassis connection and its visible retaining hardware is present. Visual verification does not claim fastener tightness or hidden engagement.",
+      "verification": "visual",
+      "recovery": "Hold the procedure and request supervisor review; no unapproved automatic correction is prescribed.",
+      "review_status": "pending_factory_pic_review",
+      "visual_references": [
+        {"entity": "front_chassis_pin", "role": "moving", "path": "data/generated/industreal_sop_visuals/page_01_image_05.png", "sha256": "c889f2b55fb46d45c1dcfa71f9504ca7548a4cd7ba4f344ff8f772f0a5a3619f", "source_document_id": "official_state_overview", "source_type": "official_sop_illustration", "factory_pic_approved": false}
+      ],
+      "visual_plan": {
+        "action": {"verb": "fasten", "subject": "front_chassis_pin", "object": "front_chassis"},
+        "entities": [
+          {"name": "front_chassis_pin", "role": "moving", "description": "The grey front chassis pin with its visible retaining hardware.", "sop_evidence": ["front chassis pin", "retaining hardware"]},
+          {"name": "front_chassis", "role": "target", "description": "The installed short-brace front chassis connection that receives the pin.", "sop_evidence": ["front chassis"]}
+        ],
+        "tools": [],
+        "completion_evidence": [
+          {"id": "part_at_target", "description": "The pin remains at the front-chassis connection across several frames.", "source": "sam2_temporal_relation"},
+          {"id": "correct_final_state", "description": "A terminal visual check confirms the pin and visible retaining hardware are correctly located.", "source": "vlm_visual_check"}
+        ],
+        "required_evidence": ["part_at_target", "correct_final_state"]
+      }
+    },
+    {
+      "id": "IR09",
+      "official_step_id": 9,
+      "component_state_index": 3,
+      "source_quote": "Install rear chassis",
+      "instruction": "Install the rear chassis by fitting the two long white perforated braces to opposite sides of the chassis base.",
+      "prerequisites": [],
+      "parts": ["chassis base", "two long white perforated braces", "rear chassis"],
+      "tools": [],
+      "completion_check": "The rear chassis is correctly located: both long white perforated braces are positioned on opposite sides of the chassis base. If the long braces cannot be distinguished from the short front braces, return unknown.",
+      "verification": "visual",
+      "recovery": "Hold the procedure and request supervisor review; no unapproved automatic correction is prescribed.",
+      "review_status": "pending_factory_pic_review",
+      "visual_references": [
+        {"entity": "rear_chassis_brace", "role": "moving", "path": "data/generated/industreal_sop_visuals/page_01_image_15.jpg", "sha256": "0f2f741b4c568e90eba309cfd2b74767b2ef8d0c754459ee4ddf2d00d7f95c9e", "source_document_id": "official_state_overview", "source_type": "official_sop_illustration", "factory_pic_approved": false}
+      ],
+      "visual_plan": {
+        "action": {"verb": "attach", "subject": "rear_chassis_brace", "object": "chassis_base"},
+        "entities": [
+          {"name": "rear_chassis_brace", "role": "moving", "description": "One currently handled long white perforated brace; two such braces form the rear chassis.", "sop_evidence": ["two long white perforated braces", "rear chassis"]},
+          {"name": "chassis_base", "role": "target", "description": "The central white chassis base that receives the long braces.", "sop_evidence": ["chassis base"]}
+        ],
+        "tools": [],
+        "completion_evidence": [
+          {"id": "part_at_target", "description": "The rear-chassis braces remain at the chassis base across several frames.", "source": "sam2_temporal_relation"},
+          {"id": "correct_final_state", "description": "A terminal visual check confirms both long braces are correctly located on opposite sides of the base.", "source": "vlm_visual_check"}
+        ],
+        "required_evidence": ["part_at_target", "correct_final_state"]
+      }
+    },
+    {
+      "id": "IR15",
+      "official_step_id": 15,
+      "component_state_index": 5,
+      "source_quote": "Install front rear chassis pin",
+      "instruction": "Install the front rear chassis pin through the front joint of the rear chassis and fit its visible retaining hardware.",
+      "prerequisites": ["IR09"],
+      "parts": ["front rear chassis pin", "front joint of the rear chassis", "retaining hardware"],
+      "tools": [],
+      "completion_check": "The front rear chassis pin is correctly located through the front joint of the rear chassis and its visible retaining hardware is present. Visual verification does not claim fastener tightness or hidden engagement.",
+      "verification": "visual",
+      "recovery": "Hold the procedure and request supervisor review; no unapproved automatic correction is prescribed.",
+      "review_status": "pending_factory_pic_review",
+      "visual_references": [
+        {"entity": "front_rear_chassis_pin", "role": "moving", "path": "data/generated/industreal_sop_visuals/page_01_image_05.png", "sha256": "c889f2b55fb46d45c1dcfa71f9504ca7548a4cd7ba4f344ff8f772f0a5a3619f", "source_document_id": "official_state_overview", "source_type": "official_sop_illustration", "factory_pic_approved": false}
+      ],
+      "visual_plan": {
+        "action": {"verb": "fasten", "subject": "front_rear_chassis_pin", "object": "rear_chassis_front_joint"},
+        "entities": [
+          {"name": "front_rear_chassis_pin", "role": "moving", "description": "The grey front rear chassis pin with its visible retaining hardware.", "sop_evidence": ["front rear chassis pin", "retaining hardware"]},
+          {"name": "rear_chassis_front_joint", "role": "target", "description": "The front joint of the installed long-brace rear chassis.", "sop_evidence": ["front joint of the rear chassis"]}
+        ],
+        "tools": [],
+        "completion_evidence": [
+          {"id": "part_at_target", "description": "The pin remains at the front rear-chassis joint across several frames.", "source": "sam2_temporal_relation"},
+          {"id": "correct_final_state", "description": "A terminal visual check confirms the pin and visible retaining hardware are correctly located.", "source": "vlm_visual_check"}
+        ],
+        "required_evidence": ["part_at_target", "correct_final_state"]
+      }
+    },
+    {
+      "id": "IR18",
+      "official_step_id": 18,
+      "component_state_index": 6,
+      "source_quote": "Install rear rear chassis pin",
+      "instruction": "Install the rear rear chassis pin through the rear joint of the rear chassis and fit its visible retaining hardware.",
+      "prerequisites": ["IR09"],
+      "parts": ["rear rear chassis pin", "rear joint of the rear chassis", "retaining hardware"],
+      "tools": [],
+      "completion_check": "The rear rear chassis pin is correctly located through the rear joint of the rear chassis and its visible retaining hardware is present. Visual verification does not claim fastener tightness or hidden engagement.",
+      "verification": "visual",
+      "recovery": "Hold the procedure and request supervisor review; no unapproved automatic correction is prescribed.",
+      "review_status": "pending_factory_pic_review",
+      "visual_references": [
+        {"entity": "rear_rear_chassis_pin", "role": "moving", "path": "data/generated/industreal_sop_visuals/page_01_image_05.png", "sha256": "c889f2b55fb46d45c1dcfa71f9504ca7548a4cd7ba4f344ff8f772f0a5a3619f", "source_document_id": "official_state_overview", "source_type": "official_sop_illustration", "factory_pic_approved": false}
+      ],
+      "visual_plan": {
+        "action": {"verb": "fasten", "subject": "rear_rear_chassis_pin", "object": "rear_chassis_rear_joint"},
+        "entities": [
+          {"name": "rear_rear_chassis_pin", "role": "moving", "description": "The grey rear rear chassis pin with its visible retaining hardware.", "sop_evidence": ["rear rear chassis pin", "retaining hardware"]},
+          {"name": "rear_chassis_rear_joint", "role": "target", "description": "The rear joint of the installed long-brace rear chassis.", "sop_evidence": ["rear joint of the rear chassis"]}
+        ],
+        "tools": [],
+        "completion_evidence": [
+          {"id": "part_at_target", "description": "The pin remains at the rear rear-chassis joint across several frames.", "source": "sam2_temporal_relation"},
+          {"id": "correct_final_state", "description": "A terminal visual check confirms the pin and visible retaining hardware are correctly located.", "source": "vlm_visual_check"}
+        ],
+        "required_evidence": ["part_at_target", "correct_final_state"]
+      }
+    },
+    {
+      "id": "IR21",
+      "official_step_id": 21,
+      "component_state_index": 7,
+      "source_quote": "Install front bracket",
+      "instruction": "Install the white front bracket at its correct location on the prepared chassis.",
+      "prerequisites": ["IR03", "IR06", "IR09", "IR15", "IR18"],
+      "parts": ["white front bracket", "prepared chassis"],
+      "tools": [],
+      "completion_check": "The white front bracket is correctly located on the prepared chassis. If its receiving location or attachment cannot be seen, return unknown.",
+      "verification": "visual",
+      "recovery": "Hold the procedure and request supervisor review; no unapproved automatic correction is prescribed.",
+      "review_status": "pending_factory_pic_review",
+      "visual_references": [
+        {"entity": "front_bracket", "role": "moving", "path": "data/generated/industreal_sop_visuals/page_01_image_01.jpg", "sha256": "96c5dd3051bdb5f8edc7a867cd203cbefc3d9cc5a32def475118b1167e77b0d1", "source_document_id": "official_state_overview", "source_type": "official_sop_illustration", "factory_pic_approved": false}
+      ],
+      "visual_plan": {
+        "action": {"verb": "attach", "subject": "front_bracket", "object": "prepared_chassis"},
+        "entities": [
+          {"name": "front_bracket", "role": "moving", "description": "The white perforated front bracket shown in the official component overview.", "sop_evidence": ["white front bracket"]},
+          {"name": "prepared_chassis", "role": "target", "description": "The chassis after both chassis branches and their pins have been installed.", "sop_evidence": ["prepared chassis"]}
+        ],
+        "tools": [],
+        "completion_evidence": [
+          {"id": "part_at_target", "description": "The front bracket remains at the prepared chassis across several frames.", "source": "sam2_temporal_relation"},
+          {"id": "correct_final_state", "description": "A terminal visual check confirms the bracket is correctly located on the chassis.", "source": "vlm_visual_check"}
+        ],
+        "required_evidence": ["part_at_target", "correct_final_state"]
+      }
+    },
+    {
+      "id": "IR24",
+      "official_step_id": 24,
+      "component_state_index": 8,
+      "source_quote": "Install front bracket screw",
+      "instruction": "Install the front bracket screw through the front bracket connection and fit its visible retaining hardware.",
+      "prerequisites": ["IR21"],
+      "parts": ["front bracket screw", "front bracket connection", "retaining hardware"],
+      "tools": [],
+      "completion_check": "The front bracket screw is correctly located through the front bracket connection and its visible retaining hardware is present. Visual verification does not claim fastener tightness or hidden engagement.",
+      "verification": "visual",
+      "recovery": "Hold the procedure and request supervisor review; no unapproved automatic correction is prescribed.",
+      "review_status": "pending_factory_pic_review",
+      "visual_references": [
+        {"entity": "front_bracket_screw", "role": "moving", "path": "data/generated/industreal_sop_visuals/page_01_image_09.png", "sha256": "8ff4dcf9008134ce7d5e218ec92d5e6ff8cfbffcd243151d45ee63ca989211ca", "source_document_id": "official_state_overview", "source_type": "official_sop_illustration", "factory_pic_approved": false}
+      ],
+      "visual_plan": {
+        "action": {"verb": "fasten", "subject": "front_bracket_screw", "object": "front_bracket_connection"},
+        "entities": [
+          {"name": "front_bracket_screw", "role": "moving", "description": "The grey front bracket screw with its visible retaining hardware.", "sop_evidence": ["front bracket screw", "retaining hardware"]},
+          {"name": "front_bracket_connection", "role": "target", "description": "The installed front bracket connection that receives the screw.", "sop_evidence": ["front bracket connection"]}
+        ],
+        "tools": [],
+        "completion_evidence": [
+          {"id": "part_at_target", "description": "The screw remains at the front-bracket connection across several frames.", "source": "sam2_temporal_relation"},
+          {"id": "correct_final_state", "description": "A terminal visual check confirms the screw and visible retaining hardware are correctly located.", "source": "vlm_visual_check"}
+        ],
+        "required_evidence": ["part_at_target", "correct_final_state"]
+      }
+    },
+    {
+      "id": "IR27",
+      "official_step_id": 27,
+      "component_state_index": 9,
+      "source_quote": "Install front wheel assy",
+      "instruction": "Install the front wheel assembly at the front bracket using the specified connection hardware.",
+      "prerequisites": ["IR24"],
+      "parts": ["front wheel assembly", "front bracket", "connection hardware", "main chassis"],
+      "tools": [],
+      "completion_check": "The complete front wheel assembly is correctly located at the front bracket and remains connected to the main chassis. If the assembly is only held nearby or remains separate, it is not complete.",
+      "verification": "visual",
+      "recovery": "Hold the procedure and request supervisor review; no unapproved automatic correction is prescribed.",
+      "review_status": "pending_factory_pic_review",
+      "visual_references": [
+        {"entity": "front_wheel_assembly", "role": "moving", "path": "data/generated/industreal_sop_visuals/page_01_image_03.jpg", "sha256": "dc87f67326db0990ed2c321c60681be0e44317f6fecd71952971005bf1f2fa76", "source_document_id": "official_state_overview", "source_type": "official_sop_illustration", "factory_pic_approved": false}
+      ],
+      "visual_plan": {
+        "action": {"verb": "attach", "subject": "front_wheel_assembly", "object": "front_bracket"},
+        "entities": [
+          {"name": "front_wheel_assembly", "role": "moving", "description": "The complete front wheel assembly with two black wheels and its magenta structural parts.", "sop_evidence": ["front wheel assembly"]},
+          {"name": "front_bracket", "role": "target", "description": "The installed white front bracket on the main chassis that receives the front wheel assembly.", "sop_evidence": ["front bracket", "main chassis"]}
+        ],
+        "tools": [],
+        "completion_evidence": [
+          {"id": "part_at_target", "description": "The front wheel assembly remains at the front bracket across several frames.", "source": "sam2_temporal_relation"},
+          {"id": "correct_final_state", "description": "A terminal visual check confirms the complete front wheel assembly is correctly connected rather than held separately.", "source": "vlm_visual_check"}
+        ],
+        "required_evidence": ["part_at_target", "correct_final_state"]
+      }
+    },
+    {
+      "id": "IR30",
+      "official_step_id": 30,
+      "component_state_index": 10,
+      "source_quote": "Install rear wheel assy",
+      "instruction": "Install the rear wheel assembly at the rear chassis using the specified connection hardware.",
+      "prerequisites": ["IR03", "IR06", "IR09", "IR15", "IR18"],
+      "parts": ["rear wheel assembly", "rear chassis", "connection hardware", "main chassis"],
+      "tools": [],
+      "completion_check": "The complete rear wheel assembly is correctly located at the rear chassis and remains connected to the main chassis. If the assembly is only held nearby or remains separate, it is not complete.",
+      "verification": "visual",
+      "recovery": "Hold the procedure and request supervisor review; no unapproved automatic correction is prescribed.",
+      "review_status": "pending_factory_pic_review",
+      "visual_references": [
+        {"entity": "rear_wheel_assembly", "role": "moving", "path": "data/generated/industreal_sop_visuals/page_01_image_17.jpg", "sha256": "5707d3b9f8cbf55d9799de12eb7db014ff649a5c77e41bf19ed73a7068adcf50", "source_document_id": "official_state_overview", "source_type": "official_sop_illustration", "factory_pic_approved": false}
+      ],
+      "visual_plan": {
+        "action": {"verb": "attach", "subject": "rear_wheel_assembly", "object": "rear_chassis"},
+        "entities": [
+          {"name": "rear_wheel_assembly", "role": "moving", "description": "The complete rear wheel assembly with two black wheels and its magenta pulley structure.", "sop_evidence": ["rear wheel assembly"]},
+          {"name": "rear_chassis", "role": "target", "description": "The installed long-brace rear chassis on the main chassis that receives the rear wheel assembly.", "sop_evidence": ["rear chassis", "main chassis"]}
+        ],
+        "tools": [],
+        "completion_evidence": [
+          {"id": "part_at_target", "description": "The rear wheel assembly remains at the rear chassis across several frames.", "source": "sam2_temporal_relation"},
+          {"id": "correct_final_state", "description": "A terminal visual check confirms the complete rear wheel assembly is correctly connected rather than held separately.", "source": "vlm_visual_check"}
+        ],
+        "required_evidence": ["part_at_target", "correct_final_state"]
+      }
+    }
+  ]
+}

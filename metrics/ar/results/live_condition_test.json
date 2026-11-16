@@ -1,0 +1,14 @@
+{
+ "condition": "live: actions detected by the system, each labelled with frames up to its end; 32 test recordings",
+ "detected_actions": 3734,
+ "true_actions_labelled_right_pct": {
+  "TCN": 53.72,
+  "V-JEPA 2 (fine-tuned, action-beginning)": 47.53,
+  "Final labels (V-JEPA 2 ensemble + VideoMAE + TCN)": 55.52
+ },
+ "true_actions": 3678,
+ "frame_accuracy_pct": {
+  "TCN": 48.37,
+  "Live label: TCN + V-JEPA 2 (w 0.1)": 48.76
+ }
+}

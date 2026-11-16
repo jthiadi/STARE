@@ -1,0 +1,20 @@
+[
+ {
+  "file": "ar_live.jsonl",
+  "split": "val",
+  "frame_acc": 70.01,
+  "end_acc": 65.35,
+  "segment_top1_paper_protocol_approx": 74.38,
+  "segments": 1928,
+  "frames": 38036
+ },
+ {
+  "file": "ar.jsonl",
+  "split": "val",
+  "frame_acc": 44.62,
+  "end_acc": 37.81,
+  "segment_top1_paper_protocol_approx": 49.17,
+  "segments": 1928,
+  "frames": 38036
+ }
+]

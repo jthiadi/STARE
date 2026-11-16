@@ -1,0 +1,157 @@
+{
+  "title": "IndustReal assembly \u00b7 13_assy_0_1",
+  "status": "candidate_for_experiment",
+  "recording_id": "13_assy_0_1",
+  "note": "SOP auto-built from install events in data/evaluation/official/13_assy_0_1/PSR_labels.csv. Parts follow AR-aligned vocabulary. timing_profile omitted (no clip-specific earliest floors; transfer test).",
+  "timing_profile": {
+    "step_earliest_done_s": {},
+    "front_branch_after_ir30_s": 0.0
+  },
+  "steps": [
+    {
+      "id": "IR09",
+      "instruction": "Install the rear chassis by fitting the two long braces to opposite sides of the partial model.",
+      "prerequisites": [],
+      "parts": [
+        "long brace",
+        "partial model"
+      ],
+      "tools": [],
+      "completion_check": "Official IndustReal step 9: Install rear chassis.",
+      "recovery": "Hold the procedure and request supervisor review; no unapproved automatic correction is prescribed."
+    },
+    {
+      "id": "IR15",
+      "instruction": "Install the front rear-chassis pin and fit retaining hardware: tooth lock washer, then hex nut (tighten).",
+      "prerequisites": [
+        "IR09"
+      ],
+      "parts": [
+        "short metal pin",
+        "tooth lock washer",
+        "hex nut",
+        "partial model"
+      ],
+      "tools": [],
+      "completion_check": "Official IndustReal step 15: Install front rear chassis pin.",
+      "recovery": "Hold the procedure and request supervisor review; no unapproved automatic correction is prescribed."
+    },
+    {
+      "id": "IR18",
+      "instruction": "Install the rear rear-chassis pin and fit retaining hardware: tooth lock washer, then hex nut (tighten).",
+      "prerequisites": [
+        "IR09"
+      ],
+      "parts": [
+        "short metal pin",
+        "tooth lock washer",
+        "hex nut",
+        "partial model"
+      ],
+      "tools": [],
+      "completion_check": "Official IndustReal step 18: Install rear rear chassis pin.",
+      "recovery": "Hold the procedure and request supervisor review; no unapproved automatic correction is prescribed."
+    },
+    {
+      "id": "IR03",
+      "instruction": "Install the front chassis by fitting the two short braces to opposite sides of the partial model.",
+      "prerequisites": [],
+      "parts": [
+        "short brace",
+        "partial model"
+      ],
+      "tools": [],
+      "completion_check": "Official IndustReal step 3: Install front chassis.",
+      "recovery": "Hold the procedure and request supervisor review; no unapproved automatic correction is prescribed."
+    },
+    {
+      "id": "IR06",
+      "instruction": "Install the front chassis pin through the partial model and fit retaining hardware: tooth lock washer, then hex nut (tighten).",
+      "prerequisites": [
+        "IR03"
+      ],
+      "parts": [
+        "short metal pin",
+        "tooth lock washer",
+        "hex nut",
+        "partial model"
+      ],
+      "tools": [],
+      "completion_check": "Official IndustReal step 6: Install front chassis pin.",
+      "recovery": "Hold the procedure and request supervisor review; no unapproved automatic correction is prescribed."
+    },
+    {
+      "id": "IR30",
+      "instruction": "Install the rear wheel assembly (wheel, pulley, wing) on the partial model using the connection hardware.",
+      "prerequisites": [
+        "IR03",
+        "IR06",
+        "IR09",
+        "IR15",
+        "IR18"
+      ],
+      "parts": [
+        "toy car wheel",
+        "pulley",
+        "wing",
+        "hex nut",
+        "tooth lock washer",
+        "round flat washer",
+        "partial model"
+      ],
+      "tools": [],
+      "completion_check": "Official IndustReal step 30: Install rear wheel assy.",
+      "recovery": "Hold the procedure and request supervisor review; no unapproved automatic correction is prescribed."
+    },
+    {
+      "id": "IR21",
+      "instruction": "Install the white front bracket on the partial model.",
+      "prerequisites": [
+        "IR03",
+        "IR06",
+        "IR09",
+        "IR15",
+        "IR18"
+      ],
+      "parts": [
+        "white front bracket",
+        "partial model"
+      ],
+      "tools": [],
+      "completion_check": "Official IndustReal step 21: Install front bracket.",
+      "recovery": "Hold the procedure and request supervisor review; no unapproved automatic correction is prescribed."
+    },
+    {
+      "id": "IR24",
+      "instruction": "Install the front bracket screw pin through the front bracket and fit round flat washer then acorn nut (tighten).",
+      "prerequisites": [
+        "IR21"
+      ],
+      "parts": [
+        "screw pin",
+        "round flat washer",
+        "acorn nut",
+        "white front bracket"
+      ],
+      "tools": [],
+      "completion_check": "Official IndustReal step 24: Install front bracket screw.",
+      "recovery": "Hold the procedure and request supervisor review; no unapproved automatic correction is prescribed."
+    },
+    {
+      "id": "IR27",
+      "instruction": "Install the front wheel at the front bracket using the connection hardware.",
+      "prerequisites": [
+        "IR24"
+      ],
+      "parts": [
+        "toy car wheel",
+        "white front bracket",
+        "hex nut",
+        "round flat washer"
+      ],
+      "tools": [],
+      "completion_check": "Official IndustReal step 27: Install front wheel assy.",
+      "recovery": "Hold the procedure and request supervisor review; no unapproved automatic correction is prescribed."
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+{
+ "latency": {
+  "gpu": "NVIDIA GeForce RTX 2080 Ti",
+  "c_ar_ms_per_frame": 87.08,
+  "v14_mean_ms": 31.75,
+  "v14_p95_ms": 67.8,
+  "ensemble_pass_ms": 1234.0,
+  "realtime_one_gpu": false,
+  "L_s": 0.716,
+  "D_tcn_frames": 8,
+  "D_ens_frames": 25
+ },
+ "tcn": {
+  "chosen": {
+   "W": 1.0,
+   "CMIN": 0.3,
+   "EPS": 0.02,
+   "RATE": 2
+  },
+  "all": [
+   0.819,
+   0.907,
+   6.53
+  ],
+  "with_errors": [
+   0.747,
+   0.839,
+   7.54
+  ],
+  "mistakes_found": 9,
+  "false_alarms_per_h": 3.6
+ },
+ "ens": {
+  "chosen": {
+   "W": 1.0,
+   "CMIN": 0.3,
+   "EPS": 0.02,
+   "RATE": 2
+  },
+  "all": [
+   0.764,
+   0.879,
+   7.18
+  ],
+  "with_errors": [
+   0.661,
+   0.797,
+   8.01
+  ],
+  "mistakes_found": 9,
+  "false_alarms_per_h": 5.19
+ },
+ "oracle": {
+  "chosen": {
+   "W": 3.0,
+   "CMIN": 0.5,
+   "EPS": 0.02,
+   "RATE": 2
+  },
+  "D_frames": 1,
+  "all": [
+   0.814,
+   0.915,
+   4.98
+  ],
+  "with_errors": [
+   0.728,
+   0.858,
+   5.02
+  ],
+  "mistakes_found": 7,
+  "false_alarms_per_h": 2.8
+ },
+ "v9": {
+  "chosen": "v9 frozen settings (no re-tune)",
+  "D_frames": 8,
+  "v9_p95_ms": 68.5,
+  "L_s": 0.717,
+  "all": [
+   0.835,
+   0.911,
+   7.99
+  ],
+  "with_errors": [
+   0.722,
+   0.831,
+   9.06
+  ],
+  "mistakes_found": 7,
+  "false_alarms_per_h": 2.8
+ },
+ "v13": {
+  "chosen": "v13 frozen settings (no re-tune)",
+  "D_frames": 8,
+  "v9_p95_ms": 68.5,
+  "L_s": 0.717,
+  "all": [
+   0.809,
+   0.903,
+   7.74
+  ],
+  "with_errors": [
+   0.747,
+   0.839,
+   9.43
+  ],
+  "mistakes_found": 7,
+  "false_alarms_per_h": 3.2
+ },
+ "noar": {
+  "chosen": {
+   "eps": 1e-05
+  },
+  "all": [
+   0.772,
+   0.893,
+   7.89
+  ],
+  "with_errors": [
+   0.689,
+   0.815,
+   7.59
+  ],
+  "mistakes_found": 8,
+  "false_alarms_per_h": 3.2
+ }
+}

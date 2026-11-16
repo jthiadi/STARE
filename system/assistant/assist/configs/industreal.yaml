@@ -1,0 +1,50 @@
+# Everything IndustReal-specific lives here and in industreal_graph.yaml.
+# A new dataset (e.g. Assembly101) needs its own copy of both files, not code changes.
+
+dataset: industreal
+fps: 10
+graph: assist/configs/industreal_graph.yaml
+
+paths:                       # relative to the repository root
+  videos: data/generated/industreal/videos
+  labels: data/evaluation/official
+  procedure_info: ../STORM-PSR-IndustReal/evaluation/utils/procedure_info_IndustReal.json
+  asd_release: ../STORM-PSR-IndustReal/data/official/ASD_results/ASD_IndustRealplusSynthetic_test
+  hands_cache: output/mistakes/hands          # MediaPipe landmarks already extracted for all 84 videos
+  causal_tcn: output/official_split_eval/tcn_{target}_causal
+  out: output/assist
+
+# PSR / ASD state vector: one value per component (1 installed, 0 absent, -1 installed incorrectly).
+components: [base, front_chassis, front_chassis_pin, rear_chassis, short_rear_chassis,
+             front_rear_chassis_pin, rear_rear_chassis_pin, front_bracket, front_bracket_screw,
+             front_wheel_assy, rear_wheel_assy]
+
+# ASD class index -> state string (order of the released IndustReal ASD model).
+asd_categories: [background, "10000000000", "10010010000", "10010100000", "10010110000", "11100000000",
+                 "11110010000", "11110100000", "11110110000", "11110111100", "11110111110", "11110110001",
+                 "11110111101", "11110111111", "11110101111", "11110011111", "11110011110", "11110101110",
+                 "11100001110", "11101101110", "11101011110", "11101111110", "11101111111", error_state]
+# Detections below this confidence are dropped, per detector. Ours has no "background" output, so it guesses a
+# state even when the view is blocked; 0.85 was chosen on val (step recognition F1 + POS, 0.6-0.9 tried).
+asd_min_conf: {release: 0.0, ours: 0.85, weights: 0.12}
+
+# Event builder: a per-frame label becomes an event once it holds min_frames frames with
+# confidence >= min_conf; it ends once another label has held min_frames frames.
+events:
+  min_frames: 5
+  min_conf: 0.30
+  ignore: [background]
+
+engine:
+  verify_window_s: 30        # T: after an install, the expected state must appear within T seconds (chosen on val)
+  state_min_conf: 0.5        # ASD detections below this are ignored
+  state_stable: 2            # a new ASD state must be seen this many times in a row before it is believed
+  low_conf: 0.45             # actions below this confidence only ever produce "cannot verify"
+  hand_occlusion_iou: 0.3    # hands covering this share of the assembly box -> the state check is "cannot verify"
+  alert_cooldown_s: 20       # the same warning (type + step) is not repeated within this time
+  order_grace_s: 10          # a prerequisite finished within 10 s after its dependent counts as done together
+  stale_state_s: 30          # at the end, no state seen for this long -> "cannot verify" instead of "skipped"
+
+evaluation:
+  match_window_s: 30         # an alert matches a ground-truth mistake of the same type and step within +-30 s
+  warning_horizon_s: 60      # an early warning counts for lead time if it precedes the mistake by <= 60 s

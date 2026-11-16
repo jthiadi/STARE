@@ -1,0 +1,22 @@
+{
+ "protocol": "IndustReal AR: true segments, 74 actions, top-1; label fixed at segment end; prior over earlier actions",
+ "paper": {
+  "SlowFast": 60.4,
+  "MViTv2": 65.3
+ },
+ "test": {
+  "segments": 3678,
+  "TCN alone": 55.74,
+  "V-JEPA 2 alone (action-beginning run)": 64.55,
+  "Live label: TCN + V-JEPA 2, w 0.1 (as deployed)": 60.9,
+  "TCN + V-JEPA 2, w 0.7 (teammate's val-chosen blend)": 69.63
+ },
+ "val": {
+  "segments": 1928,
+  "TCN alone": 74.48,
+  "V-JEPA 2 alone (action-beginning run)": 62.45,
+  "Live label: TCN + V-JEPA 2, w 0.1 (as deployed)": 76.56,
+  "TCN + V-JEPA 2, w 0.7 (teammate's val-chosen blend)": 72.82
+ },
+ "note": "val is not a fair check here: the deployed TCN has seen the val videos (the teammate's README val numbers use out-of-fold TCN outputs). Test numbers are fair: no setting was chosen on test or here."
+}

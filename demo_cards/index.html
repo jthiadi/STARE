@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SPARC card demo</title>
+<style>
+:root{--bg:#f4f3ee;--ink:#1d2430;--muted:#5d6675;--card:#fff;--line:#d9d7cf;--accent:#5aa83c}
+@media (prefers-color-scheme:dark){:root{--bg:#16181c;--ink:#e8e9ec;--muted:#9aa1ad;--card:#1f2228;--line:#30343c}}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:14px 20px;border-bottom:1px solid var(--line)}
+h1{font-size:18px;margin:0 12px 0 0}
+select,button{font:inherit;padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+button{cursor:pointer}
+main{padding:16px 20px;max-width:1600px;margin:auto}
+video{width:100%;background:#000;border-radius:10px;display:block}
+.note{color:var(--muted);font-size:13px;margin-top:10px}
+</style></head><body>
+<header>
+  <h1>SPARC: online assembly assistant</h1>
+  <label>Recording <select id="rid"></select></label>
+  <button id="prev">&larr; Prev</button><button id="next">Next &rarr;</button>
+  <label>Speed <select id="speed"><option>0.5</option><option selected>1</option><option>1.5</option><option>2</option><option>4</option></select></label>
+</header>
+<main>
+  <video id="v" controls preload="metadata"></video>
+  <p class="note">Reported system <b>v14 + TCN</b> on the 32 IndustReal test recordings (the first row of the results
+  table: POS 0.812, F1 0.904, delay 6.3 s; mistakes 9/32, 3.2 false alarms per hour). Live actions: causal TCN (DINOv2 +
+  VideoMAE features). Checklist, progress ring, 3D "Recognised state" and alerts: v14 procedure step recognition and its
+  mistake alerts. Each output at time t uses frames up to t only. "Ground Truth" rows are the dataset's annotations, shown
+  for comparison.</p>
+</main>
+<script>
+const sel=document.getElementById("rid"), v=document.getElementById("v"), sp=document.getElementById("speed");
+fetch("videos/list.json").then(r=>r.json()).then(list=>{
+  for(const r of list){const o=document.createElement("option");o.value=o.textContent=r;sel.appendChild(o);}
+  const h=decodeURIComponent(location.hash.slice(1)); if(list.includes(h)) sel.value=h; load();
+});
+function load(){v.src="videos/"+sel.value+".mp4"; v.playbackRate=+sp.value; location.hash=sel.value;}
+sel.onchange=load;
+sp.onchange=()=>v.playbackRate=+sp.value;
+v.onloadedmetadata=()=>v.playbackRate=+sp.value;
+document.getElementById("prev").onclick=()=>{sel.selectedIndex=Math.max(0,sel.selectedIndex-1);load();};
+document.getElementById("next").onclick=()=>{sel.selectedIndex=Math.min(sel.options.length-1,sel.selectedIndex+1);load();};
+</script></body></html>

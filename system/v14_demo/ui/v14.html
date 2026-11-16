@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>v14 PSR live demo</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#fff; --ink:#1b1f24; --muted:#5f6b7a; --line:#e3e6eb; --soft:#eef1f5;
+  --accent:#2563eb; --good:#15803d; --good-bg:#e7f6ec; --bad:#c2410c; --bad-bg:#fdeee5; --warn:#a16207;
+  --gt:#111827; --live:#2563eb; --oracle:#9333ea; --err:#dc2626;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#0f1216; --card:#171b21; --ink:#e7eaee; --muted:#97a1ad; --line:#2a3038; --soft:#20262e;
+    --accent:#60a5fa; --good:#4ade80; --good-bg:#14301f; --bad:#fb923c; --bad-bg:#3a2216; --warn:#facc15;
+    --gt:#e5e7eb; --live:#60a5fa; --oracle:#c084fc; --err:#ef4444; }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:14px 20px;border-bottom:1px solid var(--line);background:var(--card);display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center}
+h1{font-size:18px;margin:0}
+.sub{color:var(--muted);font-size:13px}
+.badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600}
+.b-live{background:var(--good-bg);color:var(--good)}
+.b-oracle{background:color-mix(in srgb,var(--oracle) 15%,transparent);color:var(--oracle)}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-left:auto}
+select,button{font:inherit;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
+button{cursor:pointer}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+main{padding:16px 20px;display:grid;gap:16px;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.card h2{font-size:14px;margin:0 0 10px;display:flex;align-items:center;gap:8px}
+.card h2 .hint{font-weight:400;color:var(--muted);font-size:12px;margin-left:auto}
+.full{grid-column:1/-1}
+.stack{display:grid;gap:16px;align-content:start}
+#frame{width:100%;aspect-ratio:16/9;background:#000;border-radius:8px;display:block;object-fit:contain}
+.vidbar{display:flex;gap:16px;align-items:center;margin-top:8px;color:var(--muted);font-size:13px;flex-wrap:wrap}
+.progress{flex:1;min-width:120px;height:6px;background:var(--soft);border-radius:3px;overflow:hidden}
+.progress>div{height:100%;background:var(--accent);width:0}
+.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+.num{font-variant-numeric:tabular-nums}
+.bars .row{display:grid;grid-template-columns:minmax(0,1fr) 120px 44px;gap:8px;align-items:center;margin:3px 0;font-size:13px}
+.bar{height:10px;background:var(--soft);border-radius:5px;overflow:hidden}
+.bar>div{height:100%;border-radius:5px}
+.chip{padding:2px 8px;border-radius:6px;font-size:12px;font-weight:600}
+.ok{background:var(--good-bg);color:var(--good)} .no{background:var(--bad-bg);color:var(--bad)}
+.kv{display:flex;gap:18px;flex-wrap:wrap;margin-top:8px;font-size:13px;color:var(--muted)}
+.kv b{color:var(--ink)}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{padding:5px 8px;border-bottom:1px solid var(--line);text-align:left}
+th{color:var(--muted);font-weight:600;font-size:12px}
+td.c,th.c{text-align:center}
+td.r,th.r{text-align:right}
+.dot{display:inline-block;width:12px;height:12px;border-radius:50%;border:2px solid var(--muted)}
+.dot.on{background:var(--ink);border-color:var(--ink)}
+.dot.err{background:var(--err);border-color:var(--err);border-radius:3px;position:relative}
+.dot.err::after{content:"✗";position:absolute;inset:-4px 0 0 0;font-size:10px;color:#fff;text-align:center;line-height:16px}
+.errchip{background:var(--err);color:#fff}
+td.mis{background:var(--bad-bg)}
+.pbar{display:inline-block;width:60px;height:8px;background:var(--soft);border-radius:4px;overflow:hidden;vertical-align:middle;margin-right:6px}
+.pbar>div{height:100%;width:0;background:var(--accent)}
+#tl{width:100%;display:block}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:8px}
+.legend span i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+#tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--bg);padding:6px 8px;border-radius:6px;font-size:12px;display:none;z-index:9;max-width:340px}
+.delta-good{color:var(--good)} .delta-bad{color:var(--bad)} .miss{color:var(--bad);font-weight:600}
+.note{color:var(--muted);font-size:12px;margin-top:8px}
+.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.metric{background:var(--soft);border-radius:10px;padding:10px 12px}
+.metric .l{font-size:12px;color:var(--muted)} .metric .v{font-size:20px;font-weight:700}
+.win{color:var(--good);font-weight:700} .lose{color:var(--bad);font-weight:700}
+.scroll{max-height:340px;overflow:auto}
+.newstep{animation:flash 1.6s ease-out}
+@keyframes flash{from{background:color-mix(in srgb,var(--accent) 25%,transparent)}to{background:transparent}}
+@media (max-width:1000px){main{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>IndustReal PSR — v14 live demo</h1>
+    <div class="sub">Input to v14: <span class="badge b-live">teammate's causal AR predictions · deployable</span>
+      &nbsp;Compared against PSR ground truth, AR ground truth and <span class="badge b-oracle">v14 + GT AR · oracle diagnostic</span></div>
+  </div>
+  <div class="controls">
+    <select id="split"><option value="test">test</option><option value="val">val</option></select>
+    <select id="video" style="max-width:340px"></select>
+    <select id="vmode" title="Verifier source">
+      <option value="cached">verifiers: cached (as evaluated)</option>
+      <option value="live">verifiers: live on GPU</option>
+    </select>
+    <select id="speed"><option value="1">1×</option><option value="2">2×</option><option value="4" selected>4×</option><option value="8">8×</option><option value="0">max</option></select>
+    <button class="primary" id="start">▶ Start</button>
+    <button id="pause">Pause</button>
+    <button id="stop">Stop</button>
+  </div>
+</header>
+
+<main>
+  <section class="card">
+    <h2>Video <span class="hint" id="vidinfo">pick a recording and press Start</span></h2>
+    <img id="frame" alt="current frame">
+    <div class="vidbar">
+      <span class="num mono" id="clock">—</span>
+      <div class="progress"><div id="prog"></div></div>
+      <span id="status">idle</span>
+    </div>
+    <div class="note">Green box: assembly region found by the localizer (orange = poor view, verifier weighted down). The verifiers run on every 2nd frame.</div>
+  </section>
+
+  <div class="stack">
+    <section class="card">
+      <h2>Action recognition → v14 input <span class="hint">frame-level, top-1 used</span></h2>
+      <div class="bars" id="arbars"></div>
+      <div class="kv">
+        <span>AR ground truth: <b id="argt">—</b></span>
+        <span id="armatch"></span>
+        <span>Top-1 frame accuracy so far: <b id="aracc">—</b></span>
+      </div>
+    </section>
+    <section class="card">
+      <h2>Assembly state now <span class="hint">red = differs from PSR GT · <span class="dot err" style="width:10px;height:10px;vertical-align:-1px"></span> = installed incorrectly (GT error label)</span></h2>
+      <table id="state"><thead><tr><th>Component</th><th class="c">v14 + team AR</th><th class="c">v14 + GT AR</th><th class="c">PSR GT</th><th>Verifier p(installed)</th></tr></thead><tbody></tbody></table>
+      <div class="kv" id="belief"></div>
+    </section>
+  </div>
+
+  <section class="card full">
+    <h2>Timeline <span class="hint">hover for details · predictions revealed up to the playhead; ground truth shown in full</span></h2>
+    <canvas id="tl" height="215"></canvas>
+    <div class="legend" id="legend"></div>
+  </section>
+
+  <section class="card">
+    <h2>Procedure steps vs ground truth <span class="hint">Δ = prediction time − GT time</span></h2>
+    <div class="scroll"><table id="steps"><thead><tr><th>Step (PSR GT)</th><th class="r">GT</th><th class="r">v14 + team AR</th><th class="r">v14 + GT AR</th></tr></thead><tbody></tbody></table></div>
+    <div class="note">Pairs follow the official evaluator: a step predicted before it happened counts as a false positive, not a match. Delay = mean Δ over the matched steps. * = official matching quirk: the evaluator's verdict comes from comparing with another GT entry.</div>
+  </section>
+
+  <div class="stack">
+    <section class="card">
+      <h2>This recording <span class="hint" id="runhint">scored when the video ends</span></h2>
+      <table id="rec"><thead><tr><th></th><th class="r">POS</th><th class="r">F1</th><th class="r">Delay</th><th class="r">TP / FP / FN</th></tr></thead><tbody></tbody></table>
+      <div class="note" id="recnote"></div>
+    </section>
+    <section class="card">
+      <h2>Latency per frame <span class="hint">PSR side, this run</span></h2>
+      <div class="metric-grid" id="lat"></div>
+      <div class="note">The teammate's AR is read from its precomputed causal output, so the AR model's own compute time is <b>not</b> included (no timing file was supplied).</div>
+    </section>
+  </div>
+
+  <section class="card full">
+    <h2>Mistake alerts (v14) <span class="hint">task-graph rules on the steps reported so far; end-of-recording check when the video ends</span></h2>
+    <div id="alerts" class="note">none yet</div>
+    <div class="note" id="asdnow"></div>
+  </section>
+  <section class="card full">
+    <h2>Whole test set (official evaluator, 32 recordings) <span class="hint">fixed results, not this run</span></h2>
+    <table id="agg"></table>
+    <div class="note">B3 = paper baseline. Win/lose is v14 + teammate AR vs B3. v14 + GT AR uses ground-truth actions and is a diagnostic, not deployable.</div>
+  </section>
+</main>
+<div id="tip"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+const VERBS = ["take","put","fit","check","plug","align","tighten","pull","browse","loosen"];
+const VCOL = {take:"#3b82f6",put:"#0ea5e9",fit:"#22c55e",check:"#eab308",plug:"#f97316",align:"#a855f7",
+              tighten:"#ef4444",pull:"#14b8a6",browse:"#ec4899",loosen:"#84cc16",background:"#9ca3af"};
+const verb = n => (n && n !== "background") ? n.split("_")[0] : "background";
+const col = n => VCOL[verb(n)] || "#64748b";
+const fmtT = f => { const s = f / 10; return `${Math.floor(s/60)}:${(s%60).toFixed(1).padStart(4,"0")}`; };
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+let CAT = {}, SUM = null, INFO = null, ST = null, RUNS = [], polling = null, lastT = -2;
+
+$("legend").innerHTML = VERBS.concat(["background"]).map(v => `<span><i style="background:${VCOL[v]}"></i>${v}</span>`).join("")
+  + `<span>◆ PSR step &nbsp;<b style="color:var(--gt)">GT</b> · <b style="color:var(--live)">v14 + team AR</b> · <b style="color:var(--oracle)">v14 + GT AR</b></span>`;
+
+async function j(url, body){
+  const r = await fetch(url, body ? {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(body)} : {});
+  return r.json();
+}
+
+function fillVideos(){
+  const sp = $("split").value;
+  $("video").innerHTML = (CAT[sp] || []).map(v => {
+    const l = v.live ? `POS ${v.live.pos.toFixed(2)} · F1 ${v.live.f1.toFixed(2)}` : "";
+    return `<option value="${v.video}">${v.video} · ${v.errors ? "has errors" : "no errors"} · ${l}</option>`;
+  }).join("");
+}
+
+function aggTable(){
+  if (!SUM) return;
+  const t = SUM.test, b = SUM.B3;
+  const cell = (x, ref, key, lowerBetter) => {
+    if (x == null) return "<td class='r'>—</td>";
+    const v = key === "delay_s" ? x.toFixed(1) + " s" : x.toFixed(3);
+    if (ref == null) return `<td class="r num">${v}</td>`;
+    const win = lowerBetter ? x < ref : x > ref, tie = Math.abs(x - ref) < 0.0015;
+    return `<td class="r num ${tie ? "" : win ? "win" : "lose"}">${v}${tie ? " (tie)" : ""}</td>`;
+  };
+  const row = (name, s, cls, ref) => `<tr><td>${name}</td>` +
+    ["all","with_errors"].map(k => ["POS","F1","delay_s"].map(m =>
+      cell(s[k] && s[k][m], ref ? b[k][m] : null, m, m === "delay_s")).join("")).join("") + "</tr>";
+  $("agg").innerHTML = `<thead><tr><th></th><th class="r" colspan="3">All recordings</th><th class="r" colspan="3">Recordings with errors</th></tr>
+    <tr><th></th>${"<th class='r'>POS</th><th class='r'>F1</th><th class='r'>Delay</th>".repeat(2)}</tr></thead><tbody>
+    ${row("<b>v14 + teammate AR</b> <span class='badge b-live'>deployable</span>", t.live, "", true)}
+    ${row("v14 + GT AR <span class='badge b-oracle'>oracle</span>", t.oracle)}
+    ${row("Paper B3", b)}</tbody>`;
+}
+
+async function init(){
+  [CAT, SUM] = await Promise.all([j("/api/catalog"), j("/api/summary")]);
+  fillVideos(); aggTable();
+  const s = await j("/api/state");
+  if (!s.idle){ await loadInfo(); poll(); }
+}
+$("split").onchange = fillVideos;
+
+async function loadInfo(){
+  INFO = await j("/api/info"); RUNS = []; lastT = -2;
+  $("split").value = INFO.split; fillVideos(); $("video").value = INFO.video; $("vmode").value = INFO.vmode;
+  $("vidinfo").textContent = `${INFO.video} · ${INFO.split} · ${INFO.proc === "assy" ? "assembly" : "maintenance"} · ${INFO.has_errors ? "contains errors" : "no errors"} · ${fmtT(INFO.n_frames)} · verifiers ${INFO.vmode}`;
+  $("state").tBodies[0].innerHTML = INFO.components.map((c, k) =>
+    `<tr><td>${c}</td><td class="c"></td><td class="c"></td><td class="c"></td><td>${k ? '<span class="pbar"><div></div></span><span class="num"></span>' : '<span class="note">not verified</span>'}</td></tr>`).join("");
+}
+
+$("start").onclick = async () => {
+  const r = await j("/api/start", {split:$("split").value, video:$("video").value, verifier:$("vmode").value, speed:+$("speed").value});
+  if (r.error){ alert(r.error); return; }
+  await loadInfo(); poll();
+};
+$("pause").onclick = () => j("/api/pause", {});
+$("stop").onclick = () => j("/api/stop", {});
+$("speed").onchange = () => j("/api/speed", {speed:+$("speed").value});
+
+function poll(){
+  clearInterval(polling);
+  polling = setInterval(async () => {
+    const s = await j(`/api/state?runs=${RUNS.length}`);
+    if (s.idle) return;
+    if (s.runs.length){ RUNS.length = s.runs_from; RUNS.push(...s.runs); }
+    ST = s; render();
+    if (s.done || s.error) clearInterval(polling);
+  }, 150);
+}
+
+function renderAlerts(){
+  const a = (ST && ST.alerts) || [];
+  $("alerts").innerHTML = a.length ? a.map(x => `<div><b>${fmtT(Math.round(x.t * 10))}</b> · ${x.type.replace(/_/g, " ")} · ${(x.step || x.component || "").replace(/_/g, " ")}</div>`).join("") : "none yet";
+  $("asdnow").textContent = ST && ST.asd_now ? `ASD this frame: ${ST.asd_now}` : "";
+}
+function render(){
+  try { renderAlerts(); } catch (e) {}
+  const s = ST, n = INFO.n_frames;
+  if (s.t !== lastT){ $("frame").src = `/api/frame.jpg?t=${s.t}`; lastT = s.t; }
+  $("clock").textContent = `${fmtT(Math.max(s.t,0))} / ${fmtT(n)} · frame ${s.t}`;
+  $("prog").style.width = `${100 * (s.t + 1) / n}%`;
+  $("status").textContent = s.error ? "error (see server log)" : s.done ? "finished — scored" : s.paused ? "paused" : "running";
+
+  // AR
+  if (s.now.top){
+    const used = s.now.top[0][0];
+    $("arbars").innerHTML = s.now.top.map(([nm, p], i) => `<div class="row"><span class="mono" title="${nm}">${i === 0 ? "▶ " : "&nbsp;&nbsp; "}${nm}</span>
+      <div class="bar"><div style="width:${100*p}%;background:${col(nm)}"></div></div><span class="num r">${p.toFixed(2)}</span></div>`).join("");
+    $("argt").textContent = s.now.gt.join(", ");
+    $("armatch").innerHTML = s.now.hit ? `<span class="chip ok">top-1 matches GT</span>` : `<span class="chip no">top-1 ≠ GT</span>`;
+    $("aracc").textContent = s.ar_acc != null ? (100 * s.ar_acc).toFixed(1) + "%" : "—";
+    if (used === "background") $("arbars").insertAdjacentHTML("beforeend", `<div class="note">Top-1 is background → v14 gets no action this frame.</div>`);
+  }
+
+  // state table
+  const rows = $("state").tBodies[0].rows;
+  for (let k = 0; k < 11; k++){
+    const g = s.state_gt[k];
+    [s.state, s.state_oracle, s.state_gt].forEach((st, i) => {
+      const td = rows[k].cells[i + 1];
+      const bad = i === 2 && s.state_gt_err && s.state_gt_err[k] === "x";
+      td.innerHTML = bad ? `<span class="dot err" title="installed incorrectly (error label; the official PSR labels count it as not installed)"></span>`
+        : `<span class="dot ${st[k] === "1" ? "on" : ""}" title="${st[k] === "1" ? "installed" : "not installed"}"></span>`;
+      td.classList.toggle("mis", i < 2 && st[k] !== g);
+    });
+    if (k && s.feat){
+      const p = s.feat.p[k - 1];
+      rows[k].cells[4].querySelector(".pbar div").style.width = `${100*p}%`;
+      rows[k].cells[4].querySelector(".num").textContent = p.toFixed(2);
+    }
+  }
+  $("belief").innerHTML = `<span>View quality: <b>${s.feat ? s.feat.q.toFixed(2) : "—"}</b></span>` +
+    `<span>Filter top hypotheses (v14 + team AR): ` + s.belief.map(b =>
+      `<b class="num">${b.p.toFixed(2)}</b> ${b.diff.length ? b.diff.join(" ") : "(current state)"}`).join(" · ") + `</span>`;
+
+  drawTimeline(); stepTable(); recTable(); latency();
+}
+
+// ---------------- timeline
+const LANES = [
+  {key:"argt", label:"AR ground truth", h:22},
+  {key:"arlive", label:"AR teammate (top-1)", h:22},
+  {key:"gt", label:"PSR ground truth", h:30},
+  {key:"live", label:"v14 + team AR", h:30},
+  {key:"oracle", label:"v14 + GT AR (oracle)", h:30},
+];
+let HIT = [];
+function drawTimeline(){
+  const cv = $("tl"), dpr = window.devicePixelRatio || 1, W = cv.clientWidth, H = 215;
+  cv.width = W * dpr; cv.height = H * dpr; cv.style.height = H + "px";
+  const c = cv.getContext("2d"); c.scale(dpr, dpr); c.clearRect(0, 0, W, H);
+  const L = 150, R = 12, n = INFO.n_frames, x = f => L + (W - L - R) * f / n, t = ST.t;
+  c.font = "12px system-ui"; c.textBaseline = "middle"; HIT = [];
+  let y = 8; const ys = {};
+  for (const ln of LANES){ ys[ln.key] = [y, ln.h]; c.fillStyle = css("--muted"); c.fillText(ln.label, 4, y + ln.h/2);
+    c.fillStyle = css("--soft"); c.fillRect(L, y, W - L - R, ln.h); y += ln.h + 10; }
+  // time ticks
+  c.fillStyle = css("--muted"); c.textAlign = "center";
+  const step = n > 3000 ? 600 : 300;
+  for (let f = 0; f <= n; f += step) c.fillText(fmtT(f).split(".")[0], x(f), y + 4);
+  c.textAlign = "left";
+  const seg = (lane, s0, s1, nm, alpha) => { const [yy, h] = ys[lane]; c.globalAlpha = alpha; c.fillStyle = col(nm);
+    c.fillRect(x(s0), yy + 2, Math.max(1, x(s1 + 1) - x(s0)), h - 4); c.globalAlpha = 1;
+    HIT.push({x0:x(s0), x1:x(s1+1), y0:yy, y1:yy+h, text:`${nm} · ${fmtT(s0)}–${fmtT(s1)}`}); };
+  INFO.ar_gt.forEach(([a, b, nm]) => seg("argt", a, b, nm, 0.95));
+  RUNS.forEach(([a, b, nm]) => { if (nm !== "background") seg("arlive", a, b, nm, 0.95); });
+  // PSR markers
+  const diamond = (lane, f, color, text, hollow) => { const [yy, h] = ys[lane]; const cx = x(f), cy = yy + h/2;
+    c.beginPath(); c.moveTo(cx, cy - 7); c.lineTo(cx + 6, cy); c.lineTo(cx, cy + 7); c.lineTo(cx - 6, cy); c.closePath();
+    if (hollow){ c.strokeStyle = color; c.lineWidth = 2; c.stroke(); } else { c.fillStyle = color; c.fill(); }
+    HIT.push({x0:cx-6, x1:cx+6, y0:yy, y1:yy+h, text}); };
+  const M = matching();
+  // links GT -> paired prediction (official evaluator pairing); red link = too early (FP)
+  c.lineWidth = 1;
+  M.rows.forEach(r => [["live", "--live"], ["oracle", "--oracle"]].forEach(([k, v]) => { const p = r[k]; if (!p.pred && p.pred !== 0) return;
+    const [y0, h0] = ys.gt, [y1, h1] = ys[k]; c.strokeStyle = p.status === "early" ? css("--bad") : css(v); c.globalAlpha = p.status === "early" ? .8 : .35;
+    c.beginPath(); c.moveTo(x(r.gt), y0 + h0/2 + 7); c.lineTo(x(p.pred), y1 + h1/2 - 7); c.stroke(); c.globalAlpha = 1; }));
+  INFO.gt_events.forEach(e => diamond("gt", e.frame, css("--gt"), `GT · ${e.description} · ${fmtT(e.frame)}`));
+  // error labels (PSR_labels_with_errors.csv): red ✗ above the GT lane; display only, not scored
+  (INFO.gt_events_err || []).filter(e => e.id % 3 === 1).forEach(e => { const [yy] = ys.gt, cx = x(e.frame);
+    c.fillStyle = css("--err"); c.font = "bold 13px system-ui"; c.textAlign = "center"; c.fillText("✗", cx, yy - 3);
+    c.strokeStyle = css("--err"); c.lineWidth = 1.5; c.beginPath(); c.moveTo(cx, yy + 2); c.lineTo(cx, yy + 30 - 2); c.stroke();
+    c.textAlign = "left"; c.font = "12px system-ui";
+    HIT.push({x0:cx-7, x1:cx+7, y0:yy-10, y1:yy+30, text:`GT error · ${e.description} · ${fmtT(e.frame)} (error label, not scored)`}); });
+  const xs = arr => new Set(arr.map(e => e.frame + ":" + e.id));
+  const exL = xs(ST.extra_live), exO = xs(ST.extra_oracle);
+  ST.pred.forEach(e => diamond("live", e.frame, css("--live"), `v14 + team AR · ${e.description} · ${fmtT(e.frame)}${exL.has(e.frame+":"+e.id) ? " · not in GT (FP)" : ""}`, exL.has(e.frame+":"+e.id)));
+  ST.pred_oracle.forEach(e => diamond("oracle", e.frame, css("--oracle"), `v14 + GT AR · ${e.description} · ${fmtT(e.frame)}${exO.has(e.frame+":"+e.id) ? " · not in GT (FP)" : ""}`, exO.has(e.frame+":"+e.id)));
+  // playhead
+  c.strokeStyle = css("--bad"); c.lineWidth = 2; c.beginPath(); c.moveTo(x(t), 2); c.lineTo(x(t), y - 6); c.stroke();
+}
+$("tl").addEventListener("mousemove", ev => {
+  const r = ev.target.getBoundingClientRect(), mx = ev.clientX - r.left, my = ev.clientY - r.top;
+  const h = HIT.filter(o => mx >= o.x0 - 1 && mx <= o.x1 + 1 && my >= o.y0 && my <= o.y1).pop();
+  const tip = $("tip");
+  if (h){ tip.textContent = h.text; tip.style.display = "block"; tip.style.left = ev.clientX + 12 + "px"; tip.style.top = ev.clientY + 12 + "px"; }
+  else tip.style.display = "none";
+});
+$("tl").addEventListener("mouseleave", () => $("tip").style.display = "none");
+window.addEventListener("resize", () => ST && drawTimeline());
+
+// pairing computed on the server with the official evaluator's rules (psr_utils.determine_performance)
+function matching(){
+  return {rows: INFO.gt_events.map((g, i) => ({gt:g.frame, desc:g.description, live:ST.pairs_live[i], oracle:ST.pairs_oracle[i]}))};
+}
+
+let lastSteps = "";
+function stepTable(){
+  const M = matching(), t = ST.t, end = ST.done;
+  const cell = (p, g) => {
+    if (p.status === "missed") return end ? `<td class="r miss">missed (FN)</td>` : (t < g ? `<td class="r note">—</td>` : `<td class="r note">waiting…</td>`);
+    const d = (p.pred - g) / 10;
+    if (p.quirk) return `<td class="r num">${fmtT(p.pred)} <span class="chip ok" title="The official evaluator compared this prediction against a different GT entry of the same step, so its verdict does not follow from the times shown.">counted ${p.status === "TP" ? "TP" : "FP"} by evaluator*</span></td>`;
+    if (p.status === "early") return `<td class="r num">${fmtT(p.pred)} <span class="chip no">${(-d).toFixed(1)} s early · FP</span></td>`;
+    return `<td class="r num">${fmtT(p.pred)} <span class="${d <= 10 ? "delta-good" : "delta-bad"}">(+${d.toFixed(1)} s)</span></td>`;
+  };
+  let html = M.rows.map(r => `<tr><td>${r.desc}</td><td class="r num">${fmtT(r.gt)}</td>${cell(r.live, r.gt)}${cell(r.oracle, r.gt)}</tr>`).join("");
+  const ex = ST.extra_live.map(e => ["live", e]).concat(ST.extra_oracle.map(e => ["oracle", e])).sort((a, b) => a[1].frame - b[1].frame);
+  html += ex.map(([k, e]) => `<tr><td>${e.description} <span class="chip no">not in GT (FP)</span></td><td class="r">—</td>
+     ${k === "live" ? `<td class="r num">${fmtT(e.frame)}</td><td></td>` : `<td></td><td class="r num">${fmtT(e.frame)}</td>`}</tr>`).join("");
+  const errs = (INFO.gt_events_err || []).filter(e => e.id % 3 === 1);
+  if (errs.length) html += `<tr><td colspan="4" class="note" style="padding-top:10px">Error labels (from PSR_labels_with_errors.csv · not part of the official PSR score · v14 alerts are listed below)</td></tr>`
+    + errs.map(e => `<tr><td>${e.description} <span class="chip errchip">✗ error</span></td><td class="r num">${fmtT(e.frame)}</td><td class="r note">not predicted</td><td class="r note">not predicted</td></tr>`).join("");
+  if (html !== lastSteps){ $("steps").tBodies[0].innerHTML = html; lastSteps = html; }
+}
+
+function recTable(){
+  const v = (CAT[INFO.split] || []).find(o => o.video === INFO.video) || {};
+  const f = ST.final;
+  const row = (name, m) => m ? `<tr><td>${name}</td><td class="r num">${m.POS.toFixed(3)}</td><td class="r num">${m.F1.toFixed(3)}</td><td class="r num">${m.delay_s.toFixed(1)} s</td><td class="r num">${m.TP} / ${m.FP} / ${m.FN}</td></tr>` : "";
+  const ref = (name, m) => m ? `<tr class="note"><td>${name}</td><td class="r num">${m.pos.toFixed(3)}</td><td class="r num">${m.f1.toFixed(3)}</td><td class="r num">${(m.delay_frames/10).toFixed(1)} s</td><td></td></tr>` : "";
+  $("rec").tBodies[0].innerHTML = (f ? row("<b>v14 + team AR</b> (this run)", f.live) + row("v14 + GT AR (this run)", f.oracle) : "")
+    + ref("v14 + team AR (reported)", v.live) + ref("v14 + GT AR (reported)", v.oracle);
+  $("runhint").textContent = f ? "scored by the official evaluator" : "scored when the video ends";
+  $("recnote").innerHTML = f ? `Teammate AR top-1 frame accuracy on this recording: <b>${(100*f.ar_frame_acc).toFixed(1)}%</b> (background frames included). ` +
+     (INFO.vmode === "cached" ? "Cached verifiers: should equal the reported row." : "Live verifiers: may differ slightly from the reported row (fp16 on GPU).") : "";
+}
+
+function latency(){
+  const l = ST.lat || {}, s = ST.lat_stats || {};
+  const items = [["decode_ms","Decode frame"],["ar_lookup_ms","AR lookup"],["localize_ms","Localizer"],["verifiers_ms","2 verifiers"],["filter_ms","State filter"],["end_to_end_ms","End-to-end (this frame)"]];
+  $("lat").innerHTML = items.filter(([k]) => l[k] != null).map(([k, n]) => `<div class="metric"><div class="l">${n}</div><div class="v num">${l[k].toFixed(1)} ms</div></div>`).join("")
+    + (s.mean_ms != null ? `<div class="metric"><div class="l">Mean / median / p95 (run)</div><div class="v num" style="font-size:16px">${s.mean_ms} / ${s.median_ms} / ${s.p95_ms} ms</div></div>` : "")
+    + (SUM ? `<div class="metric"><div class="l">Benchmarked v14 mean (live GPU)</div><div class="v num">${SUM.latency_v9.mean_ms} ms</div></div>` : "");
+  if (INFO.vmode === "cached") $("lat").insertAdjacentHTML("afterbegin", `<div class="metric" style="grid-column:1/-1;background:var(--bad-bg)"><div class="l">Cached verifiers: localizer and verifier compute is skipped, so these times are <b>not</b> end-to-end. Choose “verifiers: live on GPU” to measure real latency.</div></div>`);
+}
+
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+# Assembly101-O (PREGO, CVPR'24 protocol): online mistake detection on assembly step sequences.
+# Only annotations are used (no video): the mistake labels of Assembly101 and PREGO's released split,
+# test sequences (trimmed at the first mistake) and step-recognition outputs.
+
+dataset: assembly101_o
+paths:                       # relative to the repository root
+  annotations: ../datasets/assembly101_mistakes/assembly101-mistake-detection-main/annots
+  prego: ../datasets/assembly101_prego
+  out: output/assist/assembly101
+
+# Rule settings are chosen on a validation set built from the correct training procedures only
+# (leave-one-procedure-out + synthetic mistakes); see assist/assembly101/mistakes.py.
+grid:
+  toy_support: [1, 2, 3]          # an order rule mined from same-toy procedures needs this many examples
+  global_support: [3, 5, 10, 20]  # ... from all procedures (parts are shared across toys)
+  global_purity: [0.9, 0.95, 1.0] # share of those procedures in which the order holds
+  use_global_for_seen_toys: [false, true]
+synthetic:
+  seed: 0
+  per_procedure: 6                # synthetic mistakes per held-out procedure (half order, half detach)

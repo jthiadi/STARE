@@ -1,0 +1,15 @@
+vjepa                        test segs 3678  val 54.77  test 56.63   recorded {}
+vjft_area_k12                test segs 3678  val 67.06  test 69.55   recorded {'val_top1': 67.06, 'test_top1': 69.55}
+vjft_area_k12_s1             test segs 3678  val 65.09  test 69.77   recorded {'val_top1': 65.09, 'test_top1': 69.77}
+vjft_area_k8                 test segs 3678  val 65.98  test 68.35   recorded {'val_top1': 65.98, 'test_top1': 68.35}
+vjft_hand_k12                test segs 3678  val 68.26  test 70.20   recorded {'val_top1': 68.26, 'test_top1': 70.2}
+vjft_hand_k12_c25            test segs 3678  val 69.29  test 71.23   recorded {'val_top1': 69.29, 'test_top1': 71.23}
+vjft_hand_k12_c25_e15        test segs 3678  val 69.45  test 72.54   recorded {'val_top1': 69.45, 'test_top1': 72.54}
+vjft_hand_k12_c25_e15_s1     test segs 3678  val 69.71  test 71.86   recorded {'val_top1': 69.71, 'test_top1': 71.86}
+vjft_hand_k12_e15            test segs 3678  val 69.76  test 70.61   recorded {'val_top1': 69.76, 'test_top1': 70.61}
+vjft_hand_k12_p10            test segs 3678  val 62.45  test 64.55   recorded {'val_top1': 62.45, 'test_top1': 64.55}
+vjft_hand_k12_r320           test segs 3678  val 56.28  test 57.86   recorded {'val_top1': 56.28, 'test_top1': 57.86}
+vjft_hand_k12_s1             test segs 3678  val 67.95  test 70.12   recorded {'val_top1': 67.95, 'test_top1': 70.12}
+vjft_hand_k12_s2             test segs 3678  val 66.91  test 68.24   recorded {'val_top1': 66.91, 'test_top1': 68.24}
+vjft_hand_k16                test segs 3678  val 67.69  test 70.34   recorded {'val_top1': 67.69, 'test_top1': 70.34}
+vjft_hand_k8                 test segs 3678  val 66.23  test 68.08   recorded {'val_top1': 66.23, 'test_top1': 68.08}

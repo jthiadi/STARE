@@ -1,0 +1,15 @@
+{
+ "protocol": "IndustReal paper protocol: 3,678 annotated test segments, 74 actions, top-1; diagnostic, nothing chosen; settings = the deployed recipe (locked on val)",
+ "val_full_recipe": 73.81,
+ "test": {
+  "VideoMAE alone": 62.18,
+  "V-JEPA 2 work-area crop alone": 69.55,
+  "V-JEPA 2 hand crop alone": 70.2,
+  "V-JEPA 2 hand crop, seed 1, alone": 70.12,
+  "Mean of 3 V-JEPA 2 runs": 72.76,
+  "+ VideoMAE (mean of 4)": 73.25,
+  "TCN alone": 55.74,
+  "+ TCN (w = 0.95)": 73.74,
+  "+ order prior (final label)": 75.07
+ }
+}

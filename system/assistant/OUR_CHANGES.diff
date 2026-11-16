@@ -1,0 +1,90 @@
+diff --git a/assist/dashboard/data.py b/assist/dashboard/data.py
+index 68605df..fcb1235 100644
+--- a/assist/dashboard/data.py
++++ b/assist/dashboard/data.py
+@@ -17,10 +17,15 @@ from assist.evaluation.eval import RUN_NAMES, TYPES, collapse, gt_mistakes, matc
+ from assist.evaluation.psr_eval import PUBLISHED_PSR
+ from assist.industreal import SPLITS, task_of
+ 
+-LIVE_RUN = "pred_vjepap_asd"
+-RUNS = {LIVE_RUN: "Live system", "pred_vjepap_gt": "Live actions + perfect state", "gt_gt": "Oracle"}
+-RUN_NOTES = {LIVE_RUN: "Actions from the causal TCN + V-JEPA 2, and the released state detector, as it would run live.",
+-             "pred_vjepap_gt": "The same actions with a perfect state detector: shows what the state detector costs.",
++# v14-psr branch: the live run is the engine with v14's PSR steps as its state (TCN actions). The original live run
++# (pred_vjepap_asd) needs V-JEPA 2 outputs that are not on this machine; it is still shown when its files exist.
++LIVE_RUN = "pred_asdv14"
++RUNS = {LIVE_RUN: "Live system + v14 PSR", "pred_v14": "v14 PSR alone", "pred_asd": "Live system (TCN actions + ASD)",
++        "pred_vjepap_asd": "Live system (TCN + V-JEPA 2 + ASD)", "gt_gt": "Oracle"}
++RUN_NOTES = {LIVE_RUN: "Causal TCN actions, with the frozen v14 PSR (part verifiers + ASD) as the state input of the engine.",
++             "pred_v14": "The frozen v14 PSR on its own: its reported steps and its own mistake alerts (no engine rules).",
++             "pred_asd": "Causal TCN actions and the released state detector, as it would run live.",
++             "pred_vjepap_asd": "Actions from the causal TCN + V-JEPA 2, and the released state detector, as it would run live.",
+              "gt_gt": "Annotated actions and states: the upper bound of the rules."}
+ RIDS = SPLITS["test"]
+ OUT = ROOT / "output/assist"
+@@ -29,7 +34,7 @@ CFG = load_config()
+ TASKS = load_tasks(CFG["graph_path"])
+ RESULT_RUNS = {    # results page, weakest state source first
+     "pred_vjepap_none": "Live actions only, no state", "gt_none": "Annotated actions only, no state",
+-    "baseline_psr": "Baseline: official PSR + same rules", "pred_asd": "Earlier live system: TCN actions only", **RUNS}
++    "baseline_psr": "Baseline: official PSR + same rules", **RUNS}
+ 
+ 
+ # short firm commands that carry over factory noise; {name} is the step or part, {first} what must be done before it.
+@@ -144,11 +149,17 @@ def station(rid: str, run: str) -> dict:
+ def analytics() -> dict:
+     psr = _read(OUT / "eval/psr_test_release.json")
+     psr_rows = [{**row, "published": True} for row in PUBLISHED_PSR]
+-    for key in ("official_release", f"engine_{LIVE_RUN}", "engine_gt_gt"):
++    names = {f"engine_{LIVE_RUN}": "Ours: engine + v14 PSR as state (TCN actions)", "engine_pred_asd": "Ours: engine, TCN actions + ASD"}
++    for key in ("official_release", "engine_pred_asd", f"engine_{LIVE_RUN}", "engine_gt_gt"):
+         if key in psr:
+             s = psr[key]["summary"]
+-            psr_rows.append({"name": psr[key]["name"], "f1": s["all"]["f1"], "pos": s["all"]["pos"],
++            psr_rows.append({"name": names.get(key, psr[key]["name"]), "f1": s["all"]["f1"], "pos": s["all"]["pos"],
+                              "delay_s": s["all"]["delay_s"], "published": False, "with_errors": s["with_errors"]})
++    cmp = OUT / "v14/compare.json"          # v14's own steps, scored with this repository's port of the official code
++    if cmp.exists():
++        v = _read(cmp)["v14_steps_our_scoring"]
++        psr_rows.insert(len(PUBLISHED_PSR) + 1, {"name": "v14 PSR alone (frozen, one test run)", "f1": v["all"]["f1"],
++                        "pos": v["all"]["pos"], "delay_s": v["all"]["delay_s"], "published": False, "with_errors": v["with_errors"]})
+     mistakes = []
+     evals = {r["run"]: r for r in _read(OUT / "eval/eval_test.json")}
+     for run, name in RESULT_RUNS.items():
+@@ -159,7 +170,10 @@ def analytics() -> dict:
+                          "description": RUN_NAMES.get(r["run"], r["run"]),
+                          "rows": {k: {f: r["rows"][k][f] for f in ("gt", "alerts", "tp", "precision", "recall",
+                                                                    "false_alarms_per_h")} for k in (*TYPES, "all")}})
+-    a = _read(OUT / "assembly101/assembly101_o.json")
++    a101_file = OUT / "assembly101/assembly101_o.json"          # second dataset; optional on this machine
++    if not a101_file.exists():
++        return {"psr": psr_rows, "mistakes": mistakes, "assembly101": []}
++    a = _read(a101_file)
+     cols = ("precision", "recall", "f1", "precision_b", "f1_b", "avg_f1")
+     a101 = [{"name": n, "steps": steps, **dict(zip(cols, vals)), "ours": False} for n, steps, *vals in a["published"]]
+     a101 += [{"name": "Ours: task-graph rules", "steps": steps, **{c: a["test"][steps][c] for c in cols}, "ours": True}
+diff --git a/assist/dashboard/static/common.js b/assist/dashboard/static/common.js
+index 90e1308..906f21f 100644
+--- a/assist/dashboard/static/common.js
++++ b/assist/dashboard/static/common.js
+@@ -1,6 +1,6 @@
+ // Shared by the three pages: the run switch (kept in ?run=), API calls, and text helpers.
+ const params = new URLSearchParams(location.search);
+-let RUN = params.get("run") || "pred_vjepap_asd";
++let RUN = params.get("run") || "pred_asdv14";   // v14-psr branch default (pred_vjepap_asd needs V-JEPA 2 outputs)
+ 
+ async function api(path) {
+   let r;
+diff --git a/assist/run_engine.py b/assist/run_engine.py
+index 0ab7004..d61ca36 100644
+--- a/assist/run_engine.py
++++ b/assist/run_engine.py
+@@ -29,7 +29,7 @@ from assist.industreal import SPLITS, gt_actions, n_frames, psr_states, task_of
+ IMAGE_W, IMAGE_H = 1280, 720
+ AR_FILES = {"pred": "ar.jsonl", "pred_vjepa": "ar_vjepa.jsonl", "pred_vjepap": "ar_vjepa_prefix.jsonl"}
+ ASD_FILES = {"asd": "asd.jsonl", "asdours": "asd_ours.jsonl", "asdanom": "asd_anom.jsonl", "asdpart": "asd_part.jsonl",
+-             "asdv9": "asd_v9.jsonl"}
++             "asdv9": "asd_v9.jsonl", "asdv14": "asd_v14.jsonl"}
+ STATE_FPS = 2.0
+ 
+ 

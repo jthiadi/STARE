@@ -1,0 +1,15 @@
+# Store text files with LF line endings in the repository; check out with the platform default.
+* text=auto
+*.sh text eol=lf
+*.py text
+*.md text
+*.json text
+*.jsonl text
+*.csv text
+*.yaml text
+*.html text
+*.npz binary
+*.npy binary
+*.pkl binary
+*.png binary
+*.jpg binary

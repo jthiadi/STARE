@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assembly line replay</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header class="bar"></header>
+<main>
+  <div class="headline" id="headline"></div>
+  <div class="filters" role="group" aria-label="Show">
+    <button data-f="all" aria-pressed="true">All recordings</button>
+    <button data-f="assy">Assembly</button>
+    <button data-f="main">Maintenance</button>
+    <button data-f="mistakes">With mistakes</button>
+  </div>
+  <div class="grid" id="grid"></div>
+  <div class="legend">
+    <span style="--c:var(--green)">No mistake, no alert</span>
+    <span style="--c:var(--red)">Every mistake caught, no false alarm</span>
+    <span style="--c:var(--amber)">A mistake missed or a false alarm</span>
+  </div>
+</main>
+<script src="/common.js"></script>
+<script>
+let FILTER = "all", DATA = null;
+
+async function load() {
+  DATA = await api(`/api/stations?run=${RUN}`);
+  const t = DATA.totals;
+  document.getElementById("headline").innerHTML = `
+    <div><div class="big">${t.caught}<small> of ${t.mistakes}</small></div><div class="muted">annotated mistakes caught</div></div>
+    <div><div class="big">${t.false_alarms_per_h.toFixed(1)}</div><div class="muted">false alarms per hour</div></div>
+    <div><div class="big">${DATA.stations.length}</div><div class="muted">recordings, ${t.hours.toFixed(1)} h of test video</div></div>`;
+  render();
+}
+
+function render() {
+  const keep = s => FILTER === "all" || (FILTER === "mistakes" ? s.mistakes > 0 : s.task === FILTER);
+  document.getElementById("grid").innerHTML = DATA.stations.filter(keep).map(s => {
+    const alerts = Object.entries(s.alerts_by_type).filter(([k]) => k !== "early_warning")
+      .reduce((n, [, v]) => n + v, 0);
+    const warns = s.alerts_by_type.early_warning || 0;
+    return `<a class="station-card ${s.outcome}" href="${withRun(`/station.html?rid=${s.rid}`)}">
+      <div class="rid">${s.rid}</div>
+      <div class="task">${esc(s.task_title)}</div>
+      <div class="progress" title="${s.steps_done} of ${s.steps_total} steps done"><i style="width:${100 * s.steps_done / s.steps_total}%"></i></div>
+      <div class="facts">
+        <span>${s.steps_done}/${s.steps_total} steps</span>
+        <span>${s.mistakes ? `${s.caught}/${s.mistakes} mistakes caught` : "no mistakes"}</span>
+        ${s.false_alarms ? `<span>${s.false_alarms} false alarm${s.false_alarms > 1 ? "s" : ""}</span>` : ""}
+      </div>
+      <div class="facts muted"><span>${clock(s.duration_s)}</span><span>${alerts} alert${alerts === 1 ? "" : "s"}, ${warns} warning${warns === 1 ? "" : "s"}</span></div>
+    </a>`;
+  }).join("");
+}
+
+document.querySelectorAll(".filters button").forEach(b => b.onclick = () => {
+  FILTER = b.dataset.f;
+  document.querySelectorAll(".filters button").forEach(x => x.setAttribute("aria-pressed", x === b));
+  render();
+});
+topBar("line", load).then(load);
+</script>
+</body>
+</html>

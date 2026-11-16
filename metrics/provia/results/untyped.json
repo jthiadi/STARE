@@ -1,0 +1,597 @@
+{
+ "protocol": "ours, untyped: 32 test mistakes, +-30 s, any type, one-to-one; alarms within 30 s merged",
+ "STARE": {
+  "val": {
+   "found": 4,
+   "mistakes": 13,
+   "precision": 0.667,
+   "false_alarms_per_h": 1.89,
+   "found_by_type": {
+    "install": "1/5",
+    "order": "0/3",
+    "skipped": "3/5"
+   }
+  },
+  "test": {
+   "found": 8,
+   "mistakes": 32,
+   "precision": 0.667,
+   "false_alarms_per_h": 1.6,
+   "found_by_type": {
+    "install": "4/18",
+    "order": "3/4",
+    "skipped": "1/10"
+   }
+  }
+ },
+ "PROVIA": {
+  "seeds": {
+   "0": {
+    "threshold_matched_to_STARE_val": 8.762678728086524,
+    "val": {
+     "found": 3,
+     "mistakes": 13,
+     "precision": 0.6,
+     "false_alarms_per_h": 1.89,
+     "found_by_type": {
+      "install": "2/5",
+      "order": "0/3",
+      "skipped": "1/5"
+     }
+    },
+    "test": {
+     "found": 5,
+     "mistakes": 32,
+     "precision": 0.227,
+     "false_alarms_per_h": 6.79,
+     "found_by_type": {
+      "install": "3/18",
+      "order": "2/4",
+      "skipped": "0/10"
+     }
+    },
+    "test_at_val_budget_0.1_per_min": {
+     "found": 5,
+     "mistakes": 32,
+     "precision": 0.227,
+     "false_alarms_per_h": 6.79,
+     "found_by_type": {
+      "install": "3/18",
+      "order": "2/4",
+      "skipped": "0/10"
+     }
+    },
+    "test_at_val_budget_0.5_per_min": {
+     "found": 10,
+     "mistakes": 32,
+     "precision": 0.133,
+     "false_alarms_per_h": 25.97,
+     "found_by_type": {
+      "install": "7/18",
+      "order": "2/4",
+      "skipped": "1/10"
+     }
+    },
+    "test_at_val_budget_1.0_per_min": {
+     "found": 15,
+     "mistakes": 32,
+     "precision": 0.153,
+     "false_alarms_per_h": 33.16,
+     "found_by_type": {
+      "install": "10/18",
+      "order": "4/4",
+      "skipped": "1/10"
+     }
+    }
+   },
+   "1": {
+    "threshold_matched_to_STARE_val": 17.629665456650763,
+    "val": {
+     "found": 0,
+     "mistakes": 13,
+     "precision": 0.0,
+     "false_alarms_per_h": 1.89,
+     "found_by_type": {
+      "install": "0/5",
+      "order": "0/3",
+      "skipped": "0/5"
+     }
+    },
+    "test": {
+     "found": 3,
+     "mistakes": 32,
+     "precision": 0.231,
+     "false_alarms_per_h": 4.0,
+     "found_by_type": {
+      "install": "3/18",
+      "order": "0/4",
+      "skipped": "0/10"
+     }
+    },
+    "test_at_val_budget_0.1_per_min": {
+     "found": 4,
+     "mistakes": 32,
+     "precision": 0.16,
+     "false_alarms_per_h": 8.39,
+     "found_by_type": {
+      "install": "1/18",
+      "order": "2/4",
+      "skipped": "1/10"
+     }
+    },
+    "test_at_val_budget_0.5_per_min": {
+     "found": 12,
+     "mistakes": 32,
+     "precision": 0.174,
+     "false_alarms_per_h": 22.77,
+     "found_by_type": {
+      "install": "9/18",
+      "order": "2/4",
+      "skipped": "1/10"
+     }
+    },
+    "test_at_val_budget_1.0_per_min": {
+     "found": 16,
+     "mistakes": 32,
+     "precision": 0.147,
+     "false_alarms_per_h": 37.16,
+     "found_by_type": {
+      "install": "11/18",
+      "order": "4/4",
+      "skipped": "1/10"
+     }
+    }
+   },
+   "2": {
+    "threshold_matched_to_STARE_val": 14.79753484754917,
+    "val": {
+     "found": 0,
+     "mistakes": 13,
+     "precision": 0.0,
+     "false_alarms_per_h": 1.89,
+     "found_by_type": {
+      "install": "0/5",
+      "order": "0/3",
+      "skipped": "0/5"
+     }
+    },
+    "test": {
+     "found": 2,
+     "mistakes": 32,
+     "precision": 0.125,
+     "false_alarms_per_h": 5.59,
+     "found_by_type": {
+      "install": "2/18",
+      "order": "0/4",
+      "skipped": "0/10"
+     }
+    },
+    "test_at_val_budget_0.1_per_min": {
+     "found": 3,
+     "mistakes": 32,
+     "precision": 0.15,
+     "false_alarms_per_h": 6.79,
+     "found_by_type": {
+      "install": "2/18",
+      "order": "0/4",
+      "skipped": "1/10"
+     }
+    },
+    "test_at_val_budget_0.5_per_min": {
+     "found": 14,
+     "mistakes": 32,
+     "precision": 0.184,
+     "false_alarms_per_h": 24.77,
+     "found_by_type": {
+      "install": "10/18",
+      "order": "3/4",
+      "skipped": "1/10"
+     }
+    },
+    "test_at_val_budget_1.0_per_min": {
+     "found": 16,
+     "mistakes": 32,
+     "precision": 0.154,
+     "false_alarms_per_h": 35.16,
+     "found_by_type": {
+      "install": "11/18",
+      "order": "4/4",
+      "skipped": "1/10"
+     }
+    }
+   }
+  },
+  "test_found_mean_sd": [
+   3.333,
+   1.528
+  ],
+  "test_precision_mean_sd": [
+   0.194,
+   0.06
+  ],
+  "test_false_alarms_per_h_mean_sd": [
+   5.46,
+   1.4
+  ]
+ },
+ "Causal-TCN": {
+  "seeds": {
+   "0": {
+    "threshold_matched_to_STARE_val": 6.462176699078734e+22,
+    "val": {
+     "found": 0,
+     "mistakes": 13,
+     "precision": 0.0,
+     "false_alarms_per_h": 1.89,
+     "found_by_type": {
+      "install": "0/5",
+      "order": "0/3",
+      "skipped": "0/5"
+     }
+    },
+    "test": {
+     "found": 4,
+     "mistakes": 32,
+     "precision": 0.286,
+     "false_alarms_per_h": 4.0,
+     "found_by_type": {
+      "install": "2/18",
+      "order": "1/4",
+      "skipped": "1/10"
+     }
+    },
+    "test_at_val_budget_0.1_per_min": {
+     "found": 4,
+     "mistakes": 32,
+     "precision": 0.286,
+     "false_alarms_per_h": 4.0,
+     "found_by_type": {
+      "install": "2/18",
+      "order": "1/4",
+      "skipped": "1/10"
+     }
+    },
+    "test_at_val_budget_0.5_per_min": {
+     "found": 14,
+     "mistakes": 32,
+     "precision": 0.177,
+     "false_alarms_per_h": 25.97,
+     "found_by_type": {
+      "install": "10/18",
+      "order": "3/4",
+      "skipped": "1/10"
+     }
+    },
+    "test_at_val_budget_1.0_per_min": {
+     "found": 16,
+     "mistakes": 32,
+     "precision": 0.131,
+     "false_alarms_per_h": 42.35,
+     "found_by_type": {
+      "install": "12/18",
+      "order": "4/4",
+      "skipped": "0/10"
+     }
+    }
+   },
+   "1": {
+    "threshold_matched_to_STARE_val": 5.365920677838817e+29,
+    "val": {
+     "found": 0,
+     "mistakes": 13,
+     "precision": 0.0,
+     "false_alarms_per_h": 1.89,
+     "found_by_type": {
+      "install": "0/5",
+      "order": "0/3",
+      "skipped": "0/5"
+     }
+    },
+    "test": {
+     "found": 2,
+     "mistakes": 32,
+     "precision": 0.167,
+     "false_alarms_per_h": 4.0,
+     "found_by_type": {
+      "install": "1/18",
+      "order": "1/4",
+      "skipped": "0/10"
+     }
+    },
+    "test_at_val_budget_0.1_per_min": {
+     "found": 4,
+     "mistakes": 32,
+     "precision": 0.235,
+     "false_alarms_per_h": 5.19,
+     "found_by_type": {
+      "install": "2/18",
+      "order": "1/4",
+      "skipped": "1/10"
+     }
+    },
+    "test_at_val_budget_0.5_per_min": {
+     "found": 13,
+     "mistakes": 32,
+     "precision": 0.183,
+     "false_alarms_per_h": 23.17,
+     "found_by_type": {
+      "install": "10/18",
+      "order": "3/4",
+      "skipped": "0/10"
+     }
+    },
+    "test_at_val_budget_1.0_per_min": {
+     "found": 19,
+     "mistakes": 32,
+     "precision": 0.161,
+     "false_alarms_per_h": 39.55,
+     "found_by_type": {
+      "install": "14/18",
+      "order": "4/4",
+      "skipped": "1/10"
+     }
+    }
+   },
+   "2": {
+    "threshold_matched_to_STARE_val": 5.5992607610785976e+25,
+    "val": {
+     "found": 0,
+     "mistakes": 13,
+     "precision": 0.0,
+     "false_alarms_per_h": 1.89,
+     "found_by_type": {
+      "install": "0/5",
+      "order": "0/3",
+      "skipped": "0/5"
+     }
+    },
+    "test": {
+     "found": 3,
+     "mistakes": 32,
+     "precision": 0.231,
+     "false_alarms_per_h": 4.0,
+     "found_by_type": {
+      "install": "1/18",
+      "order": "1/4",
+      "skipped": "1/10"
+     }
+    },
+    "test_at_val_budget_0.1_per_min": {
+     "found": 3,
+     "mistakes": 32,
+     "precision": 0.188,
+     "false_alarms_per_h": 5.19,
+     "found_by_type": {
+      "install": "2/18",
+      "order": "0/4",
+      "skipped": "1/10"
+     }
+    },
+    "test_at_val_budget_0.5_per_min": {
+     "found": 12,
+     "mistakes": 32,
+     "precision": 0.179,
+     "false_alarms_per_h": 21.97,
+     "found_by_type": {
+      "install": "9/18",
+      "order": "2/4",
+      "skipped": "1/10"
+     }
+    },
+    "test_at_val_budget_1.0_per_min": {
+     "found": 18,
+     "mistakes": 32,
+     "precision": 0.149,
+     "false_alarms_per_h": 41.15,
+     "found_by_type": {
+      "install": "13/18",
+      "order": "4/4",
+      "skipped": "1/10"
+     }
+    }
+   }
+  },
+  "test_found_mean_sd": [
+   3.0,
+   1.0
+  ],
+  "test_precision_mean_sd": [
+   0.228,
+   0.06
+  ],
+  "test_false_alarms_per_h_mean_sd": [
+   4.0,
+   0.0
+  ]
+ },
+ "Controlled PREGO": {
+  "seeds": {
+   "0": {
+    "threshold_matched_to_STARE_val": 2.713602207161168e+37,
+    "val": {
+     "found": 0,
+     "mistakes": 13,
+     "precision": 0.0,
+     "false_alarms_per_h": 1.89,
+     "found_by_type": {
+      "install": "0/5",
+      "order": "0/3",
+      "skipped": "0/5"
+     }
+    },
+    "test": {
+     "found": 2,
+     "mistakes": 32,
+     "precision": 0.182,
+     "false_alarms_per_h": 3.6,
+     "found_by_type": {
+      "install": "1/18",
+      "order": "1/4",
+      "skipped": "0/10"
+     }
+    },
+    "test_at_val_budget_0.1_per_min": {
+     "found": 4,
+     "mistakes": 32,
+     "precision": 0.267,
+     "false_alarms_per_h": 4.39,
+     "found_by_type": {
+      "install": "2/18",
+      "order": "1/4",
+      "skipped": "1/10"
+     }
+    },
+    "test_at_val_budget_0.5_per_min": {
+     "found": 10,
+     "mistakes": 32,
+     "precision": 0.147,
+     "false_alarms_per_h": 23.17,
+     "found_by_type": {
+      "install": "7/18",
+      "order": "2/4",
+      "skipped": "1/10"
+     }
+    },
+    "test_at_val_budget_1.0_per_min": {
+     "found": 18,
+     "mistakes": 32,
+     "precision": 0.15,
+     "false_alarms_per_h": 40.75,
+     "found_by_type": {
+      "install": "13/18",
+      "order": "4/4",
+      "skipped": "1/10"
+     }
+    }
+   },
+   "1": {
+    "threshold_matched_to_STARE_val": 7.252606422079828e+37,
+    "val": {
+     "found": 0,
+     "mistakes": 13,
+     "precision": 0.0,
+     "false_alarms_per_h": 1.89,
+     "found_by_type": {
+      "install": "0/5",
+      "order": "0/3",
+      "skipped": "0/5"
+     }
+    },
+    "test": {
+     "found": 1,
+     "mistakes": 32,
+     "precision": 0.1,
+     "false_alarms_per_h": 3.6,
+     "found_by_type": {
+      "install": "0/18",
+      "order": "1/4",
+      "skipped": "0/10"
+     }
+    },
+    "test_at_val_budget_0.1_per_min": {
+     "found": 3,
+     "mistakes": 32,
+     "precision": 0.214,
+     "false_alarms_per_h": 4.39,
+     "found_by_type": {
+      "install": "1/18",
+      "order": "1/4",
+      "skipped": "1/10"
+     }
+    },
+    "test_at_val_budget_0.5_per_min": {
+     "found": 11,
+     "mistakes": 32,
+     "precision": 0.177,
+     "false_alarms_per_h": 20.38,
+     "found_by_type": {
+      "install": "9/18",
+      "order": "1/4",
+      "skipped": "1/10"
+     }
+    },
+    "test_at_val_budget_1.0_per_min": {
+     "found": 17,
+     "mistakes": 32,
+     "precision": 0.144,
+     "false_alarms_per_h": 40.35,
+     "found_by_type": {
+      "install": "12/18",
+      "order": "4/4",
+      "skipped": "1/10"
+     }
+    }
+   },
+   "2": {
+    "threshold_matched_to_STARE_val": 1.3850414903858035e+37,
+    "val": {
+     "found": 0,
+     "mistakes": 13,
+     "precision": 0.0,
+     "false_alarms_per_h": 1.89,
+     "found_by_type": {
+      "install": "0/5",
+      "order": "0/3",
+      "skipped": "0/5"
+     }
+    },
+    "test": {
+     "found": 2,
+     "mistakes": 32,
+     "precision": 0.182,
+     "false_alarms_per_h": 3.6,
+     "found_by_type": {
+      "install": "1/18",
+      "order": "1/4",
+      "skipped": "0/10"
+     }
+    },
+    "test_at_val_budget_0.1_per_min": {
+     "found": 3,
+     "mistakes": 32,
+     "precision": 0.214,
+     "false_alarms_per_h": 4.39,
+     "found_by_type": {
+      "install": "1/18",
+      "order": "1/4",
+      "skipped": "1/10"
+     }
+    },
+    "test_at_val_budget_0.5_per_min": {
+     "found": 8,
+     "mistakes": 32,
+     "precision": 0.131,
+     "false_alarms_per_h": 21.18,
+     "found_by_type": {
+      "install": "5/18",
+      "order": "2/4",
+      "skipped": "1/10"
+     }
+    },
+    "test_at_val_budget_1.0_per_min": {
+     "found": 18,
+     "mistakes": 32,
+     "precision": 0.154,
+     "false_alarms_per_h": 39.55,
+     "found_by_type": {
+      "install": "13/18",
+      "order": "4/4",
+      "skipped": "1/10"
+     }
+    }
+   }
+  },
+  "test_found_mean_sd": [
+   1.667,
+   0.577
+  ],
+  "test_precision_mean_sd": [
+   0.155,
+   0.047
+  ],
+  "test_false_alarms_per_h_mean_sd": [
+   3.6,
+   0.0
+  ]
+ }
+}

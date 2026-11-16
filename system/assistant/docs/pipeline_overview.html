@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>IndustReal assembly monitoring: pipeline overview</title>
+<style>
+  :root {
+    --bg: #f6f7f9; --card: #fff; --ink: #1d2330; --muted: #5b6475; --line: #d5dae3;
+    --done: #1f9d55; --offline: #d97706; --base: #6b7280; --plan: #2563eb; --nov: #9333ea;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 15px/1.5 "Segoe UI", system-ui, sans-serif; color: var(--ink); background: var(--bg); }
+  main { max-width: 1180px; margin: 0 auto; padding: 28px 24px 60px; }
+  h1 { font-size: 26px; margin: 0 0 4px; }
+  h2 { font-size: 20px; margin: 40px 0 6px; padding-bottom: 6px; border-bottom: 2px solid var(--line); }
+  h3 { font-size: 16px; margin: 22px 0 8px; }
+  p.lead { color: var(--muted); margin: 0 0 14px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; margin: 12px 0 4px; font-size: 13px; color: var(--muted); }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .dot { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+
+  /* pipeline rows */
+  .flow { display: grid; grid-template-columns: 150px 1fr; gap: 10px 14px; align-items: stretch; }
+  .stage-name { font-weight: 600; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em;
+                display: flex; align-items: center; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .box { flex: 1 1 200px; background: var(--card); border: 1.5px solid var(--line); border-radius: 10px; padding: 10px 12px; position: relative; }
+  .box b { display: block; font-size: 14px; margin-bottom: 2px; }
+  .box small { color: var(--muted); display: block; font-size: 12.5px; line-height: 1.4; }
+  .tag { position: absolute; top: -9px; right: 10px; font-size: 11px; font-weight: 600; color: #fff; padding: 1px 7px; border-radius: 10px; }
+  .t-done { background: var(--done); } .t-offline { background: var(--offline); }
+  .t-base { background: var(--base); } .t-plan { background: var(--plan); } .t-nov { background: var(--nov); }
+  .arrow { grid-column: 2; display: flex; justify-content: center; align-items: center; gap: 10px;
+           color: #2b3445; font-size: 28px; line-height: 1; margin: 0; }
+  .arrow .lbl { font-size: 12.5px; color: var(--muted); background: #e8ecf2; padding: 2px 10px; border-radius: 12px; }
+  .harrow { flex: 0 0 auto; align-self: center; font-size: 26px; color: #2b3445; padding: 0 2px; }
+  .stack { flex: 2 1 320px; display: flex; flex-direction: column; gap: 12px; }
+  .stack .box { flex: 1 1 auto; }
+
+  /* highlight mode */
+  .hl .box { opacity: .38; }
+  .hl .box.cur { opacity: 1; border: 2.5px solid var(--ink); box-shadow: 0 0 0 4px #ffe58a; }
+
+  /* detailed pipeline */
+  .detail { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 14px; }
+  .panel { background: var(--card); border: 1.5px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .panel h3 { margin-top: 0; }
+  .steps { counter-reset: s; list-style: none; padding: 0; margin: 0; }
+  .steps li { counter-increment: s; position: relative; padding: 6px 0 6px 32px; border-bottom: 1px dashed var(--line); }
+  .steps li:last-child { border-bottom: 0; }
+  .steps li::before { content: counter(s); position: absolute; left: 0; top: 7px; width: 22px; height: 22px; border-radius: 50%;
+                      background: var(--ink); color: #fff; font-size: 12px; text-align: center; line-height: 22px; }
+  .warn { color: var(--offline); font-weight: 600; }
+  code { background: #eef1f5; padding: 0 4px; border-radius: 4px; font-size: 13px; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: 12.5px; text-transform: uppercase; letter-spacing: .03em; }
+  .note { background: #fff8e6; border: 1px solid #f3d38a; border-radius: 10px; padding: 10px 14px; margin-top: 14px; font-size: 14px; }
+</style>
+</head>
+<body>
+<main>
+
+<h1>Assembly monitoring on IndustReal: pipeline overview</h1>
+<p class="lead">Goal: from a worker's head-mounted camera, recognise the part in hand and the action, track SOP steps,
+and warn the moment a wrong part is picked up, before it is installed.</p>
+<p class="lead">Paper-style figure of the current pipeline, with trained / fine-tuned / frozen marked: <a href="pipeline_figure.html">pipeline_figure.html</a></p>
+
+<div class="legend">
+  <span><i class="dot" style="background:var(--done)"></i>Done</span>
+  <span><i class="dot" style="background:var(--offline)"></i>Done, but offline only (needs the full video)</span>
+  <span><i class="dot" style="background:var(--base)"></i>Rule-based baseline (weak)</span>
+  <span><i class="dot" style="background:var(--plan)"></i>Planned</span>
+  <span><i class="dot" style="background:var(--nov)"></i>Planned: proposed novelty</span>
+</div>
+
+<!-- ============================ 1 ============================ -->
+<h2>1. Planned final pipeline (live, with verb)</h2>
+<p class="lead">Perception never reads the SOP. The SOP is only used afterwards to judge what was seen, so an alarm cannot be caused by the SOP itself.</p>
+<div class="note" style="margin:0 0 18px">
+  <b>Who detects what:</b> <b>DINOv2</b> = the eyes (describes each frame as numbers, gives no part name and no location) →
+  <b>TCN</b> = the brain (reads those descriptions over time and decides the part name + confidence) →
+  <b>SAM</b> = the pointer (finds where that part is: outline at the hand). The part name comes only from the TCN.
+</div>
+
+<div class="flow" id="full">
+  <div class="stage-name">Input</div>
+  <div class="row">
+    <div class="box" data-cur="1"><span class="tag t-done">done</span>
+      <b>Egocentric video stream</b><small>HoloLens RGB, processed at 10 frames/s. Live: only past frames available.</small></div>
+    <div class="box" data-cur="1"><span class="tag t-done">done</span>
+      <b>SOP (procedure)</b><small>Steps, their prerequisites (a dependency graph), and the parts each step allows.
+      <b style="display:inline;font-size:12.5px">Goes straight to C, skips perception.</b></small></div>
+  </div>
+  <div class="arrow">▼ <span class="lbl">video frames only</span></div>
+
+  <div class="stage-name">A. Perception<br>(SOP-free)</div>
+  <div class="row">
+    <div class="box" data-cur="1"><span class="tag t-done">done</span>
+      <b>A1 Frame encoder = DINOv2 (the eyes)</b><small>Turns each frame (full / centre / hands views) into a feature vector.
+      Frozen copy + a copy fine-tuned on hand crops. <b style="display:inline;font-size:12.5px">No part name, no location.</b></small></div>
+    <div class="harrow">→</div>
+    <div class="stack">
+      <div class="box" data-cur="1"><span class="tag t-offline">offline</span>
+        <b>A2 Part recogniser = TCN (the brain)</b><small>Reads DINOv2 features over time → <b style="display:inline;font-size:12.5px">decides the part name</b> + confidence, every frame.
+        Now looks ~100 s ahead; the live version must be causal.</small></div>
+      <div class="box"><span class="tag t-plan">planned</span>
+        <b>A3 Verb model</b><small>take / put / plug / screw / fit / align … + confidence, every frame (teammate's SlowFast or a verb head on the same features).</small></div>
+    </div>
+    <div class="harrow">→</div>
+    <div class="box" data-cur="1"><span class="tag t-done">done</span>
+      <b>A4 Localisation = SAM (the pointer)</b><small>Takes the part name from A2 and finds <b style="display:inline;font-size:12.5px">where</b> it is. SAM 3.1 outlines parts; hand-contact rule picks the one in hand. Display and evidence only, never changes the name.</small></div>
+  </div>
+  <div class="stage-name"></div>
+  <div class="row">
+    <div class="box"><span class="tag t-plan">planned</span>
+      <b>A5 Car state = ASD (YOLOv8)</b><small>Looks at the car, not the hand: one box around the partly built car + its 11-digit state
+      (e.g. <code>11100000000</code> = base, front chassis, chassis pin installed). COCO-pretrained, fine-tuned on IndustReal's state labels (<code>OD_labels.json</code>).</small></div>
+  </div>
+  <div class="arrow">▼ <span class="lbl">part + confidence, verb + confidence, outline of part in hand, car state</span></div>
+
+  <div class="stage-name">B. Fusion</div>
+  <div class="row">
+    <div class="box"><span class="tag t-plan">planned</span>
+      <b>B1 Action = verb + part</b><small>Per frame, e.g. <code>take_nut</code>, <code>screw_acorn_nut</code> (IndustReal's 75 action classes).
+      Action segments are formed where the label changes.</small></div>
+  </div>
+  <div class="arrow">▼ <span class="lbl">action + part in hand (with confidence), car state from A5</span> <span class="lbl">+ SOP from input</span></div>
+
+  <div class="stage-name">C. Procedure<br>reasoning<br>(uses SOP)</div>
+  <div class="row">
+    <div class="box" data-cur="1"><span class="tag t-done">done</span>
+      <b>C1 Step state</b><small>From the SOP graph + steps already done: which steps are ready / current / completed.</small></div>
+    <div class="harrow">⇄</div>
+    <div class="stack">
+      <div class="box"><span class="tag t-nov">novelty</span>
+        <b>C2 Wrong-part alarm</b><small>Part in hand not allowed by any ready step, confident (e.g. ≥0.9) for several frames → alert at the grasp,
+        before installation.</small></div>
+      <div class="box" data-cur="1"><span class="tag t-base">baseline</span>
+        <b>C3 Step completion = PSR</b><small>Now: rules on SAM boxes + timers (F1 0.678). Planned, in two stages:
+        (1) ASD state flips + SOP order only, as the paper's B3 (F1 0.883); (2) also require a matching action that just ended
+        (e.g. <code>screw_acorn_nut</code>) to cut the delay. Rules, no learning. A completed step updates C1 (⇄).</small></div>
+    </div>
+  </div>
+  <div class="arrow">▼ <span class="lbl">step states, completed steps, alarm</span></div>
+
+  <div class="stage-name">D. Output</div>
+  <div class="row">
+    <div class="box" data-cur="1"><span class="tag t-done">done</span>
+      <b>D1 Overlay / HUD</b><small>Part + confidence, outline of the part in hand, SOP checklist, (later) action and alarm.</small></div>
+    <div class="box"><span class="tag t-plan">planned</span>
+      <b>D2 Worker alert</b><small>"Stop: wrong part for this step" with the offending part outlined.</small></div>
+  </div>
+  <div class="arrow">▼ <span class="lbl">predictions compared with official labels (evaluation only, never fed back)</span></div>
+
+  <div class="stage-name">E. Evaluation</div>
+  <div class="row">
+    <div class="box" data-cur="1"><span class="tag t-done">done</span>
+      <b>E1 Part accuracy (ours)</b><small>Per-frame accuracy vs official labels on held-out video(s); cross-subject check.</small></div>
+    <div class="box"><span class="tag t-plan">planned</span>
+      <b>E2 Action top-1 (paper protocol)</b><small>Official test split, per labelled segment. Compare with IndustReal:
+      SlowFast 60.4%, MViTv2 65.3% (RGB).</small></div>
+    <div class="box"><span class="tag t-plan">planned</span>
+      <b>E3 PSR (paper protocol)</b><small>F1 / POS / delay. Compare with IndustReal B3 (F1 0.883) and STORM-PSR (F1 0.901).</small></div>
+    <div class="box"><span class="tag t-nov">novelty</span>
+      <b>E4 Alarm metrics</b><small>Delay from grasp to alarm, % of alarms raised before installation, false alarms per minute.</small></div>
+  </div>
+</div>
+
+<!-- ============================ 2 ============================ -->
+<h2>2. What is done now (highlighted)</h2>
+<p class="lead">Same pipeline; highlighted boxes are what exists today. Everything happens <b>offline</b> on one recorded test video (13_assy_0_1).</p>
+<div class="flow hl" id="hl"></div>
+
+<!-- ============================ 3 ============================ -->
+<h2>3. Current pipeline in detail</h2>
+<p class="lead">Trained on the other 18 local videos; the test video (13_assy_0_1) and its labels are never used for training or tuning, only for the final score.</p>
+
+<div class="row" style="margin-bottom:16px">
+  <div class="box"><b>Video</b><small>13_assy_0_1, 10 frames/s</small></div>
+  <div class="harrow">→</div>
+  <div class="box"><b>DINOv2 (A1)</b><small>frame → feature vector</small></div>
+  <div class="harrow">→</div>
+  <div class="box"><b>TCN (A2)</b><small>decides part + confidence per frame</small></div>
+  <div class="harrow">→</div>
+  <div class="box"><b>SAM (A4)</b><small>finds where: outline of that part at the hand</small></div>
+  <div class="harrow">→</div>
+  <div class="box"><b>D1 overlay</b><small>video for review</small></div>
+</div>
+<div class="row" style="margin-bottom:18px">
+  <div class="box"><b>Video → SAM boxes</b><small>same SAM run as A4</small></div>
+  <div class="harrow">+</div>
+  <div class="box"><b>SOP</b><small>steps + prerequisites</small></div>
+  <div class="harrow">→</div>
+  <div class="box"><b>C1 + C3 step rules</b><small>ready / current / done</small></div>
+  <div class="harrow">→</div>
+  <div class="box"><b>D1 overlay</b><small>SOP checklist</small></div>
+</div>
+
+<div class="detail">
+  <div class="panel">
+    <h3>A1 + A2: what is the part? (DINOv2 sees, TCN decides)</h3>
+    <ol class="steps">
+      <li><b>Frames:</b> video sampled at 10 frames/s.</li>
+      <li><b>Views per frame:</b> full frame, centre crop, hands crop (fixed lower-middle region, not a hand detector),
+          high-res hands crop pooled into a 2×2 grid.</li>
+      <li><b>Frozen DINOv2-small</b> turns each view into a feature vector (image content only, no timing).</li>
+      <li><b>Fine-tuned DINOv2-small</b> on hands crops (part + verb labels), 2-fold cross-fitted so no video is
+          featurised by a model that trained on it.</li>
+      <li><b>Progress feature</b> added: how far through the video each frame is (0 → 1). <span class="warn">Needs total video length, so offline only.</span></li>
+      <li><b>Multi-stage temporal CNN (MS-TCN style)</b> labels every frame with a part or "nothing"; a verb head is trained alongside to help.
+          <span class="warn">Sees ~100 s of future frames.</span></li>
+      <li><b>Ensemble</b> of seeds/folds and two variants, weighted on training out-of-fold results.</li>
+      <li><b>Viterbi smoothing</b> over the whole video with learned part-to-part transition costs. <span class="warn">Needs the full video.</span></li>
+      <li><b>Output:</b> part name + confidence (0–1) for every frame. No SOP input anywhere.</li>
+    </ol>
+  </div>
+
+  <div class="panel">
+    <h3>A4: where is the part? (SAM, display only)</h3>
+    <ol class="steps">
+      <li><b>SAM 3.1</b> per frame with text prompts for 15 kit parts + hand (<code>monitor/kit_catalog.py</code>) → outlines.</li>
+      <li><b>Candidates:</b> outlines that touch a hand (hand mask widened 12 px, ≥4% of the part touching).</li>
+      <li><b>Ignore parts already on the model:</b> skip outlines that sit still (same place 1.5 s and 3 s ago).</li>
+      <li><b>Loose name check:</b> SAM's name must be in the same look-alike group as the model's part
+          (nut/washers/acorn nut; pins; white frame parts). Wheel and pulley are kept apart.</li>
+      <li><b>Keep the same object</b> across frames while it stays valid (tracking).</li>
+      <li><b>Nothing qualifies → no box</b>, header shows "not located in hand" (never a wrong box on purpose).</li>
+      <li><b>Label on the box = model's part + confidence.</b> SAM's own name is not shown.</li>
+    </ol>
+  </div>
+
+  <div class="panel">
+    <h3>C1 + C3: SOP steps (rule-based baseline)</h3>
+    <ol class="steps">
+      <li><b>Ready steps</b> from the SOP graph: prerequisites all done.</li>
+      <li><b>Each step</b> has a moving part (e.g. pin) and a target (e.g. chassis) from the SOP.</li>
+      <li><b>Evidence per frame from SAM boxes:</b> hand near moving part, part moving, part box touching target box.</li>
+      <li><b>Timers:</b> enough work time, contact held, then hand leaves and stays away → step marked done.</li>
+      <li><b>Limits:</b> never checks the part is actually inserted/screwed; some timers were tuned on this video;
+          SAM names are unreliable.</li>
+    </ol>
+  </div>
+
+  <div class="panel">
+    <h3>D1: overlay video (first 3 min 20 s)</h3>
+    <ol class="steps">
+      <li><b>Top:</b> official label (for checking) vs model part + confidence, MATCH/MISS.</li>
+      <li><b>Image:</b> hand outlines; part in hand outlined and labelled with the model's part + confidence.</li>
+      <li><b>Left:</b> SOP checklist (done / current / not yet).</li>
+      <li><b>Bottom:</b> SOP state, recent official step completions, running part accuracy.</li>
+    </ol>
+  </div>
+</div>
+
+<h3>Current results (13_assy_0_1, whole video unless noted)</h3>
+<table>
+  <tr><th>What</th><th>Result</th><th>Meaning</th></tr>
+  <tr><td>Part, must always answer</td><td>90.8%</td><td>Frames with an official part label; model forced to name a part</td></tr>
+  <tr><td>Part, "covered"</td><td>94.2%</td><td>Only frames where the model says a part is being handled</td></tr>
+  <tr><td>Part, may answer "nothing"</td><td>85.4%</td><td>"Nothing" on a labelled frame counts as wrong (the overlay's running number)</td></tr>
+  <tr><td>Part segments</td><td>58.7%</td><td>Whole handling segments, right part and ≥50% time overlap</td></tr>
+  <tr><td>Confidence reliability</td><td>≥0.9 → 100% right</td><td>Below 0.7 → about 72–76% right</td></tr>
+  <tr><td>Cross-subject check</td><td>69.0%</td><td>Model trained without two people, tested on them (1 of 5 groups done)</td></tr>
+  <tr><td>Box on part in hand</td><td>68% of frames</td><td>Hand-checked sample: 27 of 29 boxes on the right object</td></tr>
+  <tr><td>SOP step completion</td><td>F1 0.678</td><td>Own scoring, not the paper's; rule-based</td></tr>
+</table>
+
+<div class="note">
+  <b>Gap to the planned pipeline:</b> (1) make the part model causal (no progress feature, no look-ahead, streaming smoothing) and measure the drop;
+  (2) add the verb and fuse into actions; (3) wrong-part alarm + its metrics (novelty);
+  (4) evaluate on the official test split with the paper's scoring; (5) add ASD (car state) and replace rule-based step completion with PSR on ASD + action evidence.
+</div>
+
+</main>
+<script>
+  // Section 2: clone section 1 and highlight the boxes that exist today.
+  const src = document.getElementById('full');
+  const dst = document.getElementById('hl');
+  dst.innerHTML = src.innerHTML;
+  dst.querySelectorAll('.box').forEach(b => { if (b.dataset.cur === '1') b.classList.add('cur'); });
+</script>
+</body>
+</html>

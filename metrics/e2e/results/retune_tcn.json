@@ -1,0 +1,321 @@
+{
+ "stream": "tcn",
+ "chosen": {
+  "W": 1.0,
+  "CMIN": 0.3,
+  "EPS": 0.02,
+  "RATE": 2
+ },
+ "chosen_total": 3.0914,
+ "control_total": 2.986,
+ "ranking": [
+  {
+   "config": {
+    "W": 1.0,
+    "CMIN": 0.3,
+    "EPS": 0.02,
+    "RATE": 2
+   },
+   "total": 3.0914,
+   "eligible": true,
+   "live": "all 0.877/0.891/7.0s FP16 FN13 | err 0.753/0.775/9.6s | w/err 0.853/0.878 (n=16)"
+  },
+  {
+   "config": {
+    "W": 1.0,
+    "CMIN": 0.3,
+    "EPS": 0.05,
+    "RATE": 2
+   },
+   "total": 3.0912,
+   "eligible": true,
+   "live": "all 0.877/0.891/7.0s FP16 FN13 | err 0.753/0.775/9.6s | w/err 0.853/0.878 (n=16)"
+  },
+  {
+   "config": {
+    "W": 1.0,
+    "CMIN": 0.3,
+    "EPS": 0.1,
+    "RATE": 2
+   },
+   "total": 3.0908,
+   "eligible": true,
+   "live": "all 0.877/0.891/7.0s FP16 FN13 | err 0.753/0.775/9.6s | w/err 0.853/0.878 (n=16)"
+  },
+  {
+   "config": {
+    "W": 3.0,
+    "CMIN": 0.3,
+    "EPS": 0.1,
+    "RATE": 2
+   },
+   "total": 3.0779,
+   "eligible": false,
+   "live": "all 0.861/0.882/7.1s FP16 FN15 | err 0.753/0.775/9.5s | w/err 0.838/0.869 (n=16)"
+  },
+  {
+   "config": {
+    "W": 0.3,
+    "CMIN": 0.3,
+    "EPS": 0.02,
+    "RATE": 2
+   },
+   "total": 3.0756,
+   "eligible": true,
+   "live": "all 0.877/0.891/7.1s FP16 FN13 | err 0.753/0.775/9.6s | w/err 0.853/0.878 (n=16)"
+  },
+  {
+   "config": {
+    "W": 3.0,
+    "CMIN": 0.5,
+    "EPS": 0.1,
+    "RATE": 2
+   },
+   "total": 3.0718,
+   "eligible": true,
+   "live": "all 0.869/0.887/7.2s FP17 FN13 | err 0.753/0.775/9.5s | w/err 0.845/0.874 (n=16)"
+  },
+  {
+   "config": {
+    "W": 3.0,
+    "CMIN": 0.5,
+    "EPS": 0.05,
+    "RATE": 2
+   },
+   "total": 3.0718,
+   "eligible": true,
+   "live": "all 0.869/0.887/7.2s FP17 FN13 | err 0.753/0.775/9.5s | w/err 0.845/0.874 (n=16)"
+  },
+  {
+   "config": {
+    "W": 3.0,
+    "CMIN": 0.5,
+    "EPS": 0.02,
+    "RATE": 2
+   },
+   "total": 3.0718,
+   "eligible": true,
+   "live": "all 0.869/0.887/7.2s FP17 FN13 | err 0.753/0.775/9.5s | w/err 0.845/0.874 (n=16)"
+  },
+  {
+   "config": {
+    "W": 3.0,
+    "CMIN": 0.3,
+    "EPS": 0.02,
+    "RATE": 2
+   },
+   "total": 3.0695,
+   "eligible": false,
+   "live": "all 0.861/0.882/7.1s FP16 FN15 | err 0.753/0.775/9.5s | w/err 0.838/0.869 (n=16)"
+  },
+  {
+   "config": {
+    "W": 3.0,
+    "CMIN": 0.3,
+    "EPS": 0.05,
+    "RATE": 2
+   },
+   "total": 3.0694,
+   "eligible": false,
+   "live": "all 0.861/0.882/7.1s FP16 FN15 | err 0.753/0.775/9.5s | w/err 0.838/0.869 (n=16)"
+  },
+  {
+   "config": {
+    "W": 1.0,
+    "CMIN": 0.5,
+    "EPS": 0.02,
+    "RATE": 2
+   },
+   "total": 3.0694,
+   "eligible": true,
+   "live": "all 0.869/0.887/7.3s FP17 FN13 | err 0.753/0.775/9.8s | w/err 0.845/0.874 (n=16)"
+  },
+  {
+   "config": {
+    "W": 1.0,
+    "CMIN": 0.5,
+    "EPS": 0.05,
+    "RATE": 2
+   },
+   "total": 3.0689,
+   "eligible": true,
+   "live": "all 0.869/0.887/7.3s FP17 FN13 | err 0.753/0.775/9.8s | w/err 0.845/0.874 (n=16)"
+  },
+  {
+   "config": {
+    "W": 3.0,
+    "CMIN": 0.7,
+    "EPS": 0.02,
+    "RATE": 2
+   },
+   "total": 3.0659,
+   "eligible": true,
+   "live": "all 0.869/0.887/7.5s FP17 FN13 | err 0.753/0.775/9.9s | w/err 0.845/0.874 (n=16)"
+  },
+  {
+   "config": {
+    "W": 3.0,
+    "CMIN": 0.7,
+    "EPS": 0.05,
+    "RATE": 2
+   },
+   "total": 3.0659,
+   "eligible": true,
+   "live": "all 0.869/0.887/7.5s FP17 FN13 | err 0.753/0.775/9.9s | w/err 0.845/0.874 (n=16)"
+  },
+  {
+   "config": {
+    "W": 3.0,
+    "CMIN": 0.7,
+    "EPS": 0.1,
+    "RATE": 2
+   },
+   "total": 3.0657,
+   "eligible": true,
+   "live": "all 0.869/0.887/7.5s FP17 FN13 | err 0.753/0.775/9.9s | w/err 0.845/0.874 (n=16)"
+  },
+  {
+   "config": {
+    "W": 1.0,
+    "CMIN": 0.7,
+    "EPS": 0.02,
+    "RATE": 2
+   },
+   "total": 3.0656,
+   "eligible": true,
+   "live": "all 0.869/0.887/7.5s FP17 FN13 | err 0.753/0.775/9.9s | w/err 0.845/0.874 (n=16)"
+  },
+  {
+   "config": {
+    "W": 0.3,
+    "CMIN": 0.3,
+    "EPS": 0.05,
+    "RATE": 2
+   },
+   "total": 3.0603,
+   "eligible": true,
+   "live": "all 0.869/0.891/7.3s FP16 FN13 | err 0.753/0.775/9.8s | w/err 0.845/0.878 (n=16)"
+  },
+  {
+   "config": {
+    "W": 1.0,
+    "CMIN": 0.5,
+    "EPS": 0.1,
+    "RATE": 2
+   },
+   "total": 3.0565,
+   "eligible": true,
+   "live": "all 0.869/0.887/7.4s FP17 FN13 | err 0.753/0.775/9.9s | w/err 0.845/0.874 (n=16)"
+  },
+  {
+   "config": {
+    "W": 0.3,
+    "CMIN": 0.5,
+    "EPS": 0.02,
+    "RATE": 2
+   },
+   "total": 3.0547,
+   "eligible": true,
+   "live": "all 0.869/0.887/7.4s FP17 FN13 | err 0.753/0.775/9.9s | w/err 0.845/0.874 (n=16)"
+  },
+  {
+   "config": {
+    "W": 1.0,
+    "CMIN": 0.7,
+    "EPS": 0.05,
+    "RATE": 2
+   },
+   "total": 3.0535,
+   "eligible": true,
+   "live": "all 0.869/0.887/7.5s FP17 FN13 | err 0.753/0.775/10.0s | w/err 0.845/0.874 (n=16)"
+  },
+  {
+   "config": {
+    "W": 1.0,
+    "CMIN": 0.7,
+    "EPS": 0.1,
+    "RATE": 2
+   },
+   "total": 3.0534,
+   "eligible": true,
+   "live": "all 0.869/0.887/7.5s FP17 FN13 | err 0.753/0.775/10.0s | w/err 0.845/0.874 (n=16)"
+  },
+  {
+   "config": {
+    "W": 0.3,
+    "CMIN": 0.7,
+    "EPS": 0.02,
+    "RATE": 2
+   },
+   "total": 3.053,
+   "eligible": true,
+   "live": "all 0.869/0.887/7.5s FP17 FN13 | err 0.753/0.775/10.0s | w/err 0.845/0.874 (n=16)"
+  },
+  {
+   "config": {
+    "W": 0.3,
+    "CMIN": 0.7,
+    "EPS": 0.05,
+    "RATE": 2
+   },
+   "total": 3.0528,
+   "eligible": true,
+   "live": "all 0.869/0.887/7.5s FP17 FN13 | err 0.753/0.775/10.0s | w/err 0.845/0.874 (n=16)"
+  },
+  {
+   "config": {
+    "W": 0.3,
+    "CMIN": 0.5,
+    "EPS": 0.05,
+    "RATE": 2
+   },
+   "total": 3.0498,
+   "eligible": true,
+   "live": "all 0.861/0.887/7.5s FP17 FN13 | err 0.753/0.775/9.9s | w/err 0.838/0.874 (n=16)"
+  },
+  {
+   "config": {
+    "W": 0.3,
+    "CMIN": 0.3,
+    "EPS": 0.1,
+    "RATE": 2
+   },
+   "total": 3.0387,
+   "eligible": true,
+   "live": "all 0.861/0.891/7.6s FP16 FN13 | err 0.733/0.775/10.8s | w/err 0.838/0.878 (n=16)"
+  },
+  {
+   "config": {
+    "W": 0.3,
+    "CMIN": 0.7,
+    "EPS": 0.1,
+    "RATE": 2
+   },
+   "total": 3.0317,
+   "eligible": true,
+   "live": "all 0.861/0.887/7.9s FP17 FN13 | err 0.733/0.775/10.9s | w/err 0.838/0.874 (n=16)"
+  },
+  {
+   "config": {
+    "W": 0.3,
+    "CMIN": 0.5,
+    "EPS": 0.1,
+    "RATE": 2
+   },
+   "total": 3.0285,
+   "eligible": true,
+   "live": "all 0.853/0.887/7.8s FP17 FN13 | err 0.733/0.775/10.9s | w/err 0.831/0.874 (n=16)"
+  },
+  {
+   "config": {
+    "W": 0.0,
+    "CMIN": 0.5,
+    "EPS": 0.05,
+    "RATE": 1
+   },
+   "total": 2.986,
+   "eligible": false,
+   "live": "all 0.845/0.883/7.9s FP18 FN13 | err 0.733/0.764/11.0s | w/err 0.823/0.870 (n=16)"
+  }
+ ]
+}

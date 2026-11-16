@@ -1,0 +1,85 @@
+{
+ "system": "v14",
+ "split": "test",
+ "setting": "PREDICTED AR (deployable)",
+ "all": {
+  "POS": 0.812,
+  "F1": 0.904,
+  "delay_frames": 63.2,
+  "delay_s": 6.32,
+  "TP": 252,
+  "FP": 41,
+  "FN": 18,
+  "n_videos": 32
+ },
+ "with_errors": {
+  "POS": 0.747,
+  "F1": 0.839,
+  "delay_frames": 73.3,
+  "delay_s": 7.33,
+  "TP": 111,
+  "FP": 31,
+  "FN": 15,
+  "n_videos": 15
+ },
+ "without_errors": {
+  "POS": 0.87,
+  "F1": 0.96,
+  "delay_frames": 54.2,
+  "delay_s": 5.42,
+  "TP": 141,
+  "FP": 10,
+  "FN": 3,
+  "n_videos": 17
+ },
+ "with_errors_labels_all": {
+  "POS": 0.769,
+  "F1": 0.878,
+  "delay_frames": 63.2,
+  "delay_s": 6.32,
+  "TP": 252,
+  "FP": 41,
+  "FN": 37,
+  "n_videos": 32
+ },
+ "mistakes": {
+  "skipped": {
+   "gt": 10,
+   "alerts": 5,
+   "tp": 2,
+   "precision": 0.4,
+   "recall": 0.2,
+   "false_alarms_per_h": 1.2,
+   "mean_delay_s": 2.4
+  },
+  "order": {
+   "gt": 4,
+   "alerts": 5,
+   "tp": 4,
+   "precision": 0.8,
+   "recall": 1.0,
+   "false_alarms_per_h": 0.4,
+   "mean_delay_s": 6.5
+  },
+  "install": {
+   "gt": 18,
+   "alerts": 7,
+   "tp": 3,
+   "precision": 0.429,
+   "recall": 0.167,
+   "false_alarms_per_h": 1.6,
+   "mean_delay_s": 7.7
+  },
+  "all": {
+   "gt": 32,
+   "alerts": 17,
+   "tp": 9,
+   "precision": 0.529,
+   "recall": 0.281,
+   "false_alarms_per_h": 3.2,
+   "mean_delay_s": 5.9
+  },
+  "hours": 2.503
+ },
+ "wall_s": 14.2
+}

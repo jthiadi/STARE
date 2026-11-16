@@ -1,0 +1,38 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.env
+.env.*
+
+# Local Python environments and caches.
+.venv/
+.tools/
+.runtime/
+.cache/
+.tmp/
+tmp/
+
+# Downloaded / trained weights (released separately as a GitHub Release asset).
+models/
+release/
+release_vjepa/
+runs/
+*.pt
+*.pth
+*.safetensors
+
+# IndustReal videos and annotations (downloaded by scripts/download_*.py).
+data/generated/*
+!data/generated/.gitkeep
+data/evaluation/
+data/reference/
+
+# Everything produced by the pipeline: features, predictions, overlay videos.
+output/
+*.mp4
+*.npz
+*.npy
+*.zip
+release_vjepa_prefix/*.pt
+# teammate's PSR verifier weights, 348 MB each
+weights/

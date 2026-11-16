@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4A5568"/>
+    </marker>
+    <style>
+      .t{font-size:21px;font-weight:700;fill:#1A202C}
+      .b{font-size:15.5px;fill:#2D3748}
+      .s{font-size:14px;fill:#4A5568}
+      .lane{font-size:15px;font-weight:700;letter-spacing:1.5px}
+      .ln{stroke:#4A5568;stroke-width:2.5;fill:none;marker-end:url(#a)}
+      .lab{font-size:14px;font-weight:600;fill:#4A5568}
+    </style>
+  </defs>
+  <rect width="1600" height="900" fill="#FFFFFF"/>
+
+  <!-- title -->
+  <text x="40" y="58" font-size="32" font-weight="800" fill="#1A202C">v9: causal procedure step recognition</text>
+  <text x="40" y="90" class="s" font-size="17">Every decision at frame t uses only frames, actions and readings up to t · no assembly-state detector (ASD)</text>
+
+  <!-- lanes -->
+  <rect x="20" y="118" width="1130" height="250" rx="14" fill="#F5F9FF" stroke="#BFD4F2"/>
+  <text x="40" y="146" class="lane" fill="#2B6CB0">VISION: WHAT IS ATTACHED (every 2nd frame)</text>
+  <rect x="20" y="398" width="1130" height="250" rx="14" fill="#FFF9F2" stroke="#F3D3B0"/>
+  <text x="40" y="426" class="lane" fill="#C05621">ACTIONS: WHEN SOMETHING HAPPENED</text>
+
+  <!-- vision row -->
+  <rect x="40" y="170" width="190" height="170" rx="12" fill="#FFFFFF" stroke="#2B6CB0" stroke-width="2"/>
+  <text x="135" y="232" text-anchor="middle" class="t">Camera frame</text>
+  <text x="135" y="262" text-anchor="middle" class="b">egocentric RGB</text>
+  <text x="135" y="284" text-anchor="middle" class="b">1280×720, 10 fps</text>
+
+  <rect x="275" y="170" width="260" height="170" rx="12" fill="#E8F0FE" stroke="#2B6CB0" stroke-width="2"/>
+  <text x="295" y="204" class="t">① Localizer</text>
+  <text x="295" y="234" class="b">DINOv2-small (frozen)</text>
+  <text x="295" y="256" class="b">patch tokens vs assembly /</text>
+  <text x="295" y="278" class="b">background prototypes</text>
+  <text x="295" y="300" class="b">→ blob → box (temporal prior)</text>
+
+  <rect x="580" y="170" width="250" height="170" rx="12" fill="#E8F0FE" stroke="#2B6CB0" stroke-width="2"/>
+  <text x="600" y="204" class="t">② Crop + quality</text>
+  <text x="600" y="234" class="b">336×336 crop, 10% padding</text>
+  <text x="600" y="262" class="b">q = sharpness ×</text>
+  <text x="600" y="284" class="b">      (1 − hand coverage)</text>
+  <text x="600" y="312" class="s">bad views count ≤ 10%</text>
+
+  <rect x="875" y="170" width="255" height="170" rx="12" fill="#E8F0FE" stroke="#2B6CB0" stroke-width="2"/>
+  <text x="895" y="204" class="t">③ 2 part verifiers</text>
+  <text x="895" y="234" class="b">DINOv2-base, 336 px,</text>
+  <text x="895" y="256" class="b">fine-tuned (4 / 6 blocks)</text>
+  <text x="895" y="284" class="b">→ P(part k attached)</text>
+  <text x="895" y="306" class="b">   for all 10 parts</text>
+
+  <path class="ln" d="M230 255 H272"/>
+  <path class="ln" d="M535 255 H577"/>
+  <path class="ln" d="M830 255 H872"/>
+
+  <!-- action row -->
+  <rect x="40" y="450" width="190" height="170" rx="12" fill="#FFFFFF" stroke="#C05621" stroke-width="2"/>
+  <text x="135" y="500" text-anchor="middle" class="t">Action</text>
+  <text x="135" y="525" text-anchor="middle" class="t">recognition</text>
+  <text x="135" y="560" text-anchor="middle" class="b">top-1 action per frame</text>
+  <text x="135" y="582" text-anchor="middle" class="b">(predicted or GT)</text>
+
+  <rect x="275" y="450" width="260" height="170" rx="12" fill="#FFEFDD" stroke="#C05621" stroke-width="2"/>
+  <text x="295" y="484" class="t">④ Event extractor</text>
+  <text x="295" y="514" class="b">trigger = end of a fastening</text>
+  <text x="295" y="536" class="b">action (tighten nut, fit wheel…)</text>
+  <text x="295" y="564" class="b">+ context: objects handled,</text>
+  <text x="295" y="586" class="b">duration, time since last step</text>
+
+  <rect x="580" y="450" width="550" height="170" rx="12" fill="#FFEFDD" stroke="#C05621" stroke-width="2"/>
+  <text x="600" y="484" class="t">⑤ Step model: which step did this trigger complete?</text>
+  <text x="600" y="516" class="b">Naive Bayes count tables  +  4.0 × logistic regression</text>
+  <text x="600" y="540" class="b">inputs: procedure, current state, trigger, actions in window / since last step</text>
+  <text x="600" y="568" class="b">→ p(step group | clues), incl. "no step"</text>
+  <text x="600" y="594" class="s">impossible steps masked · trained on train + val labels only</text>
+
+  <path class="ln" d="M230 535 H272"/>
+  <path class="ln" d="M535 535 H577"/>
+
+  <!-- filter -->
+  <rect x="1195" y="170" width="370" height="400" rx="14" fill="#F3E8FF" stroke="#6B46C1" stroke-width="2.5"/>
+  <text x="1215" y="206" class="t" font-size="23">⑥ Causal state filter</text>
+  <text x="1215" y="238" class="b">belief over assembly states</text>
+  <text x="1215" y="260" class="b">(11 parts on / off, top 40 kept)</text>
+  <line x1="1215" y1="280" x2="1545" y2="280" stroke="#C9B6EE"/>
+  <text x="1215" y="308" class="b" font-weight="700" fill="#2B6CB0">Reading (vision):</text>
+  <text x="1215" y="332" class="b">states matching what the camera</text>
+  <text x="1215" y="354" class="b">sees gain weight (× quality)</text>
+  <line x1="1215" y1="376" x2="1545" y2="376" stroke="#C9B6EE"/>
+  <text x="1215" y="404" class="b" font-weight="700" fill="#C05621">Trigger (actions):</text>
+  <text x="1215" y="428" class="b">belief moves along the likely</text>
+  <text x="1215" y="450" class="b">steps; only legal steps allowed</text>
+  <line x1="1215" y1="472" x2="1545" y2="472" stroke="#C9B6EE"/>
+  <text x="1215" y="500" class="b">Actions say WHEN and WHICH,</text>
+  <text x="1215" y="522" class="b">vision confirms WHAT.</text>
+  <text x="1215" y="550" class="s">keeps several hypotheses, not one guess</text>
+
+  <path class="ln" d="M1130 255 H1192"/>
+  <text x="1140" y="243" class="lab">P, q</text>
+  <path class="ln" d="M1130 535 H1160 V420 H1192"/>
+  <text x="1133" y="557" class="lab">p(step)</text>
+
+  <!-- report -->
+  <rect x="1195" y="612" width="370" height="170" rx="14" fill="#E6F6EC" stroke="#2F855A" stroke-width="2.5"/>
+  <text x="1215" y="646" class="t">⑦ Report rule (all must hold)</text>
+  <text x="1215" y="676" class="b">• best state ≠ last reported, P ≥ 0.8</text>
+  <text x="1215" y="700" class="b">• best for 3 readings in a row</text>
+  <text x="1215" y="724" class="b">• changed parts visually confirmed</text>
+  <text x="1215" y="746" class="b">   over the last 6 readings</text>
+  <text x="1215" y="770" class="s">→ official state-to-step conversion</text>
+  <path class="ln" d="M1380 570 V609"/>
+
+  <rect x="1195" y="812" width="370" height="58" rx="29" fill="#2F855A"/>
+  <text x="1380" y="848" text-anchor="middle" font-size="19" font-weight="700" fill="#FFFFFF">"Install front wheel" @ frame t</text>
+  <path class="ln" d="M1380 782 V809"/>
+
+  <!-- results strip -->
+  <rect x="20" y="678" width="1130" height="192" rx="14" fill="#F7FAFC" stroke="#E2E8F0"/>
+  <text x="40" y="712" class="lane" fill="#4A5568">TEST RESULTS (official IndustReal evaluator)</text>
+  <text x="40" y="748" class="b" font-weight="700">System</text>
+  <text x="520" y="748" class="b" font-weight="700">POS ↑</text>
+  <text x="660" y="748" class="b" font-weight="700">F1 ↑</text>
+  <text x="800" y="748" class="b" font-weight="700">Delay ↓</text>
+  <line x1="40" y1="760" x2="940" y2="760" stroke="#CBD5E0"/>
+  <text x="40" y="788" class="b" font-weight="700" fill="#2F855A">v9 + predicted actions (deployable)</text>
+  <text x="520" y="788" class="b" font-weight="700" fill="#2F855A">0.804</text>
+  <text x="660" y="788" class="b" font-weight="700" fill="#2F855A">0.893</text>
+  <text x="800" y="788" class="b" font-weight="700" fill="#2F855A">7.6 s</text>
+  <text x="40" y="816" class="b">v9 + ground-truth actions (upper bound)</text>
+  <text x="520" y="816" class="b">0.833</text><text x="660" y="816" class="b">0.918</text><text x="800" y="816" class="b">5.7 s</text>
+  <text x="40" y="844" class="b">B3, IndustReal paper</text>
+  <text x="520" y="844" class="b">0.797</text><text x="660" y="844" class="b">0.883</text><text x="800" y="844" class="b">22.4 s</text>
+  <text x="960" y="780" class="s">End-to-end</text>
+  <text x="960" y="808" font-size="26" font-weight="800" fill="#1A202C">41 ms</text>
+  <text x="960" y="832" class="s">per frame, RTX 4060</text>
+  <text x="960" y="852" class="s">laptop (real time)</text>
+</svg>

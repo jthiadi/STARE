@@ -1,0 +1,26 @@
+{
+ "protocol": "IndustReal action recognition: annotated segments, 74 actions; the live assistant's end_labels; only each action's frames and earlier actions; recipe locked on val, test once",
+ "members": [
+  "vmae_full",
+  "vjft_area_k12",
+  "vjft_hand_k12",
+  "vjft_hand_k12_s1"
+ ],
+ "samplings": [
+  0.5,
+  0.25,
+  0.75
+ ],
+ "weight": 0.95,
+ "strength": 0.2,
+ "smoothing": 0.01,
+ "val": {
+  "segments": 1928,
+  "top1": 73.81
+ },
+ "test": {
+  "segments": 3678,
+  "top1": 75.07
+ },
+ "paper_best": 65.25
+}

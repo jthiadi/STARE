@@ -1,0 +1,6 @@
+# Tested with Python 3.10.18 on Windows 11, CUDA 12.1, RTX 4060 Laptop GPU (8 GB)
+torch==2.5.1          # install the CUDA build from https://pytorch.org for your system
+transformers==4.57.6  # DINOv2 backbones (facebook/dinov2-small, facebook/dinov2-base)
+scikit-learn==1.7.2
+opencv-python==4.12.0.88
+numpy==2.0.1

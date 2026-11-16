@@ -1,0 +1,35 @@
+[
+ {
+  "file": "ar_live.jsonl",
+  "split": "test",
+  "frame_acc": 48.37,
+  "end_acc": 39.78,
+  "segment_top1_paper_protocol_approx": 55.66,
+  "segments": 3678,
+  "frames": 90105
+ },
+ {
+  "file": "ar_vjepa_prefix.jsonl",
+  "split": "test",
+  "frame_acc": 48.76,
+  "end_acc": 43.18,
+  "segment_top1_paper_protocol_approx": 55.46,
+  "segments": 3678,
+  "frames": 90105
+ },
+ {
+  "file": "ar.jsonl",
+  "split": "test",
+  "frame_acc": 48.37,
+  "end_acc": 39.78,
+  "segment_top1_paper_protocol_approx": 55.66,
+  "segments": 3678,
+  "frames": 90105
+ },
+ {
+  "file": "action_end.jsonl",
+  "split": "test",
+  "true_actions_labelled_right_detected": 55.52,
+  "true_actions": 3678
+ }
+]

@@ -1,0 +1,47 @@
+{
+ "decode": {
+  "median_ms": 6.4,
+  "p95_ms": 7.1,
+  "max_ms": 13.7
+ },
+ "ar": {
+  "median_ms": 0.0,
+  "p95_ms": 0.0,
+  "max_ms": 0.2
+ },
+ "asd": {
+  "median_ms": 8.1,
+  "p95_ms": 24.0,
+  "max_ms": 680.4
+ },
+ "localize": {
+  "median_ms": 11.6,
+  "p95_ms": 32.2,
+  "max_ms": 465.2
+ },
+ "verifiers": {
+  "median_ms": 0.0,
+  "p95_ms": 41.0,
+  "max_ms": 144.2
+ },
+ "filter": {
+  "median_ms": 0.1,
+  "p95_ms": 0.2,
+  "max_ms": 33.4
+ },
+ "end_to_end": {
+  "median_ms": 35.5,
+  "p95_ms": 78.6,
+  "max_ms": 687.4
+ },
+ "mistake_check_at_end_ms": [
+  109.6,
+  0.3,
+  0.4
+ ],
+ "peak_gpu_mb": 602,
+ "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+ "note": "AR read from ar.jsonl (AR model compute NOT included); first frames include warm-up",
+ "mean_end_to_end_ms": 50.4,
+ "frames": 3600
+}

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Station replay</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header class="bar"></header>
+<main>
+  <div class="station-head">
+    <div>
+      <h1 id="rid">Loading</h1>
+      <div class="muted" id="task"></div>
+    </div>
+    <div class="step-nav"><a id="prev" href="#">Previous recording</a><a id="next" href="#">Next recording</a></div>
+  </div>
+
+  <div class="stage">
+    <div>
+      <div class="player" id="player">
+        <video id="video" preload="auto" playsinline muted></video>
+        <div class="now" id="now" hidden><span class="what"></span><span class="conf"></span></div>
+      </div>
+      <div class="controls">
+        <button id="play">Play</button>
+        <button id="speed">Speed 1x</button>
+        <button id="sound" aria-pressed="false">Sound off</button>
+        <label class="voice">Voice <select id="voice"></select></label>
+        <span class="clock" id="clock">0:00</span>
+        <span class="muted" id="duration"></span>
+        <span class="spacer"></span>
+      </div>
+    </div>
+    <div class="side">
+      <div class="alert ok" id="alert"></div>
+      <div class="panel">
+        <h2>Procedure</h2>
+        <ul class="checklist" id="checklist"></ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel timeline-wrap">
+    <h2>Timeline</h2>
+    <svg class="timeline" id="timeline" role="img" aria-label="Recognised actions, alerts and annotated mistakes over time"></svg>
+  </div>
+
+  <div class="panel section">
+    <h2>Alerts</h2>
+    <p class="muted" id="score"></p>
+    <table class="log" id="log">
+      <thead><tr><th>Time</th><th>Alert</th><th>Details</th><th>Annotation check</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</main>
+<script src="/common.js"></script>
+<script src="/sound.js"></script>
+<script src="/station.js"></script>
+</body>
+</html>

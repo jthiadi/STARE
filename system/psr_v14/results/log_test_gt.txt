@@ -1,0 +1,85 @@
+{
+ "system": "v14",
+ "split": "test",
+ "setting": "GT AR (ORACLE, diagnostic only)",
+ "all": {
+  "POS": 0.803,
+  "F1": 0.913,
+  "delay_frames": 50.0,
+  "delay_s": 5.0,
+  "TP": 254,
+  "FP": 36,
+  "FN": 18,
+  "n_videos": 32
+ },
+ "with_errors": {
+  "POS": 0.728,
+  "F1": 0.858,
+  "delay_frames": 50.2,
+  "delay_s": 5.02,
+  "TP": 116,
+  "FP": 29,
+  "FN": 13,
+  "n_videos": 15
+ },
+ "without_errors": {
+  "POS": 0.869,
+  "F1": 0.962,
+  "delay_frames": 49.8,
+  "delay_s": 4.98,
+  "TP": 138,
+  "FP": 7,
+  "FN": 5,
+  "n_videos": 17
+ },
+ "with_errors_labels_all": {
+  "POS": 0.761,
+  "F1": 0.887,
+  "delay_frames": 50.0,
+  "delay_s": 5.0,
+  "TP": 254,
+  "FP": 36,
+  "FN": 37,
+  "n_videos": 32
+ },
+ "mistakes": {
+  "skipped": {
+   "gt": 10,
+   "alerts": 5,
+   "tp": 2,
+   "precision": 0.4,
+   "recall": 0.2,
+   "false_alarms_per_h": 1.2,
+   "mean_delay_s": 1.9
+  },
+  "order": {
+   "gt": 4,
+   "alerts": 4,
+   "tp": 3,
+   "precision": 0.75,
+   "recall": 0.75,
+   "false_alarms_per_h": 0.4,
+   "mean_delay_s": 7.1
+  },
+  "install": {
+   "gt": 18,
+   "alerts": 5,
+   "tp": 2,
+   "precision": 0.4,
+   "recall": 0.111,
+   "false_alarms_per_h": 1.2,
+   "mean_delay_s": 8.8
+  },
+  "all": {
+   "gt": 32,
+   "alerts": 14,
+   "tp": 7,
+   "precision": 0.5,
+   "recall": 0.219,
+   "false_alarms_per_h": 2.8,
+   "mean_delay_s": 6.1
+  },
+  "hours": 2.503
+ },
+ "wall_s": 9.1
+}

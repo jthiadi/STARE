@@ -1,0 +1,7 @@
+{
+ "protocol": "MECCANO action recognition: annotated segments, 61 actions, top-1; final-label method, past only",
+ "videomae_run": "off_s3",
+ "val": 66.12,
+ "test": 62.45,
+ "test_segments": 2823
+}

@@ -1,0 +1,197 @@
+{
+ "gpu": "NVIDIA GeForce RTX 2080 Ti",
+ "recordings": [
+  "03_assy_0_1",
+  "10_main_0_1",
+  "17_main_0_1"
+ ],
+ "chunk_frames": 4,
+ "ar_path": {
+  "03_assy_0_1": {
+   "frames": 2754,
+   "components": {
+    "dinov2_3_views": {
+     "seconds": 53.73,
+     "vram_peak_mb": 73
+    },
+    "dinov2_hires_hands": {
+     "seconds": 22.33,
+     "vram_peak_mb": 90
+    },
+    "finetuned_dinov2_fold0": {
+     "seconds": 30.25,
+     "vram_peak_mb": 176
+    },
+    "finetuned_dinov2_fold1": {
+     "seconds": 29.46,
+     "vram_peak_mb": 176
+    },
+    "videomae_ssv2_causal": {
+     "seconds": 18.18,
+     "vram_peak_mb": 223
+    },
+    "frame_cache_fold0": {
+     "seconds": 8.7,
+     "vram_peak_mb": 8
+    },
+    "finetuned_videomae_fold0_causal": {
+     "seconds": 35.01,
+     "vram_peak_mb": 568
+    },
+    "frame_cache_fold1": {
+     "seconds": 0.0,
+     "vram_peak_mb": 8
+    },
+    "finetuned_videomae_fold1_causal": {
+     "seconds": 27.2,
+     "vram_peak_mb": 568
+    },
+    "tcn_verb_noun": {
+     "seconds": 53.75,
+     "vram_peak_mb": 485
+    }
+   },
+   "seconds": 278.61,
+   "ms_per_frame": 101.17
+  },
+  "10_main_0_1": {
+   "frames": 1512,
+   "components": {
+    "dinov2_3_views": {
+     "seconds": 29.5,
+     "vram_peak_mb": 74
+    },
+    "dinov2_hires_hands": {
+     "seconds": 12.19,
+     "vram_peak_mb": 91
+    },
+    "finetuned_dinov2_fold0": {
+     "seconds": 18.66,
+     "vram_peak_mb": 176
+    },
+    "finetuned_dinov2_fold1": {
+     "seconds": 14.82,
+     "vram_peak_mb": 176
+    },
+    "videomae_ssv2_causal": {
+     "seconds": 11.07,
+     "vram_peak_mb": 223
+    },
+    "frame_cache_fold0": {
+     "seconds": 5.2,
+     "vram_peak_mb": 8
+    },
+    "finetuned_videomae_fold0_causal": {
+     "seconds": 9.73,
+     "vram_peak_mb": 568
+    },
+    "frame_cache_fold1": {
+     "seconds": 0.0,
+     "vram_peak_mb": 8
+    },
+    "finetuned_videomae_fold1_causal": {
+     "seconds": 10.38,
+     "vram_peak_mb": 568
+    },
+    "tcn_verb_noun": {
+     "seconds": 6.27,
+     "vram_peak_mb": 402
+    }
+   },
+   "seconds": 117.82,
+   "ms_per_frame": 77.92
+  },
+  "17_main_0_1": {
+   "frames": 1777,
+   "components": {
+    "dinov2_3_views": {
+     "seconds": 34.11,
+     "vram_peak_mb": 74
+    },
+    "dinov2_hires_hands": {
+     "seconds": 15.45,
+     "vram_peak_mb": 91
+    },
+    "finetuned_dinov2_fold0": {
+     "seconds": 16.15,
+     "vram_peak_mb": 176
+    },
+    "finetuned_dinov2_fold1": {
+     "seconds": 16.06,
+     "vram_peak_mb": 176
+    },
+    "videomae_ssv2_causal": {
+     "seconds": 11.77,
+     "vram_peak_mb": 223
+    },
+    "frame_cache_fold0": {
+     "seconds": 6.83,
+     "vram_peak_mb": 8
+    },
+    "finetuned_videomae_fold0_causal": {
+     "seconds": 11.66,
+     "vram_peak_mb": 568
+    },
+    "frame_cache_fold1": {
+     "seconds": 0.0,
+     "vram_peak_mb": 8
+    },
+    "finetuned_videomae_fold1_causal": {
+     "seconds": 12.08,
+     "vram_peak_mb": 568
+    },
+    "tcn_verb_noun": {
+     "seconds": 5.71,
+     "vram_peak_mb": 421
+    }
+   },
+   "seconds": 129.82,
+   "ms_per_frame": 73.06
+  }
+ },
+ "v14": {
+  "03_assy_0_1": {
+   "frames": 2754,
+   "latency_ms": {
+    "median": 18.4,
+    "p95": 60.2,
+    "mean": 30.8
+   }
+  },
+  "10_main_0_1": {
+   "frames": 1512,
+   "latency_ms": {
+    "median": 43.4,
+    "p95": 65.9,
+    "mean": 32.6
+   }
+  },
+  "17_main_0_1": {
+   "frames": 1777,
+   "latency_ms": {
+    "median": 43.4,
+    "p95": 67.8,
+    "mean": 32.5
+   }
+  }
+ },
+ "ensemble_pass": {
+  "gpu": "NVIDIA GeForce RTX 2080 Ti",
+  "ms_per_member": {
+   "vjft_area_k12": 367.9,
+   "vjft_hand_k12": 386.0,
+   "vjft_hand_k12_s1": 382.0,
+   "vmae_full": 98.1
+  },
+  "ms_per_action": 1234.0
+ },
+ "c_ar_ms_per_frame": 87.08,
+ "v14_mean_ms": 31.75,
+ "v14_p95_ms": 67.8,
+ "ensemble_pass_ms": 1234.0,
+ "realtime_one_gpu": false,
+ "L_s": 0.716,
+ "D_tcn_frames": 8,
+ "D_ens_frames": 25,
+ "ens_ready_after_end_s": 1.95
+}

@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assistant results</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header class="bar"></header>
+<main>
+  <p class="finding" id="finding"></p>
+
+  <div class="panel">
+    <h2>Mistake detection, IndustReal test set</h2>
+    <p class="muted">All mistake types together. The same rules run on every input; only the inputs change,
+      from no state at all (what any dataset without state labels gets) to a perfect state.</p>
+    <svg class="chart" id="mistake-chart" width="100%"></svg>
+    <table class="table" id="mistake-table"></table>
+  </div>
+
+  <div class="two">
+    <div class="panel">
+      <h2>Procedure step recognition, IndustReal test set</h2>
+      <p class="muted">IndustReal protocol. Published results in italics. "With errors" is the paper's group: a step
+        is missing or a part was installed wrongly<span id="psr-errors-count"></span>.</p>
+      <svg class="chart" id="psr-chart" width="100%"></svg>
+      <table class="table" id="psr-table"></table>
+    </div>
+    <div class="panel">
+      <h2>Online mistake detection, Assembly101-O</h2>
+      <p class="muted">PREGO protocol, 182 test sequences. Published results in italics; F1_b is the balanced F1.</p>
+      <table class="table" id="a101-table"></table>
+    </div>
+  </div>
+</main>
+<script src="/common.js"></script>
+<script>
+const f1 = x => x == null ? "-" : x.toFixed(3);
+const n1 = x => x == null ? "-" : (+x).toFixed(1);
+
+// Grouped horizontal bars, values in 0..1; one row per item, one bar per measure.
+function bars(svg, rows, measures) {
+  const w = svg.clientWidth || 700, label = Math.min(300, w * 0.42), bh = 13, gap = 22;
+  const rowH = measures.length * (bh + 3) + gap;
+  let out = "";
+  rows.forEach((r, i) => {
+    const y0 = i * rowH + 4;
+    out += `<text x="0" y="${y0 + 12}" style="fill:var(--ink)">${esc(r.name)}</text>`;
+    measures.forEach((m, j) => {
+      const v = r[m.key], y = y0 + j * (bh + 3), bw = v == null ? 0 : (w - label - 60) * v;
+      out += `<rect x="${label}" y="${y}" width="${bw}" height="${bh}" rx="2" fill="${m.color}"><title>${m.name}: ${pct(v)}</title></rect>` +
+             `<text class="value" x="${label + bw + 6}" y="${y + 11}">${m.name} ${m.fmt(v)}</text>`;
+    });
+  });
+  svg.setAttribute("height", rows.length * rowH);
+  svg.innerHTML = out;
+}
+
+async function load() {
+  const A = await api("/api/analytics");
+  const by = Object.fromEntries(A.mistakes.map(m => [m.run, m.rows.all]));
+  const live = by.pred_vjepap_asd, perfect = by.pred_vjepap_gt;
+  if (live && perfect) {
+    document.getElementById("finding").textContent =
+      `The live system catches ${live.tp} of ${live.gt} annotated mistakes. Give it a perfect state ` +
+      `detector and it catches ${perfect.tp} of ${perfect.gt}, with the same recognised actions: ` +
+      `the state detector is what holds it back.`;
+  }
+  const rows = A.mistakes;
+  bars(document.getElementById("mistake-chart"), rows.map(m => ({ name: m.name, p: m.rows.all.precision, r: m.rows.all.recall })),
+       [{ key: "p", name: "Precision", color: "var(--ink)", fmt: pct }, { key: "r", name: "Recall", color: "var(--graphite)", fmt: pct }]);
+  const types = ["skipped", "order", "install", "all"];
+  document.getElementById("mistake-table").innerHTML =
+    `<tr><th>Inputs</th>${types.map(t => `<th>${t === "all" ? "All" : TYPE_NAME[t]}<br>precision / recall</th>`).join("")}<th>False alarms / h</th></tr>` +
+    rows.map(m => `<tr class="${m.run === "baseline_psr" || m.run.endsWith("_none") ? "" : "ours"}"><td title="${esc(m.description)}">${esc(m.name)}</td>` +
+      types.map(t => `<td>${pct(m.rows[t].precision)} / ${pct(m.rows[t].recall)} <span class="muted">(${m.rows[t].tp}/${m.rows[t].gt})</span></td>`).join("") +
+      `<td>${n1(m.rows.all.false_alarms_per_h)}</td></tr>`).join("");
+
+  bars(document.getElementById("psr-chart"), A.psr.map(r => ({ name: r.name.replace(", as published", ""), f1: r.f1, pos: r.pos })),
+       [{ key: "f1", name: "F1", color: "var(--ink)", fmt: f1 }, { key: "pos", name: "POS", color: "var(--graphite)", fmt: f1 }]);
+  document.getElementById("psr-table").innerHTML =
+    "<tr><th>Method</th><th>F1</th><th>POS</th><th>Delay (s)</th>" +
+    "<th>With errors<br>F1</th><th>With errors<br>POS</th><th>With errors<br>Delay (s)</th></tr>" +
+    A.psr.map(r => {
+      const e = r.with_errors || {};
+      return `<tr class="${r.published ? "published" : "ours"}"><td>${esc(r.name)}</td><td>${f1(r.f1)}</td>` +
+             `<td>${f1(r.pos)}</td><td>${n1(r.delay_s)}</td><td>${f1(e.f1)}</td><td>${f1(e.pos)}</td>` +
+             `<td>${n1(e.delay_s)}</td></tr>`;
+    }).join("");
+  const counted = A.psr.find(r => r.with_errors && r.with_errors.videos);
+  if (counted) document.getElementById("psr-errors-count").textContent = ` (${counted.with_errors.videos} of our 32 test videos)`;
+
+  document.getElementById("a101-table").innerHTML =
+    "<tr><th>Method</th><th>Steps</th><th>P</th><th>R</th><th>F1</th><th>F1_b</th></tr>" +
+    A.assembly101.map(r => `<tr class="${r.ours ? "ours" : "published"}"><td>${esc(r.name)}</td><td>${esc(r.steps)}</td>` +
+      `<td>${n1(r.precision)}</td><td>${n1(r.recall)}</td><td>${n1(r.f1)}</td><td>${n1(r.f1_b)}</td></tr>`).join("");
+}
+topBar("analytics").then(load);
+</script>
+</body>
+</html>

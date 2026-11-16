@@ -1,0 +1,2 @@
+val: 16 videos, frame accuracy 44.62 % (38036 frames), segment top-1 49.17 % (1928 segments)
+test: 32 videos, frame accuracy 48.37 % (90105 frames), segment top-1 55.66 % (3678 segments)

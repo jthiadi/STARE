@@ -1,0 +1,58 @@
+{
+ "tracker": "filter",
+ "filter": {
+  "tau": 0.06,
+  "theta": 0.8,
+  "stable": 3,
+  "conf_n": 6,
+  "conf_thr": 5.0,
+  "eps": 0,
+  "q_ref": 0.1,
+  "q_min": 0.1,
+  "w_model": 0.6,
+  "uni": 0.0
+ },
+ "verifiers": [
+  {
+   "tag": "verif_base_r336",
+   "back": "base",
+   "three": false,
+   "res": 336,
+   "epochs": 4,
+   "unfreeze": 4
+  },
+  {
+   "tag": "verif_base_r336_e6u6",
+   "back": "base",
+   "three": false,
+   "res": 336,
+   "epochs": 6,
+   "unfreeze": 6
+  }
+ ],
+ "step_model": {
+  "w_lr": 4.0,
+  "lr_path": "lr.pkl",
+  "w_action": 0.6,
+  "w_since": 0.3,
+  "null_bias": 0.0
+ },
+ "selection": "v9 settings run through the v14 code: filter tau 0.06 / theta 0.8 (v9 frozen config), d0 0, ASD weight 0. Used to give v9 the same mistake rules and AR inputs as v14.",
+ "v11": {
+  "d0": 0.0,
+  "mistakes": {
+   "rules": "teammate assist task graph (industreal_graph.yaml) via gt_mistakes(changes=predicted)",
+   "end_skipped_keep_if": "belief done < 0.5 and mean log-odds of last 20 readings <= 0",
+   "possible_incorrect_install_if_belief_done_ge": 0.9
+  }
+ },
+ "asd": {
+  "w": 0.0,
+  "cmin": 0.3,
+  "eps": 0.02,
+  "rate": 2,
+  "weights": "asd_best_IndustRealandSynthetic.pt (IndustReal, data.4tu.nl)",
+  "stored_conf_floor": 0.05,
+  "imgsz": 640
+ }
+}

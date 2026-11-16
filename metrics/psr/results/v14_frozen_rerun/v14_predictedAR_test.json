@@ -1,0 +1,1774 @@
+{
+ "summary": {
+  "system": "v14",
+  "split": "test",
+  "setting": "PREDICTED AR (deployable)",
+  "all": {
+   "POS": 0.812,
+   "F1": 0.904,
+   "delay_frames": 63.2,
+   "delay_s": 6.32,
+   "TP": 252,
+   "FP": 41,
+   "FN": 18,
+   "n_videos": 32
+  },
+  "with_errors": {
+   "POS": 0.747,
+   "F1": 0.839,
+   "delay_frames": 73.3,
+   "delay_s": 7.33,
+   "TP": 111,
+   "FP": 31,
+   "FN": 15,
+   "n_videos": 15
+  },
+  "without_errors": {
+   "POS": 0.87,
+   "F1": 0.96,
+   "delay_frames": 54.2,
+   "delay_s": 5.42,
+   "TP": 141,
+   "FP": 10,
+   "FN": 3,
+   "n_videos": 17
+  },
+  "with_errors_labels_all": {
+   "POS": 0.769,
+   "F1": 0.878,
+   "delay_frames": 63.2,
+   "delay_s": 6.32,
+   "TP": 252,
+   "FP": 41,
+   "FN": 37,
+   "n_videos": 32
+  },
+  "mistakes": {
+   "skipped": {
+    "gt": 10,
+    "alerts": 5,
+    "tp": 2,
+    "precision": 0.4,
+    "recall": 0.2,
+    "false_alarms_per_h": 1.2,
+    "mean_delay_s": 2.4
+   },
+   "order": {
+    "gt": 4,
+    "alerts": 5,
+    "tp": 4,
+    "precision": 0.8,
+    "recall": 1.0,
+    "false_alarms_per_h": 0.4,
+    "mean_delay_s": 6.5
+   },
+   "install": {
+    "gt": 18,
+    "alerts": 7,
+    "tp": 3,
+    "precision": 0.429,
+    "recall": 0.167,
+    "false_alarms_per_h": 1.6,
+    "mean_delay_s": 7.7
+   },
+   "all": {
+    "gt": 32,
+    "alerts": 17,
+    "tp": 9,
+    "precision": 0.529,
+    "recall": 0.281,
+    "false_alarms_per_h": 3.2,
+    "mean_delay_s": 5.9
+   },
+   "hours": 2.503
+  },
+  "wall_s": 21.4
+ },
+ "videos": [
+  {
+   "video": "03_assy_0_1",
+   "errors": false,
+   "pos": 1.0,
+   "f1": 1.0,
+   "delay_frames": 32.9,
+   "FP": 0,
+   "FN": 0,
+   "predicted_steps": [
+    [
+     496,
+     "Install rear chassis"
+    ],
+    [
+     496,
+     "Install front rear chassis pin"
+    ],
+    [
+     712,
+     "Install rear rear chassis pin"
+    ],
+    [
+     1162,
+     "Install front chassis"
+    ],
+    [
+     1162,
+     "Install front chassis pin"
+    ],
+    [
+     1696,
+     "Install rear wheel assy"
+    ],
+    [
+     2736,
+     "Install front bracket"
+    ],
+    [
+     2736,
+     "Install front bracket screw"
+    ],
+    [
+     2736,
+     "Install front wheel assy"
+    ]
+   ],
+   "mistake_alerts": []
+  },
+  {
+   "video": "03_assy_1_3",
+   "errors": true,
+   "pos": 0.7,
+   "f1": 0.706,
+   "delay_frames": 58.5,
+   "FP": 3,
+   "FN": 2,
+   "predicted_steps": [
+    [
+     434,
+     "Install rear chassis"
+    ],
+    [
+     434,
+     "Install front rear chassis pin"
+    ],
+    [
+     506,
+     "Install rear rear chassis pin"
+    ],
+    [
+     900,
+     "Install front chassis"
+    ],
+    [
+     900,
+     "Install front chassis pin"
+    ],
+    [
+     1650,
+     "Install rear wheel assy"
+    ],
+    [
+     2600,
+     "Install front bracket"
+    ],
+    [
+     2600,
+     "Install front bracket screw"
+    ],
+    [
+     2600,
+     "Install front wheel assy"
+    ]
+   ],
+   "mistake_alerts": []
+  },
+  {
+   "video": "03_main_0_1",
+   "errors": false,
+   "pos": 0.125,
+   "f1": 0.727,
+   "delay_frames": 98.8,
+   "FP": 6,
+   "FN": 0,
+   "predicted_steps": [
+    [
+     288,
+     "Remove rear chassis"
+    ],
+    [
+     288,
+     "Remove front rear chassis pin"
+    ],
+    [
+     288,
+     "Remove rear rear chassis pin"
+    ],
+    [
+     288,
+     "Remove rear wheel assy"
+    ],
+    [
+     310,
+     "Remove front wheel assy"
+    ],
+    [
+     324,
+     "Install rear chassis"
+    ],
+    [
+     324,
+     "Install front rear chassis pin"
+    ],
+    [
+     424,
+     "Remove rear chassis"
+    ],
+    [
+     424,
+     "Remove front rear chassis pin"
+    ],
+    [
+     448,
+     "Install front wheel assy"
+    ],
+    [
+     754,
+     "Install short rear chassis"
+    ],
+    [
+     754,
+     "Install front rear chassis pin"
+    ],
+    [
+     880,
+     "Install rear rear chassis pin"
+    ],
+    [
+     1318,
+     "Install rear wheel assy"
+    ]
+   ],
+   "mistake_alerts": [
+    {
+     "t": 42.4,
+     "type": "wrong_order",
+     "kind": "mistake",
+     "step": "front_rear_chassis_pin",
+     "component": null
+    }
+   ]
+  },
+  {
+   "video": "08_assy_0_1",
+   "errors": true,
+   "pos": 0.7,
+   "f1": 0.87,
+   "delay_frames": 31.5,
+   "FP": 3,
+   "FN": 0,
+   "predicted_steps": [
+    [
+     616,
+     "Install front chassis"
+    ],
+    [
+     616,
+     "Install front chassis pin"
+    ],
+    [
+     1370,
+     "Install rear chassis"
+    ],
+    [
+     1370,
+     "Install rear rear chassis pin"
+    ],
+    [
+     1636,
+     "Remove rear chassis"
+    ],
+    [
+     1636,
+     "Remove rear rear chassis pin"
+    ],
+    [
+     2170,
+     "Install rear chassis"
+    ],
+    [
+     2170,
+     "Install front rear chassis pin"
+    ],
+    [
+     2452,
+     "Install rear rear chassis pin"
+    ],
+    [
+     3644,
+     "Install rear wheel assy"
+    ],
+    [
+     5226,
+     "Install front bracket"
+    ],
+    [
+     5226,
+     "Install front bracket screw"
+    ],
+    [
+     5226,
+     "Install front wheel assy"
+    ]
+   ],
+   "mistake_alerts": []
+  },
+  {
+   "video": "08_assy_2_4",
+   "errors": true,
+   "pos": 0.75,
+   "f1": 0.857,
+   "delay_frames": 41.8,
+   "FP": 0,
+   "FN": 2,
+   "predicted_steps": [
+    [
+     290,
+     "Install front chassis"
+    ],
+    [
+     290,
+     "Install front chassis pin"
+    ],
+    [
+     694,
+     "Install rear chassis"
+    ],
+    [
+     694,
+     "Install front rear chassis pin"
+    ],
+    [
+     970,
+     "Install rear rear chassis pin"
+    ],
+    [
+     2088,
+     "Install rear wheel assy"
+    ]
+   ],
+   "mistake_alerts": [
+    {
+     "t": 344.3,
+     "type": "possible_incorrect_install",
+     "kind": "mistake",
+     "step": "front_bracket",
+     "component": "front_bracket"
+    },
+    {
+     "t": 344.3,
+     "type": "possible_incorrect_install",
+     "kind": "mistake",
+     "step": "front_bracket_screw",
+     "component": "front_bracket_screw"
+    },
+    {
+     "t": 344.3,
+     "type": "possible_incorrect_install",
+     "kind": "mistake",
+     "step": "front_wheel_assy",
+     "component": "front_wheel_assy"
+    }
+   ]
+  },
+  {
+   "video": "08_main_0_1",
+   "errors": true,
+   "pos": 0.7,
+   "f1": 0.909,
+   "delay_frames": 99.9,
+   "FP": 2,
+   "FN": 0,
+   "predicted_steps": [
+    [
+     224,
+     "Remove rear chassis"
+    ],
+    [
+     224,
+     "Remove front rear chassis pin"
+    ],
+    [
+     224,
+     "Remove rear rear chassis pin"
+    ],
+    [
+     224,
+     "Remove rear wheel assy"
+    ],
+    [
+     760,
+     "Install short rear chassis"
+    ],
+    [
+     760,
+     "Install rear rear chassis pin"
+    ],
+    [
+     894,
+     "Remove rear rear chassis pin"
+    ],
+    [
+     908,
+     "Remove short rear chassis"
+    ],
+    [
+     1236,
+     "Install short rear chassis"
+    ],
+    [
+     1236,
+     "Install front rear chassis pin"
+    ],
+    [
+     1462,
+     "Install rear rear chassis pin"
+    ],
+    [
+     2492,
+     "Install rear wheel assy"
+    ]
+   ],
+   "mistake_alerts": []
+  },
+  {
+   "video": "09_assy_0_1",
+   "errors": false,
+   "pos": 1.0,
+   "f1": 1.0,
+   "delay_frames": 60.6,
+   "FP": 0,
+   "FN": 0,
+   "predicted_steps": [
+    [
+     696,
+     "Install rear chassis"
+    ],
+    [
+     696,
+     "Install front rear chassis pin"
+    ],
+    [
+     986,
+     "Install rear rear chassis pin"
+    ],
+    [
+     1526,
+     "Install front chassis"
+    ],
+    [
+     1526,
+     "Install front chassis pin"
+    ],
+    [
+     2340,
+     "Install rear wheel assy"
+    ],
+    [
+     2746,
+     "Install front bracket"
+    ],
+    [
+     2746,
+     "Install front bracket screw"
+    ],
+    [
+     3444,
+     "Install front wheel assy"
+    ]
+   ],
+   "mistake_alerts": []
+  },
+  {
+   "video": "09_assy_3_1",
+   "errors": true,
+   "pos": 0.375,
+   "f1": 0.762,
+   "delay_frames": 130.6,
+   "FP": 5,
+   "FN": 0,
+   "predicted_steps": [
+    [
+     1034,
+     "Install front chassis"
+    ],
+    [
+     1034,
+     "Install front chassis pin"
+    ],
+    [
+     1034,
+     "Install rear chassis"
+    ],
+    [
+     1034,
+     "Install front rear chassis pin"
+    ],
+    [
+     1034,
+     "Install rear rear chassis pin"
+    ],
+    [
+     1092,
+     "Remove front chassis"
+    ],
+    [
+     1092,
+     "Remove front chassis pin"
+    ],
+    [
+     1452,
+     "Install front chassis"
+    ],
+    [
+     1452,
+     "Install front chassis pin"
+    ],
+    [
+     2248,
+     "Install rear wheel assy"
+    ],
+    [
+     2804,
+     "Install front bracket"
+    ],
+    [
+     2804,
+     "Install front bracket screw"
+    ],
+    [
+     3784,
+     "Install front wheel assy"
+    ]
+   ],
+   "mistake_alerts": []
+  },
+  {
+   "video": "09_main_0_1",
+   "errors": false,
+   "pos": 0.5,
+   "f1": 0.933,
+   "delay_frames": 126.1,
+   "FP": 0,
+   "FN": 1,
+   "predicted_steps": [
+    [
+     58,
+     "Remove rear wheel assy"
+    ],
+    [
+     322,
+     "Remove rear chassis"
+    ],
+    [
+     322,
+     "Remove front rear chassis pin"
+    ],
+    [
+     322,
+     "Remove rear rear chassis pin"
+    ],
+    [
+     1412,
+     "Install short rear chassis"
+    ],
+    [
+     1412,
+     "Install front rear chassis pin"
+    ],
+    [
+     1780,
+     "Install rear rear chassis pin"
+    ]
+   ],
+   "mistake_alerts": [
+    {
+     "t": 255.4,
+     "type": "possible_incorrect_install",
+     "kind": "mistake",
+     "step": "rear_wheel_assy",
+     "component": "rear_wheel_assy"
+    }
+   ]
+  },
+  {
+   "video": "10_assy_0_1",
+   "errors": false,
+   "pos": 1.0,
+   "f1": 1.0,
+   "delay_frames": 34.2,
+   "FP": 0,
+   "FN": 0,
+   "predicted_steps": [
+    [
+     308,
+     "Install front chassis"
+    ],
+    [
+     308,
+     "Install front chassis pin"
+    ],
+    [
+     640,
+     "Install rear chassis"
+    ],
+    [
+     640,
+     "Install front rear chassis pin"
+    ],
+    [
+     834,
+     "Install rear rear chassis pin"
+    ],
+    [
+     1214,
+     "Install front bracket"
+    ],
+    [
+     1214,
+     "Install front bracket screw"
+    ],
+    [
+     1940,
+     "Install front wheel assy"
+    ],
+    [
+     2540,
+     "Install rear wheel assy"
+    ]
+   ],
+   "mistake_alerts": []
+  },
+  {
+   "video": "10_assy_3_2",
+   "errors": true,
+   "pos": 0.467,
+   "f1": 0.545,
+   "delay_frames": 23.5,
+   "FP": 3,
+   "FN": 7,
+   "predicted_steps": [
+    [
+     320,
+     "Install front chassis"
+    ],
+    [
+     320,
+     "Install front chassis pin"
+    ],
+    [
+     938,
+     "Install rear chassis"
+    ],
+    [
+     938,
+     "Install front rear chassis pin"
+    ],
+    [
+     1180,
+     "Install rear rear chassis pin"
+    ],
+    [
+     1686,
+     "Install rear wheel assy"
+    ],
+    [
+     2052,
+     "Install front bracket"
+    ],
+    [
+     2052,
+     "Install front bracket screw"
+    ],
+    [
+     2586,
+     "Install front wheel assy"
+    ]
+   ],
+   "mistake_alerts": []
+  },
+  {
+   "video": "10_main_0_1",
+   "errors": false,
+   "pos": 1.0,
+   "f1": 1.0,
+   "delay_frames": 33.5,
+   "FP": 0,
+   "FN": 0,
+   "predicted_steps": [
+    [
+     148,
+     "Remove front rear chassis pin"
+    ],
+    [
+     192,
+     "Remove rear chassis"
+    ],
+    [
+     192,
+     "Remove rear rear chassis pin"
+    ],
+    [
+     192,
+     "Remove rear wheel assy"
+    ],
+    [
+     844,
+     "Install short rear chassis"
+    ],
+    [
+     844,
+     "Install front rear chassis pin"
+    ],
+    [
+     1020,
+     "Install rear rear chassis pin"
+    ],
+    [
+     1490,
+     "Install rear wheel assy"
+    ]
+   ],
+   "mistake_alerts": []
+  },
+  {
+   "video": "10_main_3_4",
+   "errors": false,
+   "pos": 0.875,
+   "f1": 0.933,
+   "delay_frames": 21.9,
+   "FP": 0,
+   "FN": 1,
+   "predicted_steps": [
+    [
+     84,
+     "Remove front rear chassis pin"
+    ],
+    [
+     130,
+     "Remove rear chassis"
+    ],
+    [
+     130,
+     "Remove rear rear chassis pin"
+    ],
+    [
+     130,
+     "Remove rear wheel assy"
+    ],
+    [
+     866,
+     "Install short rear chassis"
+    ],
+    [
+     866,
+     "Install front rear chassis pin"
+    ],
+    [
+     964,
+     "Install rear rear chassis pin"
+    ]
+   ],
+   "mistake_alerts": [
+    {
+     "t": 135.1,
+     "type": "possible_incorrect_install",
+     "kind": "mistake",
+     "step": "rear_wheel_assy",
+     "component": "rear_wheel_assy"
+    }
+   ]
+  },
+  {
+   "video": "12_assy_0_1",
+   "errors": false,
+   "pos": 1.0,
+   "f1": 1.0,
+   "delay_frames": 48.8,
+   "FP": 0,
+   "FN": 0,
+   "predicted_steps": [
+    [
+     532,
+     "Install front chassis"
+    ],
+    [
+     532,
+     "Install front chassis pin"
+    ],
+    [
+     972,
+     "Install rear chassis"
+    ],
+    [
+     972,
+     "Install front rear chassis pin"
+    ],
+    [
+     1214,
+     "Install rear rear chassis pin"
+    ],
+    [
+     1950,
+     "Install rear wheel assy"
+    ],
+    [
+     2384,
+     "Install front bracket"
+    ],
+    [
+     2384,
+     "Install front bracket screw"
+    ],
+    [
+     2972,
+     "Install front wheel assy"
+    ]
+   ],
+   "mistake_alerts": []
+  },
+  {
+   "video": "12_assy_3_4",
+   "errors": true,
+   "pos": 0.5,
+   "f1": 0.8,
+   "delay_frames": 26.2,
+   "FP": 4,
+   "FN": 0,
+   "predicted_steps": [
+    [
+     306,
+     "Install front chassis"
+    ],
+    [
+     306,
+     "Install front chassis pin"
+    ],
+    [
+     706,
+     "Install rear chassis"
+    ],
+    [
+     706,
+     "Install front rear chassis pin"
+    ],
+    [
+     958,
+     "Remove rear chassis"
+    ],
+    [
+     958,
+     "Remove front rear chassis pin"
+    ],
+    [
+     1038,
+     "Install rear chassis"
+    ],
+    [
+     1038,
+     "Install front rear chassis pin"
+    ],
+    [
+     1206,
+     "Install rear rear chassis pin"
+    ],
+    [
+     2002,
+     "Install rear wheel assy"
+    ],
+    [
+     2328,
+     "Install front bracket"
+    ],
+    [
+     2328,
+     "Install front bracket screw"
+    ]
+   ],
+   "mistake_alerts": []
+  },
+  {
+   "video": "12_main_0_1",
+   "errors": true,
+   "pos": 0.417,
+   "f1": 0.667,
+   "delay_frames": 263.5,
+   "FP": 3,
+   "FN": 4,
+   "predicted_steps": [
+    [
+     92,
+     "Remove rear wheel assy"
+    ],
+    [
+     374,
+     "Remove rear rear chassis pin"
+    ],
+    [
+     864,
+     "Install short rear chassis"
+    ],
+    [
+     986,
+     "Remove rear chassis"
+    ],
+    [
+     986,
+     "Remove short rear chassis"
+    ],
+    [
+     986,
+     "Remove front rear chassis pin"
+    ],
+    [
+     1422,
+     "Install short rear chassis"
+    ],
+    [
+     1422,
+     "Install front rear chassis pin"
+    ],
+    [
+     1422,
+     "Install rear rear chassis pin"
+    ],
+    [
+     1860,
+     "Install rear wheel assy"
+    ]
+   ],
+   "mistake_alerts": [
+    {
+     "t": 96.4,
+     "type": "skipped_step",
+     "kind": "mistake",
+     "step": "remove_front_rear_chassis_pin",
+     "component": null
+    },
+    {
+     "t": 96.4,
+     "type": "skipped_step",
+     "kind": "mistake",
+     "step": "remove_rear_chassis",
+     "component": null
+    }
+   ]
+  },
+  {
+   "video": "13_assy_0_1",
+   "errors": false,
+   "pos": 1.0,
+   "f1": 1.0,
+   "delay_frames": 46.8,
+   "FP": 0,
+   "FN": 0,
+   "predicted_steps": [
+    [
+     404,
+     "Install rear chassis"
+    ],
+    [
+     404,
+     "Install front rear chassis pin"
+    ],
+    [
+     622,
+     "Install rear rear chassis pin"
+    ],
+    [
+     982,
+     "Install front chassis"
+    ],
+    [
+     982,
+     "Install front chassis pin"
+    ],
+    [
+     1542,
+     "Install rear wheel assy"
+    ],
+    [
+     1998,
+     "Install front bracket"
+    ],
+    [
+     1998,
+     "Install front bracket screw"
+    ],
+    [
+     2806,
+     "Install front wheel assy"
+    ]
+   ],
+   "mistake_alerts": []
+  },
+  {
+   "video": "13_main_0_1",
+   "errors": false,
+   "pos": 1.0,
+   "f1": 1.0,
+   "delay_frames": 29.1,
+   "FP": 0,
+   "FN": 0,
+   "predicted_steps": [
+    [
+     124,
+     "Remove rear wheel assy"
+    ],
+    [
+     342,
+     "Remove rear rear chassis pin"
+    ],
+    [
+     392,
+     "Remove rear chassis"
+    ],
+    [
+     392,
+     "Remove front rear chassis pin"
+    ],
+    [
+     792,
+     "Install short rear chassis"
+    ],
+    [
+     792,
+     "Install front rear chassis pin"
+    ],
+    [
+     966,
+     "Install rear rear chassis pin"
+    ],
+    [
+     1398,
+     "Install rear wheel assy"
+    ]
+   ],
+   "mistake_alerts": []
+  },
+  {
+   "video": "13_main_1_3",
+   "errors": true,
+   "pos": 1.0,
+   "f1": 1.0,
+   "delay_frames": 59.3,
+   "FP": 0,
+   "FN": 0,
+   "predicted_steps": [
+    [
+     150,
+     "Remove front rear chassis pin"
+    ],
+    [
+     256,
+     "Remove rear chassis"
+    ],
+    [
+     256,
+     "Remove rear rear chassis pin"
+    ],
+    [
+     256,
+     "Remove rear wheel assy"
+    ],
+    [
+     888,
+     "Install short rear chassis"
+    ],
+    [
+     888,
+     "Install front rear chassis pin"
+    ],
+    [
+     1096,
+     "Install rear rear chassis pin"
+    ]
+   ],
+   "mistake_alerts": [
+    {
+     "t": 140.5,
+     "type": "possible_incorrect_install",
+     "kind": "mistake",
+     "step": "rear_wheel_assy",
+     "component": "rear_wheel_assy"
+    }
+   ]
+  },
+  {
+   "video": "13_main_2_1",
+   "errors": true,
+   "pos": 1.0,
+   "f1": 1.0,
+   "delay_frames": 45.2,
+   "FP": 0,
+   "FN": 0,
+   "predicted_steps": [
+    [
+     140,
+     "Remove rear wheel assy"
+    ],
+    [
+     342,
+     "Remove rear rear chassis pin"
+    ],
+    [
+     444,
+     "Remove rear chassis"
+    ],
+    [
+     444,
+     "Remove front rear chassis pin"
+    ],
+    [
+     1184,
+     "Install rear chassis"
+    ],
+    [
+     1184,
+     "Install front rear chassis pin"
+    ],
+    [
+     1534,
+     "Install rear rear chassis pin"
+    ],
+    [
+     2350,
+     "Install rear wheel assy"
+    ]
+   ],
+   "mistake_alerts": [
+    {
+     "t": 128.4,
+     "type": "wrong_order",
+     "kind": "mistake",
+     "step": "front_rear_chassis_pin",
+     "component": null
+    },
+    {
+     "t": 163.4,
+     "type": "wrong_order",
+     "kind": "mistake",
+     "step": "rear_rear_chassis_pin",
+     "component": null
+    },
+    {
+     "t": 163.4,
+     "type": "skipped_step",
+     "kind": "mistake",
+     "step": "remove_rear_chassis",
+     "component": null
+    },
+    {
+     "t": 239.8,
+     "type": "skipped_step",
+     "kind": "mistake",
+     "step": "short_rear_chassis",
+     "component": null
+    },
+    {
+     "t": 245.0,
+     "type": "wrong_order",
+     "kind": "mistake",
+     "step": "rear_wheel_assy",
+     "component": null
+    }
+   ]
+  },
+  {
+   "video": "17_assy_0_1",
+   "errors": true,
+   "pos": 1.0,
+   "f1": 0.875,
+   "delay_frames": 52.6,
+   "FP": 2,
+   "FN": 0,
+   "predicted_steps": [
+    [
+     466,
+     "Install front chassis"
+    ],
+    [
+     466,
+     "Install front chassis pin"
+    ],
+    [
+     1506,
+     "Install rear chassis"
+    ],
+    [
+     1506,
+     "Install front rear chassis pin"
+    ],
+    [
+     1640,
+     "Install rear rear chassis pin"
+    ],
+    [
+     2446,
+     "Install front bracket"
+    ],
+    [
+     2446,
+     "Install front bracket screw"
+    ],
+    [
+     3390,
+     "Install front wheel assy"
+    ],
+    [
+     3924,
+     "Install rear wheel assy"
+    ]
+   ],
+   "mistake_alerts": []
+  },
+  {
+   "video": "17_assy_1_5",
+   "errors": true,
+   "pos": 1.0,
+   "f1": 1.0,
+   "delay_frames": 46.0,
+   "FP": 0,
+   "FN": 0,
+   "predicted_steps": [
+    [
+     510,
+     "Install front chassis"
+    ],
+    [
+     510,
+     "Install front chassis pin"
+    ],
+    [
+     1412,
+     "Install rear chassis"
+    ],
+    [
+     1412,
+     "Install front rear chassis pin"
+    ],
+    [
+     1648,
+     "Install rear rear chassis pin"
+    ],
+    [
+     2638,
+     "Install front bracket"
+    ],
+    [
+     2638,
+     "Install front bracket screw"
+    ],
+    [
+     3358,
+     "Install front wheel assy"
+    ]
+   ],
+   "mistake_alerts": [
+    {
+     "t": 418.6,
+     "type": "possible_incorrect_install",
+     "kind": "mistake",
+     "step": "rear_wheel_assy",
+     "component": "rear_wheel_assy"
+    }
+   ]
+  },
+  {
+   "video": "17_main_0_1",
+   "errors": false,
+   "pos": 1.0,
+   "f1": 1.0,
+   "delay_frames": 21.8,
+   "FP": 0,
+   "FN": 0,
+   "predicted_steps": [
+    [
+     68,
+     "Remove rear wheel assy"
+    ],
+    [
+     356,
+     "Remove rear rear chassis pin"
+    ],
+    [
+     566,
+     "Remove rear chassis"
+    ],
+    [
+     566,
+     "Remove front rear chassis pin"
+    ],
+    [
+     1058,
+     "Install short rear chassis"
+    ],
+    [
+     1058,
+     "Install front rear chassis pin"
+    ],
+    [
+     1242,
+     "Install rear rear chassis pin"
+    ],
+    [
+     1720,
+     "Install rear wheel assy"
+    ]
+   ],
+   "mistake_alerts": []
+  },
+  {
+   "video": "18_assy_0_1",
+   "errors": false,
+   "pos": 1.0,
+   "f1": 1.0,
+   "delay_frames": 38.8,
+   "FP": 0,
+   "FN": 0,
+   "predicted_steps": [
+    [
+     774,
+     "Install front chassis"
+    ],
+    [
+     774,
+     "Install front chassis pin"
+    ],
+    [
+     1268,
+     "Install rear chassis"
+    ],
+    [
+     1268,
+     "Install front rear chassis pin"
+    ],
+    [
+     1508,
+     "Install rear rear chassis pin"
+    ],
+    [
+     2200,
+     "Install rear wheel assy"
+    ],
+    [
+     2490,
+     "Install front bracket"
+    ],
+    [
+     2490,
+     "Install front bracket screw"
+    ],
+    [
+     3440,
+     "Install front wheel assy"
+    ]
+   ],
+   "mistake_alerts": []
+  },
+  {
+   "video": "18_assy_2_5",
+   "errors": true,
+   "pos": 0.714,
+   "f1": 0.8,
+   "delay_frames": 59.2,
+   "FP": 3,
+   "FN": 0,
+   "predicted_steps": [
+    [
+     806,
+     "Install front chassis"
+    ],
+    [
+     806,
+     "Install front chassis pin"
+    ],
+    [
+     1352,
+     "Install rear chassis"
+    ],
+    [
+     1352,
+     "Install front rear chassis pin"
+    ],
+    [
+     1866,
+     "Install rear rear chassis pin"
+    ],
+    [
+     2796,
+     "Install rear wheel assy"
+    ],
+    [
+     3780,
+     "Install front bracket"
+    ],
+    [
+     3780,
+     "Install front bracket screw"
+    ],
+    [
+     4278,
+     "Install front wheel assy"
+    ]
+   ],
+   "mistake_alerts": []
+  },
+  {
+   "video": "18_main_0_1",
+   "errors": false,
+   "pos": 0.875,
+   "f1": 1.0,
+   "delay_frames": 58.0,
+   "FP": 0,
+   "FN": 0,
+   "predicted_steps": [
+    [
+     330,
+     "Remove rear rear chassis pin"
+    ],
+    [
+     400,
+     "Remove rear wheel assy"
+    ],
+    [
+     442,
+     "Remove rear chassis"
+    ],
+    [
+     442,
+     "Remove front rear chassis pin"
+    ],
+    [
+     1126,
+     "Install short rear chassis"
+    ],
+    [
+     1126,
+     "Install front rear chassis pin"
+    ],
+    [
+     1354,
+     "Install rear rear chassis pin"
+    ],
+    [
+     1976,
+     "Install rear wheel assy"
+    ]
+   ],
+   "mistake_alerts": []
+  },
+  {
+   "video": "19_assy_0_1",
+   "errors": false,
+   "pos": 0.889,
+   "f1": 0.941,
+   "delay_frames": 137.5,
+   "FP": 0,
+   "FN": 1,
+   "predicted_steps": [
+    [
+     674,
+     "Install front chassis"
+    ],
+    [
+     674,
+     "Install front chassis pin"
+    ],
+    [
+     1472,
+     "Install rear chassis"
+    ],
+    [
+     1472,
+     "Install front rear chassis pin"
+    ],
+    [
+     1802,
+     "Install rear rear chassis pin"
+    ],
+    [
+     2504,
+     "Install front bracket"
+    ],
+    [
+     2504,
+     "Install front bracket screw"
+    ],
+    [
+     3904,
+     "Install front wheel assy"
+    ]
+   ],
+   "mistake_alerts": []
+  },
+  {
+   "video": "19_assy_3_5",
+   "errors": true,
+   "pos": 0.875,
+   "f1": 0.8,
+   "delay_frames": 122.0,
+   "FP": 3,
+   "FN": 0,
+   "predicted_steps": [
+    [
+     480,
+     "Install front chassis"
+    ],
+    [
+     480,
+     "Install front chassis pin"
+    ],
+    [
+     990,
+     "Install rear chassis"
+    ],
+    [
+     990,
+     "Install front rear chassis pin"
+    ],
+    [
+     1466,
+     "Install rear rear chassis pin"
+    ],
+    [
+     2102,
+     "Install front bracket"
+    ],
+    [
+     2102,
+     "Install front bracket screw"
+    ],
+    [
+     3096,
+     "Install front wheel assy"
+    ],
+    [
+     4236,
+     "Install rear wheel assy"
+    ]
+   ],
+   "mistake_alerts": []
+  },
+  {
+   "video": "19_main_0_1",
+   "errors": false,
+   "pos": 0.75,
+   "f1": 0.889,
+   "delay_frames": 64.0,
+   "FP": 2,
+   "FN": 0,
+   "predicted_steps": [
+    [
+     124,
+     "Remove rear wheel assy"
+    ],
+    [
+     446,
+     "Remove rear rear chassis pin"
+    ],
+    [
+     502,
+     "Remove rear chassis"
+    ],
+    [
+     502,
+     "Remove front rear chassis pin"
+    ],
+    [
+     926,
+     "Install short rear chassis"
+    ],
+    [
+     926,
+     "Install front rear chassis pin"
+    ],
+    [
+     1676,
+     "Install rear wheel assy"
+    ],
+    [
+     1792,
+     "Remove rear wheel assy"
+    ],
+    [
+     1932,
+     "Install rear rear chassis pin"
+    ],
+    [
+     1962,
+     "Install rear wheel assy"
+    ]
+   ],
+   "mistake_alerts": [
+    {
+     "t": 177.6,
+     "type": "wrong_order",
+     "kind": "mistake",
+     "step": "rear_wheel_assy",
+     "component": null
+    }
+   ]
+  },
+  {
+   "video": "23_assy_0_1",
+   "errors": false,
+   "pos": 0.778,
+   "f1": 0.9,
+   "delay_frames": 42.6,
+   "FP": 2,
+   "FN": 0,
+   "predicted_steps": [
+    [
+     318,
+     "Install front chassis"
+    ],
+    [
+     318,
+     "Install front chassis pin"
+    ],
+    [
+     744,
+     "Install rear chassis"
+    ],
+    [
+     744,
+     "Install front rear chassis pin"
+    ],
+    [
+     968,
+     "Install rear rear chassis pin"
+    ],
+    [
+     1354,
+     "Install front bracket"
+    ],
+    [
+     1354,
+     "Install front bracket screw"
+    ],
+    [
+     1974,
+     "Install front wheel assy"
+    ],
+    [
+     2058,
+     "Remove front wheel assy"
+    ],
+    [
+     2120,
+     "Install front wheel assy"
+    ],
+    [
+     2562,
+     "Install rear wheel assy"
+    ]
+   ],
+   "mistake_alerts": []
+  },
+  {
+   "video": "23_assy_1_2",
+   "errors": true,
+   "pos": 1.0,
+   "f1": 1.0,
+   "delay_frames": 39.2,
+   "FP": 0,
+   "FN": 0,
+   "predicted_steps": [
+    [
+     664,
+     "Install front chassis"
+    ],
+    [
+     664,
+     "Install front chassis pin"
+    ],
+    [
+     1372,
+     "Install rear chassis"
+    ],
+    [
+     1372,
+     "Install front rear chassis pin"
+    ],
+    [
+     1598,
+     "Install rear rear chassis pin"
+    ],
+    [
+     2288,
+     "Install front bracket"
+    ],
+    [
+     2288,
+     "Install front bracket screw"
+    ],
+    [
+     3804,
+     "Install rear wheel assy"
+    ]
+   ],
+   "mistake_alerts": [
+    {
+     "t": 385.5,
+     "type": "skipped_step",
+     "kind": "mistake",
+     "step": "front_wheel_assy",
+     "component": null
+    }
+   ]
+  },
+  {
+   "video": "23_main_0_1",
+   "errors": false,
+   "pos": 1.0,
+   "f1": 1.0,
+   "delay_frames": 26.8,
+   "FP": 0,
+   "FN": 0,
+   "predicted_steps": [
+    [
+     70,
+     "Remove rear wheel assy"
+    ],
+    [
+     258,
+     "Remove rear rear chassis pin"
+    ],
+    [
+     322,
+     "Remove rear chassis"
+    ],
+    [
+     322,
+     "Remove front rear chassis pin"
+    ],
+    [
+     1014,
+     "Install short rear chassis"
+    ],
+    [
+     1014,
+     "Install front rear chassis pin"
+    ],
+    [
+     1240,
+     "Install rear rear chassis pin"
+    ],
+    [
+     1860,
+     "Install rear wheel assy"
+    ]
+   ],
+   "mistake_alerts": []
+  }
+ ]
+}

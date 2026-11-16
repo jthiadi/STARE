@@ -1,0 +1,159 @@
+{
+  "title": "IndustReal assembly \u00b7 AR-aligned detectable parts",
+  "status": "candidate_for_experiment",
+  "recording_id": "03_assy_0_1",
+  "note": "Parts are the physical objects SAM3 should search for on 03_assy_0_1. Vocabulary follows IndustReal AR object nouns (not eval CSVs). partial model is the in-progress assembly body (do not also search chassis base/front/rear chassis). Detection may further restrict to ready\u222acurrent\u222anext step parts at runtime. hand/paper are station context.",
+  "timing_profile": {
+    "step_earliest_done_s": {},
+    "front_branch_after_ir30_s": 0.0
+  },
+  "steps": [
+    {
+      "id": "IR03",
+      "instruction": "Install the front chassis by fitting the two short braces to opposite sides of the partial model.",
+      "prerequisites": [],
+      "parts": [
+        "short brace",
+        "partial model"
+      ],
+      "tools": [],
+      "completion_check": "Both short braces are attached on opposite sides of the partial model.",
+      "recovery": "Hold the procedure and request supervisor review; no unapproved automatic correction is prescribed."
+    },
+    {
+      "id": "IR06",
+      "instruction": "Install the front chassis pin through the partial model and fit retaining hardware: tooth lock washer, then hex nut (tighten).",
+      "prerequisites": [
+        "IR03"
+      ],
+      "parts": [
+        "short metal pin",
+        "tooth lock washer",
+        "hex nut",
+        "partial model"
+      ],
+      "tools": [],
+      "completion_check": "The short metal pin is located through the partial model with tooth lock washer and hex nut fitted.",
+      "recovery": "Hold the procedure and request supervisor review; no unapproved automatic correction is prescribed."
+    },
+    {
+      "id": "IR09",
+      "instruction": "Install the rear chassis by fitting the two long braces to opposite sides of the partial model.",
+      "prerequisites": [],
+      "parts": [
+        "long brace",
+        "partial model"
+      ],
+      "tools": [],
+      "completion_check": "Both long braces are positioned on opposite sides of the partial model.",
+      "recovery": "Hold the procedure and request supervisor review; no unapproved automatic correction is prescribed."
+    },
+    {
+      "id": "IR15",
+      "instruction": "Install the front rear-chassis pin and fit retaining hardware: tooth lock washer, then hex nut (tighten).",
+      "prerequisites": [
+        "IR09"
+      ],
+      "parts": [
+        "short metal pin",
+        "tooth lock washer",
+        "hex nut",
+        "partial model"
+      ],
+      "tools": [],
+      "completion_check": "The short metal pin is located at the front joint of the rear chassis with tooth lock washer and hex nut fitted.",
+      "recovery": "Hold the procedure and request supervisor review; no unapproved automatic correction is prescribed."
+    },
+    {
+      "id": "IR18",
+      "instruction": "Install the rear rear-chassis pin and fit retaining hardware: tooth lock washer, then hex nut (tighten).",
+      "prerequisites": [
+        "IR09"
+      ],
+      "parts": [
+        "short metal pin",
+        "tooth lock washer",
+        "hex nut",
+        "partial model"
+      ],
+      "tools": [],
+      "completion_check": "The short metal pin is located at the rear joint of the rear chassis with tooth lock washer and hex nut fitted.",
+      "recovery": "Hold the procedure and request supervisor review; no unapproved automatic correction is prescribed."
+    },
+    {
+      "id": "IR21",
+      "instruction": "Install the white front bracket on the partial model.",
+      "prerequisites": [
+        "IR03",
+        "IR06",
+        "IR09",
+        "IR15",
+        "IR18"
+      ],
+      "parts": [
+        "white front bracket",
+        "partial model"
+      ],
+      "tools": [],
+      "completion_check": "The white front bracket is correctly located on the partial model.",
+      "recovery": "Hold the procedure and request supervisor review; no unapproved automatic correction is prescribed."
+    },
+    {
+      "id": "IR24",
+      "instruction": "Install the front bracket screw pin through the front bracket and fit round flat washer then acorn nut (tighten).",
+      "prerequisites": [
+        "IR21"
+      ],
+      "parts": [
+        "screw pin",
+        "round flat washer",
+        "acorn nut",
+        "white front bracket"
+      ],
+      "tools": [],
+      "completion_check": "The screw pin is located through the front bracket with round flat washer and acorn nut fitted.",
+      "recovery": "Hold the procedure and request supervisor review; no unapproved automatic correction is prescribed."
+    },
+    {
+      "id": "IR27",
+      "instruction": "Install the front wheel at the front bracket using the connection hardware.",
+      "prerequisites": [
+        "IR24"
+      ],
+      "parts": [
+        "toy car wheel",
+        "white front bracket",
+        "hex nut",
+        "round flat washer"
+      ],
+      "tools": [],
+      "completion_check": "The front wheel is correctly located at the front bracket.",
+      "recovery": "Stop. Finish IR24 (front bracket screw) before installing the front wheel, then request supervisor review if the station state is unclear."
+    },
+    {
+      "id": "IR30",
+      "instruction": "Install the rear wheel assembly (wheel, pulley, wing) on the partial model using the connection hardware.",
+      "prerequisites": [
+        "IR03",
+        "IR06",
+        "IR09",
+        "IR15",
+        "IR18"
+      ],
+      "parts": [
+        "toy car wheel",
+        "pulley",
+        "wing",
+        "long metal pin",
+        "middle metal pin",
+        "hex nut",
+        "tooth lock washer",
+        "round flat washer",
+        "partial model"
+      ],
+      "tools": [],
+      "completion_check": "The rear wheel assembly is correctly located on the partial model.",
+      "recovery": "Stop. Confirm the rear-chassis branch (IR09/IR15/IR18) is finished before installing the rear wheel assembly, then request supervisor review if unsure."
+    }
+  ]
+}

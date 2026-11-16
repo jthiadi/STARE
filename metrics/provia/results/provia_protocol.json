@@ -1,0 +1,120 @@
+{
+ "protocol": "PROVIA IndustReal (arXiv 2609.20638), alarm-level grace 1, instantaneous rule at score 0.5",
+ "published": {
+  "PROVIA": {
+   "AP": 0.153,
+   "AUROC": 0.625,
+   "recall_at_fa_per_min": {
+    "0.1": 0.098,
+    "0.5": 0.392,
+    "1.0": 0.667
+   }
+  },
+  "Causal-TCN": {
+   "AP": 0.148,
+   "AUROC": 0.616,
+   "recall_at_fa_per_min": {
+    "0.1": 0.255,
+    "0.5": 0.529,
+    "1.0": 0.882
+   }
+  },
+  "Controlled PREGO": {
+   "AP": 0.133,
+   "AUROC": 0.612,
+   "recall_at_fa_per_min": {
+    "0.1": 0.137,
+    "0.5": 0.392,
+    "1.0": 0.863
+   }
+  },
+  "MistSense-RGB-style": {
+   "AP": 0.101,
+   "AUROC": 0.567,
+   "recall_at_fa_per_min": {
+    "0.1": 0.118,
+    "0.5": 0.529,
+    "1.0": 0.745
+   }
+  },
+  "Position control (time), no perception": {
+   "recall_at_fa_per_min": {
+    "0.1": 0.294,
+    "0.5": 0.588,
+    "1.0": 0.765
+   }
+  }
+ },
+ "validation/install": {
+  "recall_all": 0.0,
+  "fa_per_min_correct_operation": 0.085,
+  "recall_first": 0.0,
+  "recall_after_first": NaN,
+  "median_delay_sec": NaN,
+  "zero_alarm_correct_share": 0.833,
+  "n_mistakes": 4,
+  "n_videos": 16,
+  "AP": 0.04,
+  "AUROC": 0.474,
+  "steps": 101,
+  "mistakes": 4,
+  "alerts_dropped": 0,
+  "recall_by_type": {
+   "incorrect_completion": 0.0
+  }
+ },
+ "validation/all": {
+  "recall_all": 0.0,
+  "fa_per_min_correct_operation": 0.102,
+  "recall_first": 0.0,
+  "recall_after_first": NaN,
+  "median_delay_sec": NaN,
+  "zero_alarm_correct_share": 0.833,
+  "n_mistakes": 4,
+  "n_videos": 16,
+  "AP": 0.04,
+  "AUROC": 0.469,
+  "steps": 101,
+  "mistakes": 4,
+  "alerts_dropped": 0,
+  "recall_by_type": {
+   "incorrect_completion": 0.0
+  }
+ },
+ "test/install": {
+  "recall_all": 0.0,
+  "fa_per_min_correct_operation": 0.038,
+  "recall_first": 0.0,
+  "recall_after_first": 0.0,
+  "median_delay_sec": NaN,
+  "zero_alarm_correct_share": 0.889,
+  "n_mistakes": 17,
+  "n_videos": 32,
+  "AP": 0.088,
+  "AUROC": 0.486,
+  "steps": 194,
+  "mistakes": 17,
+  "alerts_dropped": 0,
+  "recall_by_type": {
+   "incorrect_completion": 0.0
+  }
+ },
+ "test/all": {
+  "recall_all": 0.0,
+  "fa_per_min_correct_operation": 0.092,
+  "recall_first": 0.0,
+  "recall_after_first": 0.0,
+  "median_delay_sec": NaN,
+  "zero_alarm_correct_share": 0.722,
+  "n_mistakes": 17,
+  "n_videos": 32,
+  "AP": 0.088,
+  "AUROC": 0.466,
+  "steps": 194,
+  "mistakes": 17,
+  "alerts_dropped": 0,
+  "recall_by_type": {
+   "incorrect_completion": 0.0
+  }
+ }
+}

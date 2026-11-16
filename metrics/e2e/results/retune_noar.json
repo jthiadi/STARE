@@ -1,0 +1,36 @@
+{
+ "ablation": "no action recognition (vision only)",
+ "chosen_eps": 1e-05,
+ "ranking": [
+  {
+   "eps": 1e-05,
+   "criterion": 1.4272,
+   "val": "all 0.841/0.876/8.5s FP16 FN16 | err 0.724/0.754/10.5s | w/err 0.819/0.863 (n=16)"
+  },
+  {
+   "eps": 0.0001,
+   "criterion": 1.4265,
+   "val": "all 0.843/0.886/7.9s FP16 FN15 | err 0.688/0.752/10.1s | w/err 0.822/0.874 (n=16)"
+  },
+  {
+   "eps": 3e-05,
+   "criterion": 1.4067,
+   "val": "all 0.828/0.875/8.2s FP19 FN15 | err 0.688/0.752/10.3s | w/err 0.807/0.863 (n=16)"
+  },
+  {
+   "eps": 0.001,
+   "criterion": 1.2836,
+   "val": "all 0.765/0.837/7.4s FP31 FN15 | err 0.563/0.697/9.7s | w/err 0.749/0.827 (n=16)"
+  },
+  {
+   "eps": 0.0003,
+   "criterion": 1.2823,
+   "val": "all 0.769/0.846/7.8s FP29 FN15 | err 0.563/0.697/9.9s | w/err 0.753/0.836 (n=16)"
+  },
+  {
+   "eps": 0.003,
+   "criterion": 1.2253,
+   "val": "all 0.740/0.821/6.8s FP37 FN15 | err 0.491/0.671/9.4s | w/err 0.726/0.812 (n=16)"
+  }
+ ]
+}

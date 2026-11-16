@@ -1,0 +1,305 @@
+# DRAFT written by assist/tools/mine_graph.py -- review and edit by hand.
+# requires: steps that must be done (or at least placed) before this one.
+# severity: info / warn / stop, used for mistakes on this step.
+fasten_actions:
+- fit_nut
+- tighten_nut
+- fit_acorn_nut
+- tighten_acorn_nut
+tasks:
+  assy:
+    title: Assembly
+    initial_state: '10000000000'
+    mined_from:
+    - 01_assy_0_1
+    - 04_assy_0_1
+    - 06_assy_0_1
+    - 07_assy_0_1
+    - 11_assy_0_1
+    - 15_assy_0_1
+    - 16_assy_0_1
+    - 21_assy_0_1
+    - 22_assy_0_1
+    - 25_assy_0_1
+    - 27_assy_0_1
+    - 05_assy_0_1
+    - 14_assy_0_1
+    - 20_assy_0_1
+    - 24_assy_0_1
+    - 26_assy_0_1
+    subgoals:
+      chassis:
+      - front_chassis
+      - front_chassis_pin
+      - rear_chassis
+      - front_rear_chassis_pin
+      - rear_rear_chassis_pin
+      front_and_wheels:
+      - front_bracket
+      - front_bracket_screw
+      - front_wheel_assy
+      - rear_wheel_assy
+    steps:
+      front_chassis:
+        name: front chassis
+        component: front_chassis
+        value: 1
+        take:
+        - take_short_brace
+        do:
+        - fit_short_brace
+        done_on: fasten
+        note: The front chassis is the base everything at the front is mounted on.
+        requires: []
+        severity: stop
+      front_chassis_pin:
+        name: front chassis pin
+        component: front_chassis_pin
+        value: 1
+        take:
+        - take_pin_short
+        do:
+        - plug_short_pin
+        done_on: fasten
+        note: This short pin locks the front chassis to the base.
+        requires:
+        - front_chassis
+        severity: stop
+      rear_chassis:
+        name: rear chassis (long brace)
+        component: rear_chassis
+        value: 1
+        take:
+        - take_long_brace
+        do:
+        - fit_long_brace
+        done_on: fasten
+        note: The assembly uses the long brace at the rear; the short brace is only for maintenance.
+        requires: []
+        severity: stop
+      front_rear_chassis_pin:
+        name: front pin of the rear chassis
+        component: front_rear_chassis_pin
+        value: 1
+        take:
+        - take_pin_short
+        do:
+        - plug_short_pin
+        done_on: fasten
+        note: The pins go through the rear chassis, so the chassis has to be on first.
+        requires:
+        - rear_chassis
+        severity: stop
+      rear_rear_chassis_pin:
+        name: rear pin of the rear chassis
+        component: rear_rear_chassis_pin
+        value: 1
+        take:
+        - take_pin_short
+        do:
+        - plug_short_pin
+        done_on: fasten
+        note: The pins go through the rear chassis, so the chassis has to be on first.
+        requires:
+        - rear_chassis
+        severity: stop
+      front_bracket:
+        name: front bracket (wing beam)
+        component: front_bracket
+        value: 1
+        take:
+        - take_wing_beam
+        do:
+        - fit_wing_beam
+        done_on: fasten
+        note: The front bracket sits on the finished chassis and holds the front wheel axle.
+        requires:
+        - front_chassis
+        - front_chassis_pin
+        - front_rear_chassis_pin
+        - rear_rear_chassis_pin
+        severity: stop
+      front_bracket_screw:
+        name: front bracket screw
+        component: front_bracket_screw
+        value: 1
+        take:
+        - take_screw_pin
+        do:
+        - plug_screw_pin
+        done_on: fasten
+        note: The screw goes through the bracket, so the bracket must be in place first.
+        requires:
+        - front_chassis
+        - front_chassis_pin
+        - front_rear_chassis_pin
+        - rear_rear_chassis_pin
+        - front_bracket
+        severity: stop
+      front_wheel_assy:
+        name: front wheel assembly
+        component: front_wheel_assy
+        value: 1
+        take:
+        - take_pin_long
+        do:
+        - plug_pin_long
+        - fit_wheel
+        done_on: fasten
+        note: The front wheels hang on the front bracket's axle (long pin).
+        requires:
+        - front_bracket
+        - front_bracket_screw
+        severity: warn
+      rear_wheel_assy:
+        name: rear wheel assembly
+        component: rear_wheel_assy
+        value: 1
+        take:
+        - take_pin_middle
+        - take_pulley
+        do:
+        - plug_pin_middle
+        - fit_pulley
+        - fit_wheel
+        done_on: fasten
+        note: The rear wheels and pulley mount on the rear chassis (middle pin).
+        requires:
+        - front_chassis
+        - front_chassis_pin
+        - front_rear_chassis_pin
+        - rear_rear_chassis_pin
+        severity: warn
+  main:
+    title: Maintenance (swap the rear chassis for the short one)
+    initial_state: '11110111111'
+    mined_from:
+    - 01_main_0_1
+    - 02_main_0_1
+    - 04_main_0_1
+    - 06_main_0_1
+    - 07_main_0_1
+    - 11_main_0_1
+    - 16_main_0_1
+    - 21_main_0_1
+    - 22_main_0_1
+    - 25_main_0_1
+    - 27_main_0_1
+    - 05_main_0_1
+    - 14_main_0_1
+    - 20_main_0_1
+    - 24_main_0_1
+    - 26_main_0_1
+    subgoals:
+      strip:
+      - remove_rear_wheel_assy
+      - remove_rear_rear_chassis_pin
+      - remove_front_rear_chassis_pin
+      - remove_rear_chassis
+      rebuild:
+      - short_rear_chassis
+      - front_rear_chassis_pin
+      - rear_rear_chassis_pin
+      - rear_wheel_assy
+    steps:
+      remove_rear_wheel_assy:
+        name: remove the rear wheel assembly
+        component: rear_wheel_assy
+        value: 0
+        do:
+        - pull_pin_middle
+        - pull_wheel
+        done_on: do
+        note: The rear wheels block the rear chassis pins.
+        requires: []
+        severity: stop
+      remove_rear_rear_chassis_pin:
+        name: remove the rear pin of the rear chassis
+        component: rear_rear_chassis_pin
+        value: 0
+        do:
+        - pull_pin_short
+        done_on: do
+        note: Both pins must come out before the rear chassis can be lifted off.
+        requires:
+        - remove_rear_wheel_assy
+        severity: stop
+      remove_front_rear_chassis_pin:
+        name: remove the front pin of the rear chassis
+        component: front_rear_chassis_pin
+        value: 0
+        do:
+        - pull_pin_short
+        done_on: do
+        note: Both pins must come out before the rear chassis can be lifted off.
+        requires: []
+        severity: stop
+      remove_rear_chassis:
+        name: remove the rear chassis (long brace)
+        component: rear_chassis
+        value: 0
+        do:
+        - take_long_brace
+        - put_long_brace
+        done_on: do
+        note: The long brace has to come off before the short one can go on.
+        requires:
+        - remove_rear_rear_chassis_pin
+        - remove_front_rear_chassis_pin
+        severity: stop
+      short_rear_chassis:
+        name: short rear chassis (short brace)
+        component: short_rear_chassis
+        value: 1
+        take:
+        - take_short_brace
+        do:
+        - fit_short_brace
+        done_on: fasten
+        note: Maintenance replaces the long rear brace with the short one.
+        requires:
+        - remove_rear_chassis
+        severity: stop
+      front_rear_chassis_pin:
+        name: front pin of the rear chassis
+        component: front_rear_chassis_pin
+        value: 1
+        take:
+        - take_pin_short
+        do:
+        - plug_short_pin
+        done_on: fasten
+        note: The pins go through the new rear chassis, so it has to be on first.
+        requires:
+        - short_rear_chassis
+        severity: stop
+      rear_rear_chassis_pin:
+        name: rear pin of the rear chassis
+        component: rear_rear_chassis_pin
+        value: 1
+        take:
+        - take_pin_short
+        do:
+        - plug_short_pin
+        done_on: fasten
+        note: The pins go through the new rear chassis, so it has to be on first.
+        requires:
+        - short_rear_chassis
+        severity: stop
+      rear_wheel_assy:
+        name: rear wheel assembly
+        component: rear_wheel_assy
+        value: 1
+        take:
+        - take_pin_middle
+        - take_pulley
+        do:
+        - plug_pin_middle
+        - fit_pulley
+        - fit_wheel
+        done_on: fasten
+        note: The rear wheels and pulley go back on once the new rear chassis and its pins are in.
+        requires:
+        - front_rear_chassis_pin
+        - rear_rear_chassis_pin
+        severity: warn

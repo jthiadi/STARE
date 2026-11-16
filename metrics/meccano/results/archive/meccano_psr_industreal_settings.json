@@ -1,0 +1,571 @@
+{
+ "settings": {
+  "filter": {
+   "tau": 0.05,
+   "theta": 0.6,
+   "stable": 3,
+   "conf_n": 6,
+   "conf_thr": 5.0,
+   "eps": 0,
+   "q_ref": 0.1,
+   "q_min": 0.1,
+   "w_model": 0.6,
+   "uni": 0.0
+  },
+  "step_model": {
+   "w_lr": 4.0,
+   "lr_path": "lr.pkl",
+   "w_action": 0.6,
+   "w_since": 0.3,
+   "null_bias": 0.0
+  },
+  "d0_frames": 14,
+  "triggers": [
+   "plug_handlebar",
+   "put_wrench",
+   "take_handlebar",
+   "put_screwdriver",
+   "take_tire",
+   "unscrew_screw_with_hands",
+   "tighten_bolt_with_wrench",
+   "put_partial_model",
+   "screw_screw_with_screwdriver",
+   "browse_booklet",
+   "take_white_angled_perforated_bar",
+   "tighten_bolt_with_hands",
+   "screw_screw_with_hands",
+   "align_wrench_to_bolt",
+   "pull_partial_model",
+   "put_red_perforated_bar",
+   "take_rod",
+   "take_partial_model",
+   "align_screwdriver_to_screw",
+   "pull_screw",
+   "plug_rod"
+  ],
+  "train_completion_coverage": 0.811,
+  "samples": 1598,
+  "train_groups_with_trigger": "133/164",
+  "groups": 32
+ },
+ "val": {
+  "POS": 0.675,
+  "F1": 0.817,
+  "delay_s": 248.7,
+  "TP": 25,
+  "FP": 3,
+  "FN": 8,
+  "videos": [
+   {
+    "video": "0007",
+    "pos": 0.824,
+    "f1": 0.786,
+    "delay_s": 166.0,
+    "steps": [
+     [
+      906,
+      "Install left damping fork"
+     ],
+     [
+      906,
+      "Install left frame"
+     ],
+     [
+      906,
+      "Install headlamp"
+     ],
+     [
+      3786,
+      "Install right damping fork"
+     ],
+     [
+      3786,
+      "Install right frame"
+     ],
+     [
+      6142,
+      "Install left handle"
+     ],
+     [
+      6354,
+      "Install right handle"
+     ],
+     [
+      8344,
+      "Install left rear chassis"
+     ],
+     [
+      8344,
+      "Install left tail wing"
+     ],
+     [
+      11350,
+      "Install right rear chassis"
+     ],
+     [
+      11792,
+      "Install swingarm"
+     ],
+     [
+      12480,
+      "Install right tail wing"
+     ],
+     [
+      12736,
+      "Install drive shaft"
+     ],
+     [
+      14500,
+      "Install fuel tank"
+     ]
+    ]
+   },
+   {
+    "video": "0017",
+    "pos": 0.526,
+    "f1": 0.848,
+    "delay_s": 331.5,
+    "steps": [
+     [
+      2504,
+      "Install left damping fork"
+     ],
+     [
+      2504,
+      "Install left frame"
+     ],
+     [
+      2504,
+      "Install headlamp"
+     ],
+     [
+      7278,
+      "Install right damping fork"
+     ],
+     [
+      7278,
+      "Install right frame"
+     ],
+     [
+      8776,
+      "Install left handle"
+     ],
+     [
+      8888,
+      "Install right handle"
+     ],
+     [
+      8970,
+      "Install left rear chassis"
+     ],
+     [
+      9128,
+      "Install swingarm"
+     ],
+     [
+      9450,
+      "Install right tail wing"
+     ],
+     [
+      9598,
+      "Install left tail wing"
+     ],
+     [
+      9936,
+      "Install right rear chassis"
+     ],
+     [
+      10196,
+      "Install drive shaft"
+     ],
+     [
+      11374,
+      "Install fuel tank"
+     ]
+    ]
+   }
+  ]
+ },
+ "test": {
+  "POS": 0.521,
+  "F1": 0.705,
+  "delay_s": 211.0,
+  "TP": 72,
+  "FP": 7,
+  "FN": 52,
+  "videos": [
+   {
+    "video": "0008",
+    "pos": 0.824,
+    "f1": 0.786,
+    "delay_s": 255.1,
+    "steps": [
+     [
+      1348,
+      "Install left damping fork"
+     ],
+     [
+      1348,
+      "Install left frame"
+     ],
+     [
+      1348,
+      "Install headlamp"
+     ],
+     [
+      6088,
+      "Install right damping fork"
+     ],
+     [
+      6088,
+      "Install right frame"
+     ],
+     [
+      8292,
+      "Install left handle"
+     ],
+     [
+      8424,
+      "Install right handle"
+     ],
+     [
+      9570,
+      "Install left rear chassis"
+     ],
+     [
+      9570,
+      "Install left tail wing"
+     ],
+     [
+      11842,
+      "Install right rear chassis"
+     ],
+     [
+      11958,
+      "Install swingarm"
+     ],
+     [
+      12068,
+      "Install right tail wing"
+     ],
+     [
+      12768,
+      "Install drive shaft"
+     ],
+     [
+      14914,
+      "Install fuel tank"
+     ]
+    ]
+   },
+   {
+    "video": "0009",
+    "pos": 0.353,
+    "f1": 0.522,
+    "delay_s": 256.0,
+    "steps": [
+     [
+      3184,
+      "Install left damping fork"
+     ],
+     [
+      3184,
+      "Install left frame"
+     ],
+     [
+      3184,
+      "Install headlamp"
+     ],
+     [
+      4118,
+      "Install right damping fork"
+     ],
+     [
+      4118,
+      "Install right frame"
+     ],
+     [
+      7508,
+      "Install left handle"
+     ]
+    ]
+   },
+   {
+    "video": "0010",
+    "pos": 0.13,
+    "f1": 0.516,
+    "delay_s": 478.0,
+    "steps": [
+     [
+      5640,
+      "Install left damping fork"
+     ],
+     [
+      5640,
+      "Install left frame"
+     ],
+     [
+      5640,
+      "Install headlamp"
+     ],
+     [
+      8604,
+      "Install right damping fork"
+     ],
+     [
+      8604,
+      "Install right frame"
+     ],
+     [
+      11180,
+      "Install left handle"
+     ],
+     [
+      12962,
+      "Install right handle"
+     ],
+     [
+      14050,
+      "Install left rear chassis"
+     ]
+    ]
+   },
+   {
+    "video": "0011",
+    "pos": 0.706,
+    "f1": 0.828,
+    "delay_s": 213.1,
+    "steps": [
+     [
+      1646,
+      "Install left damping fork"
+     ],
+     [
+      1646,
+      "Install left frame"
+     ],
+     [
+      1646,
+      "Install headlamp"
+     ],
+     [
+      2100,
+      "Install right damping fork"
+     ],
+     [
+      2100,
+      "Install right frame"
+     ],
+     [
+      4202,
+      "Install left handle"
+     ],
+     [
+      4714,
+      "Install right handle"
+     ],
+     [
+      6176,
+      "Install left rear chassis"
+     ],
+     [
+      6176,
+      "Install left tail wing"
+     ],
+     [
+      8298,
+      "Install right rear chassis"
+     ],
+     [
+      12132,
+      "Install swingarm"
+     ],
+     [
+      12568,
+      "Install right tail wing"
+     ]
+    ]
+   },
+   {
+    "video": "0012",
+    "pos": 0.529,
+    "f1": 0.828,
+    "delay_s": 64.9,
+    "steps": [
+     [
+      1430,
+      "Install left damping fork"
+     ],
+     [
+      1430,
+      "Install left frame"
+     ],
+     [
+      1430,
+      "Install headlamp"
+     ],
+     [
+      1630,
+      "Install right damping fork"
+     ],
+     [
+      1630,
+      "Install right frame"
+     ],
+     [
+      1916,
+      "Install left handle"
+     ],
+     [
+      2096,
+      "Install right handle"
+     ],
+     [
+      3182,
+      "Install left rear chassis"
+     ],
+     [
+      3182,
+      "Install left tail wing"
+     ],
+     [
+      4206,
+      "Install right rear chassis"
+     ],
+     [
+      4834,
+      "Install swingarm"
+     ],
+     [
+      6320,
+      "Install right tail wing"
+     ],
+     [
+      6836,
+      "Install drive shaft"
+     ]
+    ]
+   },
+   {
+    "video": "0019",
+    "pos": 0.476,
+    "f1": 0.645,
+    "delay_s": 141.0,
+    "steps": [
+     [
+      982,
+      "Install left damping fork"
+     ],
+     [
+      982,
+      "Install left frame"
+     ],
+     [
+      982,
+      "Install headlamp"
+     ],
+     [
+      1540,
+      "Install right damping fork"
+     ],
+     [
+      1540,
+      "Install right frame"
+     ],
+     [
+      3620,
+      "Install left handle"
+     ],
+     [
+      3864,
+      "Install right handle"
+     ],
+     [
+      6542,
+      "Install left rear chassis"
+     ],
+     [
+      6542,
+      "Install left tail wing"
+     ],
+     [
+      8042,
+      "Install right rear chassis"
+     ],
+     [
+      8598,
+      "Install swingarm"
+     ],
+     [
+      8932,
+      "Install right tail wing"
+     ]
+    ]
+   },
+   {
+    "video": "0020",
+    "pos": 0.632,
+    "f1": 0.812,
+    "delay_s": 68.8,
+    "steps": [
+     [
+      816,
+      "Install left damping fork"
+     ],
+     [
+      816,
+      "Install left frame"
+     ],
+     [
+      816,
+      "Install headlamp"
+     ],
+     [
+      2034,
+      "Install right damping fork"
+     ],
+     [
+      2034,
+      "Install right frame"
+     ],
+     [
+      3676,
+      "Install left handle"
+     ],
+     [
+      3868,
+      "Install right handle"
+     ],
+     [
+      4374,
+      "Install left rear chassis"
+     ],
+     [
+      4374,
+      "Install left tail wing"
+     ],
+     [
+      5046,
+      "Install right rear chassis"
+     ],
+     [
+      8938,
+      "Install swingarm"
+     ],
+     [
+      10482,
+      "Install right tail wing"
+     ],
+     [
+      11162,
+      "Install drive shaft"
+     ],
+     [
+      13444,
+      "Install fuel tank"
+     ]
+    ]
+   }
+  ]
+ }
+}

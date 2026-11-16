@@ -1,0 +1,76 @@
+{
+ "protocol": "IndustReal test, 32 recordings, official PSR evaluator (port), POS / F1 / delay; mistakes: teammate rules",
+ "inputs": "live actions = their TCN + action-beginning V-JEPA 2 (w 0.1), computed from the video; v14 frozen, run live on the video (verifiers on even frames, ASD on odd frames)",
+ "v14_live": {
+  "steps": {
+   "all": {
+    "f1": 0.893,
+    "pos": 0.788,
+    "delay_s": 6.9
+   },
+   "with_errors": {
+    "f1": 0.829,
+    "pos": 0.708,
+    "delay_s": 8.0
+   }
+  },
+  "mistakes": {
+   "found": 8,
+   "of": 32,
+   "alerts": 19,
+   "precision": 0.421,
+   "false_alarms_per_h": 4.4,
+   "by_type": {
+    "skipped": "2/10 (7 alerts)",
+    "order": "4/4 (7 alerts)",
+    "install": "2/18 (5 alerts)"
+   }
+  },
+  "latency_ms_median_of_videos": 19.8
+ },
+ "engine_with_v14_state": {
+  "steps": {
+   "all": {
+    "f1": 0.895,
+    "pos": 0.809,
+    "delay_s": 7.5
+   },
+   "with_errors": {
+    "f1": 0.833,
+    "pos": 0.734,
+    "delay_s": 9.1
+   }
+  },
+  "mistakes": {
+   "found": 8,
+   "of": 32,
+   "alerts": 41,
+   "false_alarms_per_h": 13.2,
+   "warned": 10,
+   "early_warnings_per_h": 22.4,
+   "by_type": {
+    "skipped": {
+     "found": 2,
+     "of": 10,
+     "alerts": 21,
+     "false_alarms_per_h": 7.6,
+     "delay_s": 2.7
+    },
+    "order": {
+     "found": 4,
+     "of": 4,
+     "alerts": 6,
+     "false_alarms_per_h": 0.8,
+     "delay_s": 5.9
+    },
+    "install": {
+     "found": 2,
+     "of": 18,
+     "alerts": 14,
+     "false_alarms_per_h": 4.8,
+     "delay_s": -9.2
+    }
+   }
+  }
+ }
+}
