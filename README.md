@@ -212,6 +212,15 @@ details: [`metrics/ar/README.md`](metrics/ar/README.md), [`metrics/e2e/README.md
 
 ## Demo
 
+From `system/assistant` (needs `stare_outputs.tar`, the IndustReal test videos, `part_geometries` and `pip install imageio-ffmpeg`):
+
+```bash
+python ../../demo_cards/build_v14_tcn.py ../psr_v14/results/v14_predictedAR_test.json output/assist ../../demo_cards/app_v14_tcn
+python ../../demo_cards/render_cards.py ../../demo_cards/videos --outputs ../../demo_cards/app_v14_tcn
+```
+
+The first command builds the card data and the second renders the 32 test videos into `demo_cards/videos/`.
+
 **Rendered demo videos from IndustReal test set**: https://drive.google.com/drive/folders/1gOOiDWF7yPbYWn1aHRhmxn8siRY1gwmt?usp=drive_link
 
 ## Credits and licenses
